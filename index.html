@@ -121,6 +121,17 @@
         </div>
       </template>
 
+      <!-- ===== OPGAVER: DAGENS REGNEOPGAVER (js/opgaver.js) ===== -->
+      <template x-if="typeof opgStart === 'function'">
+        <div class="panel p-4 flex flex-wrap items-center gap-3" id="oev-opgaver">
+          <div class="min-w-0 flex-1">
+            <h2 class="hd text-lg" id="oev-opg-titel" x-text="'Dagens regneopgaver (' + opgDagAntal() + ')'"></h2>
+            <p class="text-xs text-muted" x-text="opgDagAntal() ? 'Nye tal hver gang. Svagt område kommer oftere.' : 'Dagens mål er nået. Du kan altid tage flere.'"></p>
+          </div>
+          <button class="btn btn-primary" id="oev-opg-start" @click="opgGaaTilDag()">Regn opgaver</button>
+        </div>
+      </template>
+
       <!-- Beherskelse pr. emne -->
       <div class="panel p-4 flex flex-col gap-2" x-show="emneStat().length">
         <h2 class="hd text-lg">Beherskelse pr. emne</h2>
@@ -136,7 +147,84 @@
   </template>
 
   <!-- ===== OPGAVER (fase 2, js/opgaver.js) ===== -->
-  <!-- Fanen lægges her som <template x-if="klar && view==='opgaver'"><section id="v-opgaver">…</section></template> -->
+  <template x-if="klar && view==='opgaver'">
+    <section class="flex flex-col gap-4" id="v-opgaver" x-init="opgAkt || opgStart()">
+      <div class="flex flex-wrap items-center gap-2">
+        <label class="text-sm text-muted" for="opg-valg">Opgaver</label>
+        <select id="opg-valg" class="inp !w-auto" :value="opgValg" @change="opgSkift($event.target.value)">
+          <option value="blandet">Blandet efter svagheder</option>
+          <optgroup label="Emne"><template x-for="e in emner.filter(x => opgGeneratorer.some(g => g.emne === x.id))" :key="e.id"><option :value="'emne:' + e.id" x-text="e.navn"></option></template></optgroup>
+          <optgroup label="Generator"><template x-for="g in opgGeneratorer" :key="g.id"><option :value="'gen:' + g.id" x-text="g.navn"></option></template></optgroup>
+        </select>
+        <button class="btn btn-ghost ml-auto" id="opg-info" @click="modal='opgInfo'">Forudsætninger</button>
+      </div>
+
+      <template x-if="opgAkt && opgGen()">
+        <article class="kortflade p-5 flex flex-col gap-4" id="opg-kort">
+          <div class="flex flex-wrap items-center gap-2 text-xs text-muted">
+            <span class="tag" x-text="opgGen().navn"></span><span class="tag" x-text="emneKort(opgGen().emne)"></span><span class="tag" x-text="'Niveau ' + opgGen().niveau"></span>
+            <span class="ml-auto num" x-text="'Seed ' + opgAkt.seed"></span>
+          </div>
+          <div class="kt-tekst" id="opg-tekst" x-html="vis(opgAkt.opg.tekst)"></div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <template x-for="s in opgAkt.opg.svar" :key="s.id">
+              <label class="f">
+                <span x-html="vis(s.navn)"></span>
+                <span class="flex items-center gap-2">
+                  <input class="inp num flex-1 min-w-0" inputmode="decimal" autocomplete="off" data-opg-svar :id="'opg-svar-' + s.id" :disabled="!!opgRes"
+                    x-model="opgInd[s.id]" @keydown="opgTast($event)" placeholder="fx 4,7">
+                  <span class="text-sm text-muted" x-text="s.enhed"></span>
+                </span>
+                <template x-if="opgDel(s.id)">
+                  <span class="text-xs" :id="'opg-ok-' + s.id" :style="'color:var(' + (opgOk(s.id) ? '--ok' : '--crit') + ')'"
+                    x-text="opgOk(s.id) ? 'Rigtigt' : 'Rigtigt svar: ' + opgFmt(s.vaerdi) + ' ' + s.enhed"></span>
+                </template>
+              </label>
+            </template>
+          </div>
+
+          <div class="flex flex-wrap gap-2">
+            <button class="btn btn-primary" id="opg-tjek" x-show="!opgRes" @click="opgTjek()">Tjek svar <kbd>Enter</kbd></button>
+            <button class="btn btn-primary" id="opg-naeste" x-show="opgRes" @click="opgStart()">Næste opgave <kbd>Enter</kbd></button>
+            <button class="btn" id="opg-spring" x-show="!opgRes" @click="opgStart()">Spring over</button>
+          </div>
+
+          <template x-if="opgRes">
+            <div class="flex flex-col gap-3 border-t border-line pt-4" id="opg-feedback">
+              <p class="font-semibold" id="opg-resultat" :style="'color:var(' + (opgRes.korrekt ? '--ok' : '--crit') + ')'"
+                x-text="opgRes.korrekt ? 'Rigtigt!' : (opgRes.score > 0 ? 'Delvist rigtigt' : 'Ikke rigtigt')"></p>
+              <template x-if="opgRes.fejltype">
+                <div class="panel p-3 text-sm" id="opg-fejl">
+                  <p class="font-semibold" x-text="'Typisk fejl: ' + opgFejlNavn(opgRes.fejltype)"></p>
+                  <p class="kt-tekst !text-base" x-html="vis(opgRes.forklaring)"></p>
+                </div>
+              </template>
+              <div id="opg-trin" class="flex flex-col gap-2" x-show="!opgRes.korrekt">
+                <p class="text-xs font-semibold text-muted uppercase tracking-wide">Trinvis løsning</p>
+                <ol class="list-decimal pl-5 flex flex-col gap-2">
+                  <template x-for="(t, i) in opgAkt.opg.trin" :key="i"><li class="kt-tekst !text-base" x-html="vis(t)"></li></template>
+                </ol>
+              </div>
+            </div>
+          </template>
+        </article>
+      </template>
+
+      <!-- Træfsikkerhed pr. generator -->
+      <div class="panel p-4 flex flex-col gap-2" id="opg-stat">
+        <h2 class="hd text-lg">Træfsikkerhed pr. opgavetype</h2>
+        <p class="text-xs text-muted" x-text="'I dag: ' + opgIDag() + ' opgaver. Dagsmål: ' + opgDagsmaal + '.'"></p>
+        <template x-for="s in opgStat()" :key="s.id">
+          <div class="grid grid-cols-[minmax(0,1fr)_auto] gap-x-3 items-center text-sm">
+            <button class="text-left hover:underline" @click="opgSkift('gen:' + s.id)" x-text="s.navn"></button>
+            <span class="num text-muted" x-text="s.forsoeg ? s.rigtige + '/' + s.forsoeg + ' (' + s.pct + ' %)' : 'ikke prøvet'"></span>
+            <div class="meter col-span-2"><i :style="'width:' + (s.pct || 0) + '%'"></i></div>
+            <p class="col-span-2 text-xs text-muted" x-show="s.topFejl" x-text="'Hyppigste fejl: ' + s.topFejl"></p>
+          </div>
+        </template>
+      </div>
+    </section>
+  </template>
 
   <!-- ===== CASES (fase 4, js/cases.js) ===== -->
   <!-- Fanen lægges her som <template x-if="klar && view==='cases'"><section id="v-cases">…</section></template> -->
@@ -315,6 +403,16 @@
   </template>
 
   <!-- ===== DIALOGER: OPGAVER (js/opgaver.js) ===== -->
+  <template x-if="modal==='opgInfo'">
+    <div class="sloer" @click.self="lukModal()">
+      <div class="dialog p-4 flex flex-col gap-3" role="dialog" aria-modal="true" aria-labelledby="opg-info-titel" id="opg-info-dialog">
+        <h2 id="opg-info-titel" class="hd text-xl">Forudsætninger for opgaverne</h2>
+        <p class="text-sm" x-text="opgInfoTekst"></p>
+        <p class="text-sm text-muted">Svar skrives med decimalkomma. Et svar er rigtigt, hvis det er højst 2 % fra facit (1,5 % for I<sub>z</sub> og 3 % for kompensering), så du kan regne med afrundede mellemresultater. Genkendes dit svar som en typisk fejl, vises den sammen med løsningen.</p>
+        <div class="flex justify-end"><button class="btn btn-primary" @click="lukModal()">Luk</button></div>
+      </div>
+    </div>
+  </template>
 
   <!-- ===== DIALOGER: CASES (js/cases.js) ===== -->
 
