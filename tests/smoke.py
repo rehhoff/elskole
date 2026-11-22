@@ -140,13 +140,42 @@ async def main():
         r = await pg.evaluate(f"(()=>{{const a={A};return [a.kort.length, a.log.length, Object.keys(a.tilst).length]}})()")
         tjek('kort, log og tilstand er gemt efter genindlæsning', r == [1, 1, 1], r)
 
+        # 3b. Import fra Anki-tekstfiler gennem dialogen
+        async def importer(tekst):
+            await pg.click('#tab-kort'); await pg.click('#k-import'); await pg.wait_for_selector('#imp-dialog')
+            await pg.fill('#imp-tekst', tekst); await pg.wait_for_timeout(100)
+            tael = await pg.inner_text('#imp-tael')
+            if await pg.is_enabled('#imp-ok'): await pg.click('#imp-ok')
+            else: await pg.keyboard.press('Escape')
+            await pg.wait_for_timeout(200)
+            return tael
+        foer = await pg.evaluate(f"{A}.kort.length")
+        anki = ('#separator:tab\n#html:true\n#guid column:1\n#tags column:4\n'
+                'g1\tHvad er <b>effekt</b>?<br>Skriv formlen\t\\(P = U \\cdot I\\) &amp; mere<img src="x.png">[sound:a.mp3]\tel kabler\n'
+                'g2\t"Linje1\nLinje2 med ""citat"" og\ttab"\t\\[x^2 &lt; 4\\]\tel\n')
+        tael = await importer(anki)
+        r = await pg.evaluate(f"(()=>{{const a={A};return a.kort.filter(k=>k.oprindelse.startsWith('anki:')).map(k=>[k.oprindelse,k.front,k.bag,k.tags.join('|')])}})()")
+        tjek('Anki-fil med hovedlinjer, HTML og MathJax importeres gennem dialogen',
+             r == [['anki:g1', 'Hvad er **effekt**?\nSkriv formlen', '$P = U \\cdot I$ & mere', 'el|kabler|anki'],
+                   ['anki:g2', 'Linje1\nLinje2 med "citat" og\ttab', '$$x^2 < 4$$', 'el|anki']] and tael.startswith('2 nye') and 'Billeder (1)' in tael and 'lyd (1)' in tael, (r, tael))
+        tael = await importer(anki)
+        r = await pg.evaluate(f"{A}.kort.length")
+        tjek('samme Anki-fil igen giver kun dubletter', r == foer + 2 and tael.startswith('0 nye') and '2 dubletter' in tael, (r, foer, tael))
+        await importer('Forside;Bagside\nSpørgsmål A;Svar A\n"x;y";z')
+        r = await pg.evaluate(f"{A}.kort.filter(k=>k.oprindelse==='anki').map(k=>[k.front,k.bag])")
+        tjek('semikolon-CSV uden hovedlinjer importeres', r == [['Forside', 'Bagside'], ['Spørgsmål A', 'Svar A'], ['x;y', 'z']], r)
+        tael = await importer('Spørgsmål A;Anden\nNy forside;Ny bagside')
+        r = await pg.evaluate(f"{A}.kort.filter(k=>k.oprindelse==='anki').map(k=>k.front)")
+        tjek('dubletter på forsiden springes over ved import uden guid', r == ['Forside', 'Spørgsmål A', 'x;y', 'Ny forside'] and tael.startswith('1 nye kort, 1 dubletter'), (r, tael))
+
         # 4. Startkort (hvis pakken findes)
         if (ROD / 'indhold/start-matematik.json').exists():
             n = len(json.loads((ROD / 'indhold/start-matematik.json').read_text(encoding='utf-8'))['kort'])
+            foer = await pg.evaluate(f"{A}.kort.length")
             await pg.evaluate(f"{A}.indlaesStartpakke({A}.startpakker[0])"); await pg.wait_for_timeout(200)
             await pg.evaluate(f"{A}.indlaesStartpakke({A}.startpakker[0])"); await pg.wait_for_timeout(200)
             r = await pg.evaluate(f"{A}.kort.length")
-            tjek('startkort indlæses én gang uden dubletter', r == 1 + n, (r, n))
+            tjek('startkort indlæses én gang uden dubletter', r - foer == n, (r, foer, n))
             ugyldig = await pg.evaluate(f"(()=>{{const a={A};return a.kort.filter(k=>k.oprindelse.startsWith('start:')).filter(k=>/katex-error/.test(a.vis(k.front)+a.vis(k.bag))).map(k=>k.id)}})()")
             tjek('alle startkort har gyldige formler', not ugyldig, ugyldig)
 

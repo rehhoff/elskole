@@ -263,6 +263,47 @@
   </template>
 
   <!-- ===== DIALOG: IMPORT (js/import.js) ===== -->
+  <template x-if="modal==='import' && imp">
+    <div class="sloer" @click.self="lukModal()">
+      <div class="dialog p-4 flex flex-col gap-3" role="dialog" aria-modal="true" aria-labelledby="imp-titel" id="imp-dialog">
+        <h2 id="imp-titel" class="hd text-xl">Importér fra Anki</h2>
+        <p class="text-xs text-muted">Vælg en tekstfil fra Anki (Filer &rarr; Eksportér &rarr; Notes in Plain Text) eller en CSV-fil, eller indsæt teksten. Læringshistorik importeres ikke: kortene starter som nye.</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <label class="f">Fil<input id="imp-fil" type="file" accept=".txt,.csv,.tsv" class="inp" @change="impVaelgFil($event)"></label>
+          <label class="f">Eller indsæt tekst<textarea id="imp-tekst" class="inp" rows="3" :value="imp.tekst" @input="impNy($event.target.value, '')"></textarea></label>
+        </div>
+        <template x-if="imp.t && imp.t.raekker.length">
+          <div class="flex flex-col gap-3">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <label class="f">Forside<select id="imp-front" class="inp" x-model.number="imp.front" @change="impOpdater()"><template x-for="k in impKolonner()" :key="k"><option :value="k" :selected="k===imp.front" x-text="impKolTxt(k)"></option></template></select></label>
+              <label class="f">Bagside<select id="imp-bag" class="inp" x-model.number="imp.bag" @change="impOpdater()"><option value="0" :selected="!imp.bag">(ingen)</option><template x-for="k in impKolonner()" :key="k"><option :value="k" :selected="k===imp.bag" x-text="impKolTxt(k)"></option></template></select></label>
+              <label class="f">Tags<select id="imp-tags" class="inp" x-model.number="imp.tags" @change="impOpdater()"><option value="0" :selected="!imp.tags">(ingen)</option><template x-for="k in impKolonner()" :key="k"><option :value="k" :selected="k===imp.tags" x-text="impKolTxt(k)"></option></template></select></label>
+            </div>
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+              <label class="f">Emne<select id="imp-emne" class="inp" x-model="imp.emne"><template x-for="e in emner" :key="e.id"><option :value="e.id" :selected="e.id===imp.emne" x-text="e.navn"></option></template></select></label>
+              <label class="f">Type<select id="imp-type" class="inp" x-model="imp.type"><template x-for="(n, t) in korttyper" :key="t"><option :value="t" :selected="t===imp.type" x-text="n"></option></template></select></label>
+              <label class="f col-span-2 sm:col-span-1">Ekstra tag<input id="imp-ekstra" class="inp" x-model="imp.ekstra" @input="impOpdater()"></label>
+            </div>
+            <div class="flex flex-wrap gap-4 text-sm">
+              <label class="flex items-center gap-2"><input type="checkbox" x-model="imp.html" @change="impOpdater()"> Felterne indeholder HTML</label>
+              <label class="flex items-center gap-2"><input type="checkbox" x-model="imp.spring" @change="impOpdater()"> Første række er overskrift</label>
+            </div>
+            <p id="imp-tael" class="text-sm"><strong x-text="imp.nye"></strong> nye kort, <strong x-text="imp.dubl"></strong> dubletter springes over<span x-show="imp.tomme">, <span x-text="imp.tomme"></span> rækker uden forside eller bagside</span><span x-show="imp.t && (imp.t.billeder || imp.t.lyde)">. Billeder (<span x-text="imp.t ? imp.t.billeder : 0"></span>) og lyd (<span x-text="imp.t ? imp.t.lyde : 0"></span>) fjernes</span>.</p>
+            <div class="flex flex-col gap-2" x-show="impEksempel().length">
+              <p class="text-xs font-semibold text-muted uppercase tracking-wide">Eksempel (første 5 nye kort)</p>
+              <template x-for="(k, i) in impEksempel()" :key="i">
+                <div class="panel p-3 kt-tekst !text-base"><div x-html="vis(k.front)"></div><hr class="my-2 border-line"><div x-html="vis(k.bag)"></div><p class="text-xs text-muted mt-2" x-show="k.tags.length" x-text="k.tags.join(', ')"></p></div>
+              </template>
+            </div>
+          </div>
+        </template>
+        <div class="flex flex-wrap gap-2 justify-end">
+          <button class="btn" @click="lukModal()">Annullér</button>
+          <button id="imp-ok" class="btn btn-primary" :disabled="!imp.nye" @click="impImporter()">Importér <span x-text="imp.nye"></span> kort</button>
+        </div>
+      </div>
+    </div>
+  </template>
 
   <!-- ===== BEKRÆFTELSE ===== -->
   <template x-if="confirm">
@@ -284,6 +325,7 @@
 <script src="js/synk.js?v=0.1.0"></script>
 <script src="js/oev.js?v=0.1.0"></script>
 <script src="js/kort.js?v=0.1.0"></script>
+<script src="js/import.js?v=0.1.0"></script>
 <script src="js/app.js?v=0.1.0"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.14.1/cdn.min.js" onerror="document.getElementById('fail').hidden=false"></script>
 <script>setTimeout(() => { if (!window.__alpineOk || typeof FSRS === 'undefined') document.getElementById('fail').hidden = false; }, 6000);</script>

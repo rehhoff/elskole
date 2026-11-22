@@ -1,0 +1,869 @@
+{
+ "navn": "Matematik og fysik (startkort)",
+ "kort": [
+  {
+   "id": "mat-001",
+   "type": "formel",
+   "emne": "mat",
+   "front": "Hvad fortæller Ohms lov, og hvordan bruger du den?",
+   "bag": "$$U = R \\cdot I \\qquad I = \\dfrac{U}{R} \\qquad R = \\dfrac{U}{I}$$\n$U$ spænding (V), $I$ strøm (A), $R$ modstand ($\\Omega$).\n**Eksempel:** $R = 46\\ \\Omega$ ved $U = 230\\ \\text{V}$ giver $I = 230 / 46 = 5\\ \\text{A}$.",
+   "tags": [
+    "ohm"
+   ],
+   "kilde": {
+    "dok": "",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "mat-002",
+   "type": "formel",
+   "emne": "mat",
+   "front": "Hvordan beregner du elektrisk effekt i en jævnstrøms- eller ren ohmsk belastning?",
+   "bag": "$$P = U \\cdot I = I^2 \\cdot R = \\dfrac{U^2}{R}$$\n$P$ effekt (W), $U$ spænding (V), $I$ strøm (A), $R$ modstand ($\\Omega$).\n**Eksempel:** $230\\ \\text{V}$ og $10\\ \\text{A}$ giver $P = 230 \\cdot 10 = 2300\\ \\text{W}$.",
+   "tags": [
+    "ohm",
+    "effekt"
+   ],
+   "kilde": {
+    "dok": "",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "mat-003",
+   "type": "formel",
+   "emne": "mat",
+   "front": "Hvordan beregner du elektrisk energi, og hvad er en kWh?",
+   "bag": "$$W = P \\cdot t$$\n$W$ energi (kWh eller Ws = J), $P$ effekt (kW eller W), $t$ tid (h eller s).\n**Eksempel:** $2\\ \\text{kW}$ i $3\\ \\text{h}$ giver $W = 2 \\cdot 3 = 6\\ \\text{kWh}$.",
+   "tags": [
+    "energi"
+   ],
+   "kilde": {
+    "dok": "",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "mat-004",
+   "type": "fakta",
+   "emne": "mat",
+   "front": "Hvor meget er 1 kWh i joule, og hvad måler elmåleren?",
+   "bag": "$1\\ \\text{kWh} = 1000\\ \\text{W} \\cdot 3600\\ \\text{s} = 3{,}6\\ \\text{MJ}$.\nElmåleren måler **energi** (kWh), ikke effekt. Effekt (kW) er øjebliksværdien, energi er effekt gange tid.",
+   "tags": [
+    "energi"
+   ],
+   "kilde": {
+    "dok": "",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "mat-005",
+   "type": "formel",
+   "emne": "mat",
+   "front": "Hvordan beregner du den samlede modstand i en serieforbindelse?",
+   "bag": "$$R_{tot} = R_1 + R_2 + R_3 + \\dots$$\nStrømmen er ens i alle led, og spændingen fordeles efter modstandene.\n**Eksempel:** $10 + 22 + 47 = 79\\ \\Omega$.",
+   "tags": [
+    "serie"
+   ],
+   "kilde": {
+    "dok": "",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "mat-006",
+   "type": "formel",
+   "emne": "mat",
+   "front": "Hvordan beregner du den samlede modstand i en parallelforbindelse?",
+   "bag": "$$\\dfrac{1}{R_{tot}} = \\dfrac{1}{R_1} + \\dfrac{1}{R_2} + \\dots$$\nTo modstande: $R_{tot} = \\dfrac{R_1 \\cdot R_2}{R_1 + R_2}$. Spændingen er ens over alle grene.\n**Eksempel:** $30\\ \\Omega$ og $60\\ \\Omega$ giver $\\dfrac{30 \\cdot 60}{30 + 60} = 20\\ \\Omega$.",
+   "tags": [
+    "parallel"
+   ],
+   "kilde": {
+    "dok": "",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "mat-007",
+   "type": "fakta",
+   "emne": "mat",
+   "front": "Hvad gælder for strøm og spænding i serie- og parallelforbindelser?",
+   "bag": "**Serie:** samme strøm i alle led, spændingerne lægges sammen, $R_{tot}$ er større end den største modstand.\n**Parallel:** samme spænding over alle grene, strømmene lægges sammen, $R_{tot}$ er mindre end den mindste modstand.",
+   "tags": [
+    "serie",
+    "parallel"
+   ],
+   "kilde": {
+    "dok": "",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "mat-008",
+   "type": "formel",
+   "emne": "mat",
+   "front": "Hvad er en spændingsdeler, og hvordan beregner du spændingen over $R_2$?",
+   "bag": "$$U_2 = U \\cdot \\dfrac{R_2}{R_1 + R_2}$$\nGælder for to modstande i serie uden belastning på $U_2$.\n**Eksempel:** $U = 230\\ \\text{V}$, $R_1 = 100\\ \\Omega$, $R_2 = 150\\ \\Omega$ giver $U_2 = 230 \\cdot 150 / 250 = 138\\ \\text{V}$.",
+   "tags": [
+    "serie",
+    "ohm"
+   ],
+   "kilde": {
+    "dok": "",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "mat-009",
+   "type": "formel",
+   "emne": "mat",
+   "front": "Regn selv: Et varmelegeme er mærket $2300\\ \\text{W}$ ved $230\\ \\text{V}$. Find strøm og modstand.",
+   "bag": "**Trin 1:** $I = P / U = 2300 / 230 = 10\\ \\text{A}$.\n**Trin 2:** $R = U / I = 230 / 10 = 23\\ \\Omega$.\n(Kontrol: $R = U^2 / P = 230^2 / 2300 = 23\\ \\Omega$.)",
+   "tags": [
+    "regn-selv",
+    "ohm",
+    "effekt"
+   ],
+   "kilde": {
+    "dok": "",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "mat-010",
+   "type": "formel",
+   "emne": "mat",
+   "front": "Regn selv: En ovn på $1{,}5\\ \\text{kW}$ kører i $4\\ \\text{h}$. Elprisen er $2{,}50\\ \\text{kr/kWh}$. Hvad koster det?",
+   "bag": "**Trin 1:** $W = P \\cdot t = 1{,}5 \\cdot 4 = 6\\ \\text{kWh}$.\n**Trin 2:** pris $= 6 \\cdot 2{,}50 = 15\\ \\text{kr}$.",
+   "tags": [
+    "regn-selv",
+    "energi"
+   ],
+   "kilde": {
+    "dok": "",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "mat-011",
+   "type": "formel",
+   "emne": "mat",
+   "front": "Hvordan beregner du en leders modstand?",
+   "bag": "$$R = \\rho \\cdot \\dfrac{L}{A}$$\n$R$ modstand ($\\Omega$), $\\rho$ resistivitet ($\\Omega \\cdot \\text{mm}^2/\\text{m}$), $L$ længde (m), $A$ tværsnit ($\\text{mm}^2$).\n**Eksempel:** kobber, $L = 100\\ \\text{m}$, $A = 2{,}5\\ \\text{mm}^2$, $\\rho = 0{,}0175$ giver $R = 0{,}0175 \\cdot 100 / 2{,}5 = 0{,}7\\ \\Omega$.",
+   "tags": [
+    "leder"
+   ],
+   "kilde": {
+    "dok": "",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "mat-012",
+   "type": "fakta",
+   "emne": "mat",
+   "front": "Hvilke værdier af resistivitet $\\rho$ bruges for kobber og aluminium?",
+   "bag": "**Kobber:** $\\rho = 0{,}0175\\ \\Omega \\cdot \\text{mm}^2/\\text{m}$ ved $20\\ °\\text{C}$. Som praktisk værdi ved driftstemperatur bruges $0{,}0225\\ \\Omega \\cdot \\text{mm}^2/\\text{m}$.\n**Aluminium:** ca. $0{,}028\\ \\Omega \\cdot \\text{mm}^2/\\text{m}$ ved $20\\ °\\text{C}$, altså ca. 60 % højere end kobber.\nVærdierne er vejledende.",
+   "tags": [
+    "leder"
+   ],
+   "kilde": {
+    "dok": "",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "mat-013",
+   "type": "formel",
+   "emne": "mat",
+   "front": "Hvad er ledningsevne $\\gamma$, og hvordan hænger den sammen med $\\rho$?",
+   "bag": "$$\\gamma = \\dfrac{1}{\\rho} \\qquad R = \\dfrac{L}{\\gamma \\cdot A}$$\n$\\gamma$ i $\\text{m}/(\\Omega \\cdot \\text{mm}^2)$.\n**Eksempel:** kobber ved $20\\ °\\text{C}$: $\\gamma = 1 / 0{,}0175 \\approx 57\\ \\text{m}/(\\Omega \\cdot \\text{mm}^2)$.",
+   "tags": [
+    "leder"
+   ],
+   "kilde": {
+    "dok": "",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "mat-014",
+   "type": "formel",
+   "emne": "mat",
+   "front": "Hvordan ændrer en kobberleders modstand sig med temperaturen?",
+   "bag": "$$R_t = R_{20} \\cdot \\left(1 + \\alpha \\cdot (t - 20)\\right)$$\n$R_{20}$ modstand ved $20\\ °\\text{C}$ ($\\Omega$), $t$ temperatur ($°\\text{C}$), $\\alpha$ temperaturkoefficient (for kobber ca. $0{,}0039\\ \\text{K}^{-1}$).\n**Eksempel:** $1\\ \\Omega$ ved $20\\ °\\text{C}$ er ved $70\\ °\\text{C}$: $1 \\cdot (1 + 0{,}0039 \\cdot 50) \\approx 1{,}2\\ \\Omega$.\nModstanden i metaller stiger med temperaturen.",
+   "tags": [
+    "leder",
+    "temperatur"
+   ],
+   "kilde": {
+    "dok": "",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "mat-015",
+   "type": "formel",
+   "emne": "mat",
+   "front": "Regn selv: Find modstanden i en kobberkabel på $50\\ \\text{m}$ med $4\\ \\text{mm}^2$ (én leder, driftsværdi $\\rho = 0{,}0225$).",
+   "bag": "**Trin 1:** $R = \\rho \\cdot L / A$.\n**Trin 2:** $R = 0{,}0225 \\cdot 50 / 4 = 0{,}28125\\ \\Omega$.\n**Svar:** ca. $0{,}28\\ \\Omega$.",
+   "tags": [
+    "regn-selv",
+    "leder"
+   ],
+   "kilde": {
+    "dok": "",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "mat-016",
+   "type": "formel",
+   "emne": "mat",
+   "front": "Regn selv: En kobberviklings modstand er $12\\ \\Omega$ ved $20\\ °\\text{C}$. Hvad er den ved $80\\ °\\text{C}$ ($\\alpha = 0{,}0039\\ \\text{K}^{-1}$)?",
+   "bag": "**Trin 1:** temperaturstigning $= 80 - 20 = 60\\ \\text{K}$.\n**Trin 2:** $R_{80} = 12 \\cdot (1 + 0{,}0039 \\cdot 60) = 12 \\cdot 1{,}234 = 14{,}808\\ \\Omega$.\n**Svar:** ca. $14{,}8\\ \\Omega$.",
+   "tags": [
+    "regn-selv",
+    "temperatur"
+   ],
+   "kilde": {
+    "dok": "",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "mat-017",
+   "type": "formel",
+   "emne": "mat",
+   "front": "Hvordan beregner du effekten i et 1-faset vekselstrømsanlæg?",
+   "bag": "$$P = U \\cdot I \\cdot \\cos\\varphi$$\n$P$ aktiv effekt (W), $U$ spænding (V), $I$ strøm (A), $\\cos\\varphi$ effektfaktor.\n**Eksempel:** $230\\ \\text{V}$, $10\\ \\text{A}$, $\\cos\\varphi = 0{,}85$ giver $P = 230 \\cdot 10 \\cdot 0{,}85 = 1955\\ \\text{W}$.",
+   "tags": [
+    "1-faset",
+    "effekt"
+   ],
+   "kilde": {
+    "dok": "",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "mat-018",
+   "type": "formel",
+   "emne": "mat",
+   "front": "Hvordan beregner du aktiv effekt i et 3-faset system?",
+   "bag": "$$P = \\sqrt{3} \\cdot U \\cdot I \\cdot \\cos\\varphi$$\n$U$ er hovedspændingen (mellem to faser, V), $I$ er linjestrømmen (A).\n**Eksempel:** $U = 400\\ \\text{V}$, $I = 16\\ \\text{A}$, $\\cos\\varphi = 0{,}8$ giver $P = 1{,}732 \\cdot 400 \\cdot 16 \\cdot 0{,}8 \\approx 8870\\ \\text{W} \\approx 8{,}9\\ \\text{kW}$.",
+   "tags": [
+    "3-faset",
+    "effekt"
+   ],
+   "kilde": {
+    "dok": "",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "mat-019",
+   "type": "fakta",
+   "emne": "mat",
+   "front": "Hvad er forskellen på fasespænding og hovedspænding i et 230/400 V-net?",
+   "bag": "**Fasespænding** $U_f$ er mellem en fase og nul: $230\\ \\text{V}$.\n**Hovedspænding** $U_L$ er mellem to faser: $400\\ \\text{V}$.\n$$U_L = \\sqrt{3} \\cdot U_f \\qquad 230 \\cdot \\sqrt{3} \\approx 398 \\approx 400\\ \\text{V}$$\nFaserne er forskudt $120°$ i forhold til hinanden.",
+   "tags": [
+    "3-faset",
+    "spaending"
+   ],
+   "kilde": {
+    "dok": "",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "mat-020",
+   "type": "formel",
+   "emne": "mat",
+   "front": "Hvad gælder for spænding og strøm, når belastningen er koblet i **stjerne**?",
+   "bag": "$$U_f = \\dfrac{U_L}{\\sqrt{3}} \\qquad I_f = I_L$$\nHver belastning ligger på fasespændingen. Linjestrømmen er lig fasestrømmen.\n**Eksempel:** $U_L = 400\\ \\text{V}$ giver $U_f = 400 / 1{,}732 \\approx 231\\ \\text{V}$.",
+   "tags": [
+    "3-faset",
+    "stjerne"
+   ],
+   "kilde": {
+    "dok": "",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "mat-021",
+   "type": "formel",
+   "emne": "mat",
+   "front": "Hvad gælder for spænding og strøm, når belastningen er koblet i **trekant**?",
+   "bag": "$$U_f = U_L \\qquad I_L = \\sqrt{3} \\cdot I_f$$\nHver belastning ligger på hovedspændingen. Linjestrømmen er $\\sqrt{3}$ gange fasestrømmen.\n**Eksempel:** $I_f = 10\\ \\text{A}$ giver $I_L = 1{,}732 \\cdot 10 \\approx 17{,}3\\ \\text{A}$.",
+   "tags": [
+    "3-faset",
+    "trekant"
+   ],
+   "kilde": {
+    "dok": "",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "mat-022",
+   "type": "fakta",
+   "emne": "mat",
+   "front": "Hvad sker der med effekten, når den samme belastning skifter fra stjerne til trekant?",
+   "bag": "Ved trekant ligger hver belastning på $\\sqrt{3}$ gange så høj spænding som ved stjerne. Strømmen i hver belastning bliver $\\sqrt{3}$ gange så stor, og effekten bliver **3 gange** så stor.\nDerfor kan en motor stjerne-trekant-startes: i stjerne er startstrømmen ca. en tredjedel af værdien i trekant.",
+   "tags": [
+    "3-faset",
+    "stjerne",
+    "trekant"
+   ],
+   "kilde": {
+    "dok": "",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "mat-023",
+   "type": "formel",
+   "emne": "mat",
+   "front": "Regn selv: En 3-faset belastning optager $11\\ \\text{kW}$ ved $400\\ \\text{V}$ og $\\cos\\varphi = 0{,}85$. Find linjestrømmen.",
+   "bag": "**Trin 1:** omform: $I = \\dfrac{P}{\\sqrt{3} \\cdot U \\cdot \\cos\\varphi}$.\n**Trin 2:** $I = \\dfrac{11000}{1{,}732 \\cdot 400 \\cdot 0{,}85} = \\dfrac{11000}{588{,}9}$.\n**Svar:** ca. $18{,}7\\ \\text{A}$.",
+   "tags": [
+    "regn-selv",
+    "3-faset"
+   ],
+   "kilde": {
+    "dok": "",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "mat-024",
+   "type": "formel",
+   "emne": "mat",
+   "front": "Regn selv: Tre modstande på $20\\ \\Omega$ kobles til $3 \\times 400\\ \\text{V}$. Find linjestrøm og effekt i trekant og i stjerne.",
+   "bag": "**Trekant:** $I_f = 400 / 20 = 20\\ \\text{A}$, $I_L = \\sqrt{3} \\cdot 20 \\approx 34{,}6\\ \\text{A}$, $P = 3 \\cdot 400 \\cdot 20 = 24\\ \\text{kW}$.\n**Stjerne:** $U_f = 400 / \\sqrt{3} \\approx 231\\ \\text{V}$, $I_L = I_f = 231 / 20 \\approx 11{,}5\\ \\text{A}$, $P = 3 \\cdot 231^2 / 20 \\approx 8\\ \\text{kW}$.\nTrekant giver altså 3 gange så meget effekt.",
+   "tags": [
+    "regn-selv",
+    "3-faset",
+    "stjerne",
+    "trekant"
+   ],
+   "kilde": {
+    "dok": "",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "mat-025",
+   "type": "fakta",
+   "emne": "mat",
+   "front": "Hvad er aktiv, reaktiv og tilsyneladende effekt, og hvilke enheder har de?",
+   "bag": "**Aktiv effekt $P$** (W): omsættes til arbejde eller varme.\n**Reaktiv effekt $Q$** (var): pendler mellem net og induktive/kapacitive komponenter og udfører intet arbejde.\n**Tilsyneladende effekt $S$** (VA): den samlede belastning af net og kabler, $S = U \\cdot I$ (1-faset) eller $\\sqrt{3} \\cdot U \\cdot I$ (3-faset).",
+   "tags": [
+    "effekt",
+    "reaktiv"
+   ],
+   "kilde": {
+    "dok": "",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "mat-026",
+   "type": "formel",
+   "emne": "mat",
+   "front": "Hvordan hænger P, Q og S sammen i effekttrekanten?",
+   "bag": "$$S^2 = P^2 + Q^2 \\qquad S = \\sqrt{P^2 + Q^2}$$\n$$P = S \\cdot \\cos\\varphi \\qquad Q = S \\cdot \\sin\\varphi \\qquad Q = P \\cdot \\tan\\varphi$$\n**Eksempel:** $P = 3\\ \\text{kW}$, $Q = 4\\ \\text{kvar}$ giver $S = \\sqrt{9 + 16} = 5\\ \\text{kVA}$.",
+   "tags": [
+    "effekt",
+    "reaktiv"
+   ],
+   "kilde": {
+    "dok": "",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "mat-027",
+   "type": "formel",
+   "emne": "mat",
+   "front": "Hvad er effektfaktoren $\\cos\\varphi$, og hvordan beregner du den?",
+   "bag": "$$\\cos\\varphi = \\dfrac{P}{S}$$\n$\\varphi$ er faseforskydningen mellem spænding og strøm. $\\cos\\varphi$ ligger mellem 0 og 1 og er 1 for en ren ohmsk belastning.\n**Eksempel:** $P = 4{,}8\\ \\text{kW}$, $S = 6\\ \\text{kVA}$ giver $\\cos\\varphi = 0{,}8$.",
+   "tags": [
+    "effekt",
+    "cosphi"
+   ],
+   "kilde": {
+    "dok": "",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "mat-028",
+   "type": "formel",
+   "emne": "mat",
+   "front": "Regn selv: En belastning har $P = 6\\ \\text{kW}$ og $Q = 8\\ \\text{kvar}$. Find $S$ og $\\cos\\varphi$.",
+   "bag": "**Trin 1:** $S = \\sqrt{P^2 + Q^2} = \\sqrt{36 + 64} = 10\\ \\text{kVA}$.\n**Trin 2:** $\\cos\\varphi = P / S = 6 / 10 = 0{,}6$.",
+   "tags": [
+    "regn-selv",
+    "effekt",
+    "reaktiv"
+   ],
+   "kilde": {
+    "dok": "",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "mat-029",
+   "type": "formel",
+   "emne": "mat",
+   "front": "Hvordan beregner du reaktiv effekt i et 3-faset system?",
+   "bag": "$$Q = \\sqrt{3} \\cdot U \\cdot I \\cdot \\sin\\varphi$$\nEnhed: var (eller kvar).\n**Eksempel:** $U = 400\\ \\text{V}$, $I = 10\\ \\text{A}$, $\\cos\\varphi = 0{,}8$ ($\\sin\\varphi = 0{,}6$) giver $Q = 1{,}732 \\cdot 400 \\cdot 10 \\cdot 0{,}6 \\approx 4160\\ \\text{var}$.",
+   "tags": [
+    "3-faset",
+    "reaktiv"
+   ],
+   "kilde": {
+    "dok": "",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "mat-030",
+   "type": "formel",
+   "emne": "mat",
+   "front": "Hvordan beregner du den kondensatoreffekt, der skal til for at kompensere fra $\\cos\\varphi_1$ til $\\cos\\varphi_2$?",
+   "bag": "$$Q_C = P \\cdot (\\tan\\varphi_1 - \\tan\\varphi_2)$$\n$P$ aktiv effekt (kW), $\\varphi_1$ før og $\\varphi_2$ efter kompensering. $Q_C$ i kvar.\n**Eksempel:** $P = 10\\ \\text{kW}$, $\\cos\\varphi_1 = 0{,}8$ ($\\tan = 0{,}75$), $\\cos\\varphi_2 = 1$ ($\\tan = 0$) giver $Q_C = 10 \\cdot 0{,}75 = 7{,}5\\ \\text{kvar}$.",
+   "tags": [
+    "effekt",
+    "kompensering",
+    "cosphi"
+   ],
+   "kilde": {
+    "dok": "",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "mat-031",
+   "type": "formel",
+   "emne": "mat",
+   "front": "Regn selv: $P = 20\\ \\text{kW}$ med $\\cos\\varphi = 0{,}7$ skal kompenseres til $\\cos\\varphi = 0{,}95$. Hvor mange kvar skal kondensatorerne yde?",
+   "bag": "**Trin 1:** $\\tan\\varphi_1 = \\tan(\\arccos 0{,}7) \\approx 1{,}020$.\n**Trin 2:** $\\tan\\varphi_2 = \\tan(\\arccos 0{,}95) \\approx 0{,}329$.\n**Trin 3:** $Q_C = 20 \\cdot (1{,}020 - 0{,}329) \\approx 13{,}8\\ \\text{kvar}$.",
+   "tags": [
+    "regn-selv",
+    "kompensering"
+   ],
+   "kilde": {
+    "dok": "",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "mat-032",
+   "type": "fakta",
+   "emne": "mat",
+   "front": "Hvorfor kompenserer man for reaktiv effekt?",
+   "bag": "Induktive belastninger som motorer og transformere trækker reaktiv effekt. Den giver ekstra strøm i kabler og transformere uden at give arbejde, så tabene og spændingsfaldet stiger.\nEn parallelkoblet **kondensator** leverer reaktiv effekt lokalt, så strømmen fra nettet falder, og $\\cos\\varphi$ nærmer sig 1.",
+   "tags": [
+    "kompensering",
+    "reaktiv"
+   ],
+   "kilde": {
+    "dok": "",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "mat-033",
+   "type": "formel",
+   "emne": "mat",
+   "front": "Hvordan beregner du en spoles induktive reaktans $X_L$?",
+   "bag": "$$X_L = 2\\pi \\cdot f \\cdot L$$\n$X_L$ reaktans ($\\Omega$), $f$ frekvens (Hz), $L$ induktans (H).\n**Eksempel:** $L = 0{,}1\\ \\text{H}$ ved $50\\ \\text{Hz}$ giver $X_L = 2\\pi \\cdot 50 \\cdot 0{,}1 \\approx 31{,}4\\ \\Omega$.",
+   "tags": [
+    "reaktans",
+    "spole"
+   ],
+   "kilde": {
+    "dok": "",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "mat-034",
+   "type": "formel",
+   "emne": "mat",
+   "front": "Hvordan beregner du en kondensators kapacitive reaktans $X_C$?",
+   "bag": "$$X_C = \\dfrac{1}{2\\pi \\cdot f \\cdot C}$$\n$X_C$ reaktans ($\\Omega$), $f$ frekvens (Hz), $C$ kapacitans (F).\n**Eksempel:** $C = 100\\ \\mu\\text{F} = 100 \\cdot 10^{-6}\\ \\text{F}$ ved $50\\ \\text{Hz}$ giver $X_C = \\dfrac{1}{2\\pi \\cdot 50 \\cdot 100 \\cdot 10^{-6}} \\approx 31{,}8\\ \\Omega$.",
+   "tags": [
+    "reaktans",
+    "kondensator"
+   ],
+   "kilde": {
+    "dok": "",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "mat-035",
+   "type": "fakta",
+   "emne": "mat",
+   "front": "Hvordan afhænger $X_L$ og $X_C$ af frekvensen?",
+   "bag": "$X_L$ **stiger** med frekvensen: en spole slipper let jævnstrøm igennem ($X_L = 0$) og spærrer for høje frekvenser.\n$X_C$ **falder** med frekvensen: en kondensator spærrer for jævnstrøm og slipper høje frekvenser igennem.\nI en spole er strømmen forsinket efter spændingen, i en kondensator er den foran.",
+   "tags": [
+    "reaktans"
+   ],
+   "kilde": {
+    "dok": "",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "mat-036",
+   "type": "formel",
+   "emne": "mat",
+   "front": "Hvordan beregner du impedansen $Z$ af en modstand og en spole i serie?",
+   "bag": "$$Z = \\sqrt{R^2 + X_L^2} \\qquad \\cos\\varphi = \\dfrac{R}{Z} \\qquad I = \\dfrac{U}{Z}$$\nMed både spole og kondensator i serie bruges $X = X_L - X_C$.\n**Eksempel:** $R = 30\\ \\Omega$, $X_L = 40\\ \\Omega$ giver $Z = \\sqrt{900 + 1600} = 50\\ \\Omega$ og $\\cos\\varphi = 30 / 50 = 0{,}6$.",
+   "tags": [
+    "impedans"
+   ],
+   "kilde": {
+    "dok": "",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "mat-037",
+   "type": "formel",
+   "emne": "mat",
+   "front": "Hvordan beregner du spændingsfaldet i en 1-faset kabelstrækning (ohmsk belastning)?",
+   "bag": "$$\\Delta U = \\dfrac{2 \\cdot L \\cdot I \\cdot \\rho}{A} \\qquad \\Delta u = \\dfrac{\\Delta U}{U} \\cdot 100\\ \\%$$\nFaktoren 2 skyldes, at strømmen går ud i fasen og hjem i nul. $L$ er kablets længde (m), $A$ tværsnit ($\\text{mm}^2$).\n**Eksempel:** $L = 30\\ \\text{m}$, $I = 16\\ \\text{A}$, $A = 2{,}5\\ \\text{mm}^2$, $\\rho = 0{,}0225$ giver $\\Delta U = 2 \\cdot 30 \\cdot 16 \\cdot 0{,}0225 / 2{,}5 \\approx 8{,}6\\ \\text{V}$, altså $3{,}8\\ \\%$ af $230\\ \\text{V}$.",
+   "tags": [
+    "spaendingsfald",
+    "1-faset"
+   ],
+   "kilde": {
+    "dok": "",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "mat-038",
+   "type": "formel",
+   "emne": "mat",
+   "front": "Hvordan beregner du spændingsfaldet i en 3-faset kabelstrækning (ohmsk belastning)?",
+   "bag": "$$\\Delta U = \\dfrac{\\sqrt{3} \\cdot L \\cdot I \\cdot \\rho}{A}$$\nResultatet er hovedspændingsfaldet mellem to faser. Procent: $\\Delta u = \\Delta U / 400 \\cdot 100\\ \\%$.\n**Eksempel:** $L = 50\\ \\text{m}$, $I = 20\\ \\text{A}$, $A = 6\\ \\text{mm}^2$, $\\rho = 0{,}0225$ giver $\\Delta U = 1{,}732 \\cdot 50 \\cdot 20 \\cdot 0{,}0225 / 6 \\approx 6{,}5\\ \\text{V}$, altså $1{,}6\\ \\%$.",
+   "tags": [
+    "spaendingsfald",
+    "3-faset"
+   ],
+   "kilde": {
+    "dok": "",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "mat-039",
+   "type": "formel",
+   "emne": "mat",
+   "front": "Regn selv: Find spændingsfaldet i $40\\ \\text{m}$ kobberkabel, $1{,}5\\ \\text{mm}^2$, $10\\ \\text{A}$, $230\\ \\text{V}$ ($\\rho = 0{,}0225$).",
+   "bag": "**Trin 1:** 1-faset, så ledningslængden er $2 \\cdot 40 = 80\\ \\text{m}$.\n**Trin 2:** $\\Delta U = 80 \\cdot 10 \\cdot 0{,}0225 / 1{,}5 = 12\\ \\text{V}$.\n**Trin 3:** $12 / 230 \\cdot 100 \\approx 5{,}2\\ \\%$.",
+   "tags": [
+    "regn-selv",
+    "spaendingsfald",
+    "1-faset"
+   ],
+   "kilde": {
+    "dok": "",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "mat-040",
+   "type": "formel",
+   "emne": "mat",
+   "front": "Regn selv: Hvilket tværsnit skal en 1-faset kobberkabel på $25\\ \\text{m}$ mindst have, hvis $I = 16\\ \\text{A}$ og spændingsfaldet højst må være $4\\ \\text{V}$ ($\\rho = 0{,}0225$)?",
+   "bag": "**Trin 1:** omform: $A = \\dfrac{2 \\cdot L \\cdot I \\cdot \\rho}{\\Delta U}$.\n**Trin 2:** $A = \\dfrac{2 \\cdot 25 \\cdot 16 \\cdot 0{,}0225}{4} = 4{,}5\\ \\text{mm}^2$.\n**Trin 3:** vælg næste standardtværsnit op: $6\\ \\text{mm}^2$. Tjek også kablets strømbelastning og beskyttelse.",
+   "tags": [
+    "regn-selv",
+    "spaendingsfald",
+    "1-faset"
+   ],
+   "kilde": {
+    "dok": "",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "mat-041",
+   "type": "formel",
+   "emne": "mat",
+   "front": "Hvordan beregner du virkningsgraden $\\eta$?",
+   "bag": "$$\\eta = \\dfrac{P_{ud}}{P_{ind}} \\qquad P_{tab} = P_{ind} - P_{ud}$$\n$\\eta$ er et tal mellem 0 og 1 (eller i procent).\n**Eksempel:** en motor optager $5\\ \\text{kW}$ og afgiver $4{,}4\\ \\text{kW}$ på akslen: $\\eta = 4{,}4 / 5 = 0{,}88 = 88\\ \\%$.",
+   "tags": [
+    "virkningsgrad"
+   ],
+   "kilde": {
+    "dok": "",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "mat-042",
+   "type": "formel",
+   "emne": "mat",
+   "front": "Regn selv: En motor skal afgive $5{,}5\\ \\text{kW}$ på akslen og har $\\eta = 0{,}88$. Hvad optager den, og hvad er tabet?",
+   "bag": "**Trin 1:** $P_{ind} = P_{ud} / \\eta = 5{,}5 / 0{,}88 = 6{,}25\\ \\text{kW}$.\n**Trin 2:** $P_{tab} = 6{,}25 - 5{,}5 = 0{,}75\\ \\text{kW}$.",
+   "tags": [
+    "regn-selv",
+    "virkningsgrad"
+   ],
+   "kilde": {
+    "dok": "",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "mat-043",
+   "type": "formel",
+   "emne": "mat",
+   "front": "Hvordan hænger spænding, strøm og vindingstal sammen i en ideel transformer?",
+   "bag": "$$\\dfrac{U_1}{U_2} = \\dfrac{N_1}{N_2} = \\dfrac{I_2}{I_1}$$\n$U$ spænding, $N$ vindingstal, $I$ strøm; 1 er primær, 2 sekundær. Omsætningsforholdet er $N_1 / N_2$.\n**Eksempel:** $230\\ \\text{V}$ til $23\\ \\text{V}$ giver forholdet $10 : 1$.",
+   "tags": [
+    "transformer"
+   ],
+   "kilde": {
+    "dok": "",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "mat-044",
+   "type": "formel",
+   "emne": "mat",
+   "front": "Regn selv: En ideel transformer $230 / 24\\ \\text{V}$ leverer $5\\ \\text{A}$ sekundært. Find primærstrømmen og effekten.",
+   "bag": "**Trin 1:** $I_1 = I_2 \\cdot U_2 / U_1 = 5 \\cdot 24 / 230 \\approx 0{,}52\\ \\text{A}$.\n**Trin 2:** $P = U_2 \\cdot I_2 = 24 \\cdot 5 = 120\\ \\text{VA}$.\nI en virkelig transformer er primærstrømmen lidt større på grund af tab.",
+   "tags": [
+    "regn-selv",
+    "transformer"
+   ],
+   "kilde": {
+    "dok": "",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "mat-045",
+   "type": "formel",
+   "emne": "mat",
+   "front": "Hvordan beregner du en motors synkrone omdrejningstal?",
+   "bag": "$$n = \\dfrac{60 \\cdot f}{p}$$\n$n$ omdrejninger pr. minut, $f$ netfrekvens (Hz), $p$ antal polpar.\n**Eksempel:** 4-polet motor ($p = 2$) ved $50\\ \\text{Hz}$: $n = 60 \\cdot 50 / 2 = 1500\\ \\text{min}^{-1}$.",
+   "tags": [
+    "motor",
+    "omdrejninger"
+   ],
+   "kilde": {
+    "dok": "",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "mat-046",
+   "type": "formel",
+   "emne": "mat",
+   "front": "Regn selv: Find det synkrone omdrejningstal for en 2-polet og en 6-polet motor ved $50\\ \\text{Hz}$.",
+   "bag": "Antal polpar er halvdelen af poltallet.\n**2-polet:** $p = 1$, $n = 60 \\cdot 50 / 1 = 3000\\ \\text{min}^{-1}$.\n**6-polet:** $p = 3$, $n = 60 \\cdot 50 / 3 = 1000\\ \\text{min}^{-1}$.",
+   "tags": [
+    "regn-selv",
+    "motor",
+    "omdrejninger"
+   ],
+   "kilde": {
+    "dok": "",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "mat-047",
+   "type": "formel",
+   "emne": "mat",
+   "front": "Hvad er slip i en asynkronmotor, og hvordan beregner du det?",
+   "bag": "$$s = \\dfrac{n_s - n}{n_s} \\cdot 100\\ \\%$$\n$n_s$ synkront omdrejningstal, $n$ rotorens faktiske omdrejningstal. En asynkronmotor kører altid lidt under det synkrone.\n**Eksempel:** $n_s = 1500$, $n = 1450\\ \\text{min}^{-1}$ giver $s = 50 / 1500 \\approx 3{,}3\\ \\%$.",
+   "tags": [
+    "motor",
+    "omdrejninger"
+   ],
+   "kilde": {
+    "dok": "",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "mat-048",
+   "type": "formel",
+   "emne": "mat",
+   "front": "Hvordan hænger effektivværdi og spidsværdi sammen for en sinusspænding?",
+   "bag": "$$\\hat{U} = \\sqrt{2} \\cdot U \\qquad U = \\dfrac{\\hat{U}}{\\sqrt{2}} \\approx 0{,}707 \\cdot \\hat{U}$$\n$U$ effektivværdi (den værdi, der opgives), $\\hat{U}$ spidsværdi (maksimum).\n**Eksempel:** $230\\ \\text{V}$ effektivt giver $\\hat{U} = 1{,}414 \\cdot 230 \\approx 325\\ \\text{V}$.",
+   "tags": [
+    "vekselstroem",
+    "effektivvaerdi"
+   ],
+   "kilde": {
+    "dok": "",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "mat-049",
+   "type": "formel",
+   "emne": "mat",
+   "front": "Regn selv: Hvad er spidsværdien af hovedspændingen $400\\ \\text{V}$, og hvad er spids-til-spids?",
+   "bag": "**Trin 1:** $\\hat{U} = \\sqrt{2} \\cdot 400 \\approx 566\\ \\text{V}$.\n**Trin 2:** spids-til-spids $= 2 \\cdot 566 \\approx 1131\\ \\text{V}$.",
+   "tags": [
+    "regn-selv",
+    "vekselstroem",
+    "effektivvaerdi"
+   ],
+   "kilde": {
+    "dok": "",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "mat-050",
+   "type": "fakta",
+   "emne": "mat",
+   "front": "Hvad er effektivværdien af en vekselspænding?",
+   "bag": "Effektivværdien er den jævnspænding, der afsætter samme varmeeffekt i en modstand som vekselspændingen. Voltmetre og mærkninger angiver effektivværdi, så $230\\ \\text{V}$ er en effektivværdi.\nFor en sinus er middelværdien af en halvperiode $\\dfrac{2}{\\pi} \\cdot \\hat{U} \\approx 0{,}637 \\cdot \\hat{U}$.",
+   "tags": [
+    "vekselstroem",
+    "effektivvaerdi"
+   ],
+   "kilde": {
+    "dok": "",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "mat-051",
+   "type": "formel",
+   "emne": "mat",
+   "front": "Hvordan hænger frekvens og periodetid sammen?",
+   "bag": "$$T = \\dfrac{1}{f} \\qquad f = \\dfrac{1}{T}$$\n$T$ periodetid (s), $f$ frekvens (Hz).\n**Eksempel:** $f = 50\\ \\text{Hz}$ giver $T = 1 / 50 = 0{,}02\\ \\text{s} = 20\\ \\text{ms}$.",
+   "tags": [
+    "vekselstroem"
+   ],
+   "kilde": {
+    "dok": "",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  }
+ ]
+}
