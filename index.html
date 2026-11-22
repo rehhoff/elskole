@@ -142,7 +142,112 @@
   <!-- Fanen lægges her som <template x-if="klar && view==='cases'"><section id="v-cases">…</section></template> -->
 
   <!-- ===== FEJLFINDING (fase 5, js/fejlfinding.js) ===== -->
-  <!-- Fanen lægges her som <template x-if="klar && view==='fejlfinding'"><section id="v-fejlfinding">…</section></template> -->
+  <template x-if="klar && view==='fejlfinding'">
+    <section class="flex flex-col gap-4" id="v-fejlfinding" x-init="ffStart()">
+      <template x-if="ffScen">
+        <div class="flex flex-col gap-4">
+          <div class="panel p-4 flex flex-col gap-2">
+            <div class="flex flex-wrap items-center gap-2">
+              <h2 class="hd text-xl" x-text="ffScen.navn"></h2><span class="tag num" x-text="'Scenarie ' + ffScen.seed"></span>
+              <button id="ff-nyt" class="btn ml-auto" @click="ffNyt()">Nyt scenarie</button>
+            </div>
+            <p class="text-sm"><strong>Henvendelse:</strong> <span id="ff-symptom" x-text="ffScen.symptom"></span></p>
+            <p class="text-sm text-muted" x-text="ffInfoTxt()"></p>
+            <p class="text-sm">Find fejlen med så få målinger som muligt, og overhold sikkerhedsreglerne.</p>
+          </div>
+
+          <div class="panel p-3 flex flex-wrap items-center gap-2" id="ff-tilstand">
+            <span class="st" :class="ffLevende ? 'forfalden' : 'gentages'" x-text="ffLevende ? 'Spændingsførende' : 'Spændingsløs og sikret'"></span>
+            <button id="ff-frakobl" class="btn" x-show="ffLevende" :disabled="!!ffSvar" @click="ffAabnSikkerhed()">Gør spændingsløs</button>
+            <button id="ff-tilkobl" class="btn" x-show="!ffLevende" :disabled="!!ffSvar" @click="ffTilkobl()">Sæt spænding på</button>
+            <span class="text-xs text-muted ml-auto num" x-text="ffMaalinger.length + ' målinger' + (ffSikFejl ? ' · ' + ffSikFejl + ' sikkerhedsfejl' : '')"></span>
+          </div>
+
+          <div class="panel p-2 overflow-x-auto" id="ff-diagram" @click="ffKlikSvg($event)" x-html="ffSvg()"></div>
+          <ul class="text-xs text-muted grid grid-cols-1 sm:grid-cols-2 gap-1 -mt-2 px-1">
+            <template x-for="n in ffScen.noder.filter(n => n.art !== 'tavle' && n.art !== 'daase')" :key="n.id">
+              <li><strong class="text-ink" x-text="n.kode"></strong> <span x-text="n.navn + ' (' + FF_ART[n.art].toLowerCase() + ', via ' + n.op + ')'"></span></li>
+            </template>
+          </ul>
+
+          <div class="panel p-4 flex flex-col gap-3">
+            <label class="f">Målepunkt (eller klik i diagrammet)
+              <select id="ff-punkt" class="inp" x-model="ffPunkt">
+                <template x-for="n in ffScen.noder" :key="n.id"><option :value="n.id" :selected="n.id===ffPunkt" x-text="ffPunktNavn(n.id)"></option></template>
+              </select>
+            </label>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+              <template x-for="m in ffMaaleTyper" :key="m.id">
+                <button class="btn !whitespace-normal" :id="'ff-m-' + m.id" :disabled="!!ffSvar" @click="ffMaal(m.id)" x-text="m.l"></button>
+              </template>
+            </div>
+            <template x-if="ffSidste()">
+              <p id="ff-sidste" class="text-sm" :class="ffSidste().fare && 'warn'">
+                <span class="text-muted" x-text="ffMaalNavn(ffSidste().m) + ' ved ' + ffPunktNavn(ffSidste().p) + ': '"></span><strong class="num" x-text="ffSidste().tekst"></strong>
+              </p>
+            </template>
+            <div class="overflow-x-auto" x-show="ffMaalinger.length">
+              <table class="kt" id="ff-tabel">
+                <thead><tr><th>Nr.</th><th>Punkt</th><th>Måling</th><th>Resultat</th></tr></thead>
+                <tbody>
+                  <template x-for="x in [...ffMaalinger].reverse()" :key="x.nr">
+                    <tr :class="x.fare && 'warn'"><td class="num" x-text="x.nr"></td><td x-text="ffScen.noder.find(n => n.id === x.p).kode"></td><td x-text="ffMaalNavn(x.m)"></td>
+                      <td class="num" x-text="x.tekst"></td></tr>
+                  </template>
+                </tbody>
+              </table>
+            </div>
+            <details class="text-xs text-muted">
+              <summary class="cursor-pointer">Grænseværdier</summary>
+              <ul class="mt-1 flex flex-col gap-1">
+                <li>Isolationsmodstand ved 500 V DC: mindst 1 MΩ (DS/HD 60364-6). Fejlfri installation måler typisk over 999 MΩ.</li>
+                <li>Kontinuitet i PE: svarer til ρ · l / A for vejen fra tavlen.</li>
+                <li x-text="ffGraenseTekst() + ' Faktoren 2/3 er en tommelfingerregel for, at lederne er varmere under en fejl end ved målingen.'"></li>
+                <li>RCD: udløsning inden for 300 ms ved 1 × IΔn.</li>
+              </ul>
+            </details>
+          </div>
+
+          <template x-if="!ffSvar">
+            <div class="panel p-4 flex flex-col gap-3" id="ff-diag">
+              <h2 class="hd text-lg">Diagnose</h2>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <label class="f">Fejltype<select id="ff-type" class="inp" x-model="ffDiag.type"><option value="">Vælg …</option>
+                  <template x-for="f in ffFejltyper" :key="f.id"><option :value="f.id" x-text="f.navn"></option></template></select></label>
+                <label class="f">Placering<select id="ff-sted" class="inp" x-model="ffDiag.sted"><option value="">Vælg …</option>
+                  <template x-for="x in ffStedListe(ffScen)" :key="x.id"><option :value="x.id" x-text="x.navn"></option></template></select></label>
+              </div>
+              <button id="ff-diagnose" class="btn btn-primary self-start" :disabled="!ffDiag.type || !ffDiag.sted" @click="ffDiagnose()">Afgiv diagnose</button>
+            </div>
+          </template>
+
+          <template x-if="ffSvar">
+            <div class="panel p-4 flex flex-col gap-3" id="ff-svar">
+              <h2 class="hd text-xl" :class="ffSvar.korrekt ? 'text-accent' : 'text-crit'" x-text="ffSvar.korrekt ? 'Rigtigt fundet' : (ffSvar.typeOk ? 'Rigtig fejltype, forkert placering' : 'Forkert fejltype')"></h2>
+              <p class="text-sm"><span x-text="'Fejlen var: ' + ffFejlTekst()"></span> <span class="num" x-text="'Score ' + Math.round(ffSvar.score * 100) + ' %'"></span></p>
+              <p class="text-sm warn" x-show="ffSikFejl" x-text="ffSikFejl + ' måling(er) på spændingsførende anlæg, hvor det ikke må ske: −' + (ffSikFejl * 25) + ' point.'"></p>
+              <p class="text-sm" x-text="ffFejltyper.find(f => f.id === ffScen.fejl.type).forklaring"></p>
+              <div class="flex flex-col gap-1" x-show="ffSvar.afvigende.length">
+                <h3 class="hd text-base">Dine målinger, der afveg fra et fejlfrit anlæg</h3>
+                <ul class="text-sm flex flex-col gap-1">
+                  <template x-for="x in ffSvar.afvigende" :key="x.nr"><li><span x-text="'Nr. ' + x.nr + ': ' + ffMaalNavn(x.m) + ' ved ' + ffPunktNavn(x.p) + ' gav '"></span><strong class="num" x-text="x.tekst"></strong></li></template>
+                </ul>
+              </div>
+              <div class="flex flex-col gap-1">
+                <h3 class="hd text-base">Målinger, der afslører fejlen (uden fejl → med fejl)</h3>
+                <ul class="text-sm flex flex-col gap-1">
+                  <template x-for="(x, i) in ffSvar.afg.slice(0, 8)" :key="i"><li><span x-text="ffMaalNavn(x.m) + ' ved ' + ffPunktNavn(x.p) + ': '"></span><span class="num" x-text="x.uden + ' → ' + x.med"></span></li></template>
+                </ul>
+                <p class="text-xs text-muted" x-show="ffSvar.afg.length > 8" x-text="'… og ' + (ffSvar.afg.length - 8) + ' til.'"></p>
+              </div>
+              <p class="text-xs text-muted">Modellen er forenklet og vejledende. Følg altid gældende regler og din virksomheds instruktioner.</p>
+              <button id="ff-igen" class="btn btn-primary self-start" @click="ffNyt()">Nyt scenarie</button>
+            </div>
+          </template>
+        </div>
+      </template>
+    </section>
+  </template>
 
   <!-- ===== KORT ===== -->
   <template x-if="klar && view==='kort'">
@@ -319,6 +424,24 @@
   <!-- ===== DIALOGER: CASES (js/cases.js) ===== -->
 
   <!-- ===== DIALOGER: FEJLFINDING (js/fejlfinding.js) ===== -->
+  <template x-if="modal==='ff-sikker'">
+    <div class="sloer" @click.self="lukModal()">
+      <div class="dialog p-4 flex flex-col gap-3" role="dialog" aria-modal="true" aria-labelledby="ff-sik-titel" id="ff-sik-dialog">
+        <h2 id="ff-sik-titel" class="hd text-xl">Gør anlægget spændingsløst</h2>
+        <p class="text-xs text-muted">De fem sikkerhedsregler fra DS/EN 50110-1, skrevet med egne ord. Kryds dem af i rækkefølge.</p>
+        <template x-for="(r, i) in ffRegler" :key="i">
+          <label class="flex items-start gap-2 text-sm">
+            <input type="checkbox" class="mt-1" :id="'ff-r' + i" :checked="ffTjek[i]" :disabled="i > 0 && !ffTjek[i - 1]" @change="ffSaetTjek(i, $event.target.checked)">
+            <span><strong x-text="(i + 1) + '. ' + r.t + '.'"></strong> <span class="text-muted" x-text="r.b"></span></span>
+          </label>
+        </template>
+        <div class="flex flex-wrap justify-end gap-2">
+          <button class="btn" @click="lukModal()">Annullér</button>
+          <button id="ff-sik-ok" class="btn btn-primary" :disabled="!ffTjek.every(Boolean)" @click="ffFrakobl()">Anlægget er spændingsløst</button>
+        </div>
+      </div>
+    </div>
+  </template>
 
   <!-- ===== BEKRÆFTELSE ===== -->
   <template x-if="confirm">
