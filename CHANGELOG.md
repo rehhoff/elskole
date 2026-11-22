@@ -4,7 +4,7 @@
 Skema 2 (tabellen `resultater`), faner og modulpladser til parallelle faser. Derudover tre faser bygget i hver sin session:
 - Fase 2, opgaver (`docs/planer/2026-11-22-fase-2-opgaver.md`): 10 opgavegeneratorer med trinvis løsning og 25 koder for typiske fejl.
 - Fase 4, cases (`docs/planer/2026-11-22-fase-4-cases.md`): 5 cases med forgreninger og et regelbibliotek med 28 regler. Ingen af reglerne er fagligt kontrolleret endnu (`verificeret:false`), og appen viser det.
-- Fase 5, fejlfinding: 7 fejltyper, 10 målinger, diagram og en sikkerhedstjekliste med 5 regler.
+- Fase 5, fejlfinding (`docs/planer/2026-11-22-fase-5-fejlfinding.md`): 7 fejltyper, 10 målinger, diagram og en sikkerhedstjekliste med 5 regler.
 
 ## 0.1.0 · 2026-11-22 · Claude Opus 5.5
 Fase 0 og 1 (`docs/planer/2026-11-22-fase-0-1.md`):
