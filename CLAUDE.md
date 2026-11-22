@@ -2,6 +2,12 @@
 
 Webapp til træning i elektrikerfaget: gentagelse med mellemrum (FSRS), senere regneopgaver, cases og fejlfinding. Ejer: Alexander. Brugerfladen er på dansk.
 
+## Hukommelse
+
+**Læs `docs/STATUS.md` før alt andet.** Den er projektets hukommelse mellem sessioner: hvor langt hver fase er, hvilke brancher der venter, åbne spørgsmål til ejeren og de beslutninger og ønsker, han allerede har givet. Spørg ikke om noget, der står der.
+
+Før en opgave afsluttes, opdateres `docs/STATUS.md`: faseoversigten, åbne punkter, nye beslutninger eller ønsker fra ejeren (med dato i historikken) og nye forhold i miljøet. Fjern det, der ikke længere gælder. Detaljer hører hjemme i `docs/planer/`, `CHANGELOG.md` og `docs/ARKITEKTUR.md`; STATUS.md henviser til dem og holdes kort.
+
 - Udgives på GitHub Pages som `https://rehhoff.github.io/elskole/` (repoet `rehhoff/elskole`, gren `main`, mappe `/`). Repoet er offentligt: skriv ingen personlige oplysninger i filer eller commits.
 - **Samme origin som El-oversigtsappen** (`rehhoff.github.io`). localStorage, IndexedDB og caches deles derfor med den. Alle nøgler starter med `elskole.`, IndexedDB hedder `elskole`, caches hedder `elskole-*`, og service workeren har scope `./` (= `/elskole/`). Rør aldrig andres nøgler eller caches.
 - Ét lille byggetrin: Tailwind bygges med `python tools/byg_css.py` (v3.4.17). Biblioteker med fast version: Alpine.js 3.14.1 og KaTeX 0.16.9 fra cdnjs, ts-fsrs 5.2.3 fra jsdelivr (global `FSRS`). Almindelige scripts, der deler globalt scope, i denne rækkefølge:
