@@ -8,7 +8,7 @@ Sidst opdateret: 2026-11-22.
 
 Elskolen er en dansk webapp, der skal gøre ejeren til en meget dygtig elektriker: matematik og fysik, dimensionering (DS/HD 60364), særlige installationer, love og myndigheder, erhverv og arbejdsmiljø. Den afløser og udvider Anki med opgaver, cases og fejlfinding. Samlet plan: `docs/plan.md`.
 
-- Live: https://rehhoff.github.io/elskole/ (GitHub Pages fra `main` i `rehhoff/elskole`). Udgivet version: **0.1.0**. Version **0.2.0** er merget lokalt på `main`, men ikke pushet.
+- Live: https://rehhoff.github.io/elskole/ (GitHub Pages fra `main` i `rehhoff/elskole`). Udgivet version: **0.2.0**.
 - Lokal mappe på ejerens PC: `Desktop\GROUND\elskole`.
 - Søsterapp: El-oversigtsappen (`rehhoff/rehhoff.github.io`, lokalt `Desktop\GROUND\rehhoff.github.io`). Separat repo og separat app, men samme origin. Se "Samme origin" nedenfor.
 
@@ -19,16 +19,14 @@ Elskolen er en dansk webapp, der skal gøre ejeren til en meget dygtig elektrike
 | 0 | Skelet, offline-app, lager, røgtest | Færdig, udgivet i 0.1.0 |
 | 1 | FSRS-kort, kortredigering med kilde, Anki-import, 51 startkort i matematik og fysik | Færdig, udgivet i 0.1.0 |
 | – | Forberedelse til parallelle faser: skema 2 (`resultater`), faner og modulpladser | På `main`, del af 0.2.0 |
-| 2 | Opgavegeneratorer (10 stk., 25 fejlkoder) | Merget på `main` i 0.2.0, ikke pushet |
-| 4 | Cases (5) og regelbibliotek (28 regler, alle `verificeret:false`) | Merget på `main` i 0.2.0, ikke pushet |
-| 5 | Fejlfinding (7 fejltyper, 10 målinger, 5 sikkerhedsregler) | Merget på `main` i 0.2.0, ikke pushet |
+| 2 | Opgavegeneratorer (10 stk., 25 fejlkoder) | Udgivet i 0.2.0 |
+| 4 | Cases (5) og regelbibliotek (28 regler, alle `verificeret:false`) | Udgivet i 0.2.0 |
+| 5 | Fejlfinding (7 fejltyper, 10 målinger, 5 sikkerhedsregler) | Udgivet i 0.2.0 |
 | 3 | Kompetencetræ og log over typiske fejl | Klar til start (fase 2 er på `main`) |
 | 6 | Kobling til El-oversigtsappen, prøvesimulering | Klar til start. Prøvesimuleringen afhænger af åbent punkt 2 (niveau) |
 | 7 | AI-retning af forklaringer | Kræver ejerens beslutning om API-nøgle eller backend |
 
 Erfaring fra merge af fase 2, 4 og 5: kun `css/tailwind.css` gav konflikt. Den løses ved at tage én side og bygge CSS igen med `python tools/byg_css.py`. Røgtesten sluttede med `OK`.
-
-Venter på ejeren: ja til push af 0.2.0 til `origin/main`.
 
 ## Åbne punkter for ejeren
 
@@ -52,7 +50,7 @@ Venter på ejeren: ja til push af 0.2.0 til `origin/main`.
 - **Sprog:** al brugerflade, dokumentation og commit-beskeder på dansk.
 - **To separate apps:** Elskolen og El-oversigtsappen må aldrig ligge i samme repo.
 - **Samme origin:** løst ved, at begge service workere kun håndterer egne adresser. El-oversigtsappen fik rettelsen i 10.26.1 (`EGNE` i dens `sw.js`). Elskolen bruger kun nøgler, databaser og caches, der starter med `elskole`.
-- **Undersessioner og modeller:** brug parallelle sessioner, hvor opgaver kan køre uafhængigt, og Sonnet til veldefineret arbejde (fx generatorer, indhold med Python-kontrol). Opus til design-tungt arbejde og faglige vurderinger.
+- **Undersessioner og modeller (2026-11-22):** Opus kun til planlægning, Sonnet til kodning. Afvig kun, hvis det er nødvendigt. Brug parallelle sessioner, hvor opgaver kan køre uafhængigt. Vær så token-effektiv som muligt, men korrekt udførelse går forud.
 - **Hvis en undersession ikke kan starte** (mappen ikke godkendt med "Trust repository" i Claude Desktop), så sig det til ejeren og lav opgaven med Sonnet-subagenter i stedet.
 - **Merge og push:** spørg ejeren, før faser merges til `main` og før push. Ejeren har sagt ja til hver udgivelse indtil nu.
 - **Faglig ærlighed:** opfind aldrig paragraf- eller afsnitsnumre; markér usikkert indhold og vis det i appen.
@@ -65,4 +63,4 @@ Venter på ejeren: ja til push af 0.2.0 til `origin/main`.
 
 ## Historik i korte træk
 
-- 2026-11-22: Plan lagt. Fase 0–1 bygget og udgivet som 0.1.0. El-oversigtsappen 10.26.1 udgivet med rettelse af service workeren. Forberedelse til parallelle faser committet. Fase 2, 4 og 5 bygget i tre sessioner og merget lokalt som 0.2.0 (ikke pushet).
+- 2026-11-22: Plan lagt. Fase 0–1 bygget og udgivet som 0.1.0. El-oversigtsappen 10.26.1 udgivet med rettelse af service workeren. Forberedelse til parallelle faser committet. Fase 2, 4 og 5 bygget i tre sessioner og udgivet som 0.2.0. Fase 3 og 6 startet i hver sin session.
