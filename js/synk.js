@@ -65,8 +65,11 @@ function APP_SYNK() {
       let mSchema = 0; try { mSchema = Number(JSON.parse(F[G_MARK].content).schema) || 0; } catch (e) {}
       if (mSchema > SCHEMA) { const e = new Error('Data på GitHub er gemt af en nyere version af appen (skema ' + mSchema + ', denne har ' + SCHEMA + '). Genindlæs siden med Ctrl+F5. Indtil da synkroniseres der ikke fra denne enhed.'); e.status = 'skema'; throw e; }
       const rK = ((await this.synkFil(F[G_KORT])) || []).map(normKort), rT = ((await this.synkFil(F[G_TILST])) || []).map(normTilstand);
-      const rL = {};
-      for (const navn of Object.keys(F)) { const m = G_LOG_RE.exec(navn); if (m) rL[m[1]] = ((await this.synkFil(F[navn])) || []).map(normLog); }
+      const rL = {}, rR = {};
+      for (const navn of Object.keys(F)) {
+        let m = G_LOG_RE.exec(navn); if (m) rL[m[1]] = ((await this.synkFil(F[navn])) || []).map(normLog);
+        m = G_RES_RE.exec(navn); if (m) rR[m[1]] = ((await this.synkFil(F[navn])) || []).map(normResultat);
+      }
       const sorter = a => [...a].sort((x, y) => x.id < y.id ? -1 : 1), filer = {};
       this.iSynk = true;
       try {
@@ -87,6 +90,15 @@ function APP_SYNK() {
           if (L.some(l => !rid.has(l.id))) filer[G_LOG(m)] = { content:JSON.stringify(sorter([...R, ...L.filter(l => !rid.has(l.id))])) };
         }
         if (hent.length) await this.tilfoejLog(hent);
+        /* resultater pr. måned (skema 2), samme princip som loggen */
+        const lokR = {}; for (const r of this.resultater) (lokR[r.tid.slice(0, 7)] = lokR[r.tid.slice(0, 7)] || []).push(r);
+        const hentR = [];
+        for (const m of new Set([...Object.keys(lokR), ...Object.keys(rR)])) {
+          const L = lokR[m] || [], R = rR[m] || [], rid = new Set(R.map(x => x.id)), lid = new Set(L.map(x => x.id));
+          hentR.push(...R.filter(x => !lid.has(x.id)));
+          if (L.some(x => !rid.has(x.id))) filer[G_RES(m)] = { content:JSON.stringify(sorter([...R, ...L.filter(x => !rid.has(x.id))])) };
+        }
+        if (hentR.length) await this.tilfoejResultat(hentR);
       } finally { this.iSynk = false; }
       if (Object.keys(filer).length) {
         filer[G_MARK] = { content:this.synkMarkoer() };

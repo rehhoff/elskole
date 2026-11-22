@@ -6,13 +6,13 @@ Webapp til træning i elektrikerfaget: gentagelse med mellemrum (FSRS), senere r
 - **Samme origin som El-oversigtsappen** (`rehhoff.github.io`). localStorage, IndexedDB og caches deles derfor med den. Alle nøgler starter med `elskole.`, IndexedDB hedder `elskole`, caches hedder `elskole-*`, og service workeren har scope `./` (= `/elskole/`). Rør aldrig andres nøgler eller caches.
 - Ét lille byggetrin: Tailwind bygges med `python tools/byg_css.py` (v3.4.17). Biblioteker med fast version: Alpine.js 3.14.1 og KaTeX 0.16.9 fra cdnjs, ts-fsrs 5.2.3 fra jsdelivr (global `FSRS`). Almindelige scripts, der deler globalt scope, i denne rækkefølge:
   - `js/data.js`: `APP_VERSION`, `SCHEMA`, lagernøgler, `EMNER`, `norm*()`, `flet()`, `hashD()`.
-  - `js/lager.js` (`APP_LAGER`), `js/synk.js` (`APP_SYNK`), `js/oev.js` (`APP_OEV`), `js/kort.js` (`APP_KORT`), `js/import.js` (`APP_IMPORT`).
+  - `js/lager.js` (`APP_LAGER`), `js/synk.js` (`APP_SYNK`), `js/oev.js` (`APP_OEV`), `js/kort.js` (`APP_KORT`), `js/import.js` (`APP_IMPORT`), `js/opgaver.js` (`APP_OPGAVER`, præfiks `opg`), `js/cases.js` (`APP_CASES`, præfiks `case`), `js/fejlfinding.js` (`APP_FEJLFINDING`, præfiks `ff`).
   - `js/app.js`: `app()`, `init()`, fælles brugerflade. `bland()` samler metoderne. Navne skal være unikke på tværs af filerne.
 - Opbygning og datamodel: `docs/ARKITEKTUR.md`. Samlet plan: `docs/plan.md`. Delplaner: `docs/planer/`. Historik: `CHANGELOG.md`.
 
 ## 1. Data må aldrig gå tabt
 
-1. Omdøb eller fjern aldrig nøglerne `elskole.meta`, `elskole.tema`, `elskole.indstillinger`, `elskole.sync`, `elskole.backup`, IndexedDB-databasen `elskole` (tabellerne `kort`, `tilstand`, `log`) eller Gist-filerne `elskole.json`, `elskole-kort.json`, `elskole-tilstand.json`, `elskole-log-ÅÅÅÅ-MM.json`.
+1. Omdøb eller fjern aldrig nøglerne `elskole.meta`, `elskole.tema`, `elskole.indstillinger`, `elskole.sync`, `elskole.backup`, IndexedDB-databasen `elskole` (tabellerne `kort`, `tilstand`, `log`, `resultater`) eller Gist-filerne `elskole.json`, `elskole-kort.json`, `elskole-tilstand.json`, `elskole-log-ÅÅÅÅ-MM.json`, `elskole-resultater-ÅÅÅÅ-MM.json`.
 2. Ændres datamodellen: udvid `normKort()`, `normTilstand()` eller `normLog()` med standardværdier og migrering, og hæv `SCHEMA`. Første start efter en hævning gemmer en backup i `elskole.backup`. Tilføj et tjek i `tests/smoke.py` med data i det gamle format.
 3. Kort slettes aldrig fysisk: de får `slettet: true` (gravsten), så sletningen kan synkroniseres. Loggen tilføjes kun til; den eneste sletning er Fortryd af det sidste svar.
 4. Synk: en app med lavere `SCHEMA` end Gist-markøren må hverken læse eller skrive.
@@ -35,6 +35,12 @@ python tools/byg_css.py
 python tests/smoke.py
 ```
 Sæt `PYTHONIOENCODING=utf-8`, hvis æ, ø og å giver fejl i konsollen.
+
+## 2a. Flere sessioner samtidig
+
+- Én fase = én session = én branch. Hver session ejer sin modulfil og sine markerede blokke (`<!-- ===== OPGAVER … -->` osv. i `index.html`, `# ===== FASE n … =====` i `tests/smoke.py`). Ændringer uden for egne blokke holdes små og samlet ét sted.
+- Kun hovedsessionen ændrer `SCHEMA`, `js/data.js`, `js/lager.js` og `js/synk.js`. Data fra faserne gemmes med `tilfoejResultat()` (tabellen `resultater`) eller som statisk indhold i `indhold/`. Mangler en fase noget i datamodellen, skrives det i dens rapport.
+- Version, `CHANGELOG.md` og merge til `main` klares af hovedsessionen. Faserne pusher ikke.
 
 ## 3. Faglige regler
 

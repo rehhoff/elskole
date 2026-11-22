@@ -1,6 +1,6 @@
 /* Elskolen: konstanter, lagernøgler, emner, datamodel (norm*) og små hjælpere. Indlæses før de andre scripts. */
 const APP_VERSION = '0.1.0';
-const SCHEMA = 1;
+const SCHEMA = 2;  // 2: tabellen resultater (opgaver, cases, fejlfinding)
 
 /* Lagernøgler. Appen ligger på samme origin som El-oversigtsappen (rehhoff.github.io), så ALLE nøgler skal starte med "elskole.".
    Omdøb eller fjern dem aldrig (se CLAUDE.md afsnit 1). */
@@ -9,12 +9,13 @@ const K_TEMA = 'elskole.tema';          // 'auto' | 'light' | 'dark'
 const K_INDST = 'elskole.indstillinger';
 const K_SYNK = 'elskole.sync';          // { token, gistId, login, sidst }
 const K_BACKUP = 'elskole.backup';      // seneste automatiske backup (JSON-tekst)
-const IDB_NAVN = 'elskole', IDB_VER = 1; // tabeller: kort, tilstand, log
+const IDB_NAVN = 'elskole', IDB_VER = 2; // tabeller: kort, tilstand, log, resultater (fra version 2)
 
 /* Gist-synk: markør plus én fil pr. slags data og én logfil pr. måned. Formatet må kun udvides. */
 const GH = 'https://api.github.com';
 const G_MARK = 'elskole.json', G_KORT = 'elskole-kort.json', G_TILST = 'elskole-tilstand.json', G_LOG = m => 'elskole-log-' + m + '.json';
 const G_LOG_RE = /^elskole-log-(\d{4}-\d{2})\.json$/;
+const G_RES = m => 'elskole-resultater-' + m + '.json', G_RES_RE = /^elskole-resultater-(\d{4}-\d{2})\.json$/;
 
 /* Faste emner (kompetencetræets rødder). id'erne må ikke omdøbes, da kortene peger på dem. */
 const EMNER = [
@@ -72,6 +73,18 @@ function normLog(l) {
   l = l && typeof l === 'object' ? l : {};
   return { id:str(l.id) || uid(), kortId:str(l.kortId), tid:str(l.tid) || nu(), karakter:Math.min(4, Math.max(1, Number(l.karakter) || 3)),
     ny:!!l.ny, varighedMs:Math.max(0, Number(l.varighedMs) || 0), foer:Number.isFinite(Number(l.foer)) ? Number(l.foer) : 0 };
+}
+
+/* Resultat: ét forsøg på en opgave, en case eller en fejlfinding. Kun tilføjes, aldrig rettes (som log).
+   art: 'opgave' | 'case' | 'fejlfinding'. ref: generatorens, casens eller scenariets id. emne: et af EMNER.
+   korrekt: om forsøget lykkedes. score: 0–1. fejltype: kort kode for den typiske fejl, fx 'glemt-ktemp' (tom, når korrekt).
+   data: frit objekt til modulets egne detaljer (opgavens tal, valgte trin …). Holdes lille. */
+const RESULTAT_ARTER = ['opgave', 'case', 'fejlfinding'];
+function normResultat(r) {
+  r = r && typeof r === 'object' ? r : {};
+  return { id:str(r.id) || uid(), art:RESULTAT_ARTER.includes(r.art) ? r.art : 'opgave', ref:str(r.ref), emne:EMNE_IDS.includes(r.emne) ? r.emne : 'andet',
+    tid:str(r.tid) || nu(), korrekt:!!r.korrekt, score:Math.min(1, Math.max(0, Number(r.score) || (r.korrekt ? 1 : 0))), fejltype:str(r.fejltype),
+    varighedMs:Math.max(0, Number(r.varighedMs) || 0), data:r.data && typeof r.data === 'object' ? r.data : {} };
 }
 
 function normIndst(s) {

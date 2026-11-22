@@ -204,12 +204,38 @@ async def main():
         await pg.evaluate(f"{A}.synkNu()"); await vent_synk(pg)
         r = await pg.evaluate(f"(()=>{{const a={A};return [a.kort.filter(k=>!k.slettet).length, a.kort.some(k=>k.front==='Ny fra 2'), a.synkFejl]}})()")
         tjek('sletning og nyt kort synkroniseres til den anden enhed', r == [len(d['kort']), True, ''], r)
+        # resultater (skema 2) synkroniseres som loggen
+        await pg.evaluate(f"(async()=>{{const a={A}; await a.tilfoejResultat({{art:'opgave', ref:'test', emne:'mat', korrekt:false, fejltype:'glemt-ktemp'}}); await a.synkNu()}})()"); await vent_synk(pg)
+        await pg2.evaluate(f"{A}.synkNu()"); await vent_synk(pg2)
+        r = await pg2.evaluate(f"(()=>{{const a={A};return [a.resultater.length, a.resultater[0] && a.resultater[0].fejltype, a.synkFejl]}})()")
+        tjek('resultater synkroniseres til den anden enhed', r == [1, 'glemt-ktemp', ''] and any(k.startswith('elskole-resultater-') for k in GIST), r)
         # nyere skema i Gist'en: der må hverken læses eller skrives
         foer = dict(GIST); GIST['elskole.json'] = json.dumps({'format': 'elskole-sync', 'schema': 999})
         await pg.evaluate(f"(async()=>{{const a={A}; await a.gemKort(nytKort({{front:'x', bag:'y'}})); await a.synkNu()}})()"); await vent_synk(pg)
         r = await pg.evaluate(f"{A}.synkFejl")
         tjek('nyere skema i Gist blokerer synk', 'nyere version' in r and GIST['elskole-kort.json'] == foer['elskole-kort.json'], r)
         await ctx.close(); await ctx2.close()
+
+        # 6b. Opgradering fra skema 1: IndexedDB version 1 med tre tabeller og et kort. Efter start findes kortet, tabellen resultater og en automatisk backup.
+        ctx = await b.new_context(viewport={'width': 1200, 'height': 900}, service_workers='block'); ctx.set_default_timeout(TRIN_MS)
+        await ctx.route('**/*', route)
+        pg = await ctx.new_page(); pg.on('pageerror', lambda e: fejl.append(str(e)))
+        await pg.goto(URL + 'findes-ikke')
+        await pg.evaluate("""new Promise(ok => { const r = indexedDB.open('elskole', 1);
+          r.onupgradeneeded = () => { for (const s of ['kort', 'tilstand', 'log']) r.result.createObjectStore(s, { keyPath:'id' }); };
+          r.onsuccess = () => { const tx = r.result.transaction('kort', 'readwrite');
+            tx.objectStore('kort').put({ id:'gl1', type:'fakta', emne:'mat', front:'Gammelt kort', bag:'b', tags:[], kilde:{}, oprettet:'2026-11-01T00:00:00Z', rettet:'2026-11-01T00:00:00Z' });
+            tx.oncomplete = () => { r.result.close(); localStorage.setItem('elskole.meta', JSON.stringify({ schema:1 })); ok(); }; }; })""")
+        await pg.goto(URL); await pg.wait_for_function(f"window.__alpineOk && {A}.klar")
+        r = await pg.evaluate(f"(async()=>{{const a={A}; await a.tilfoejResultat({{art:'case', ref:'x'}}); return [a.kort.map(k=>k.front), a.resultater.length, !!localStorage.getItem('elskole.backup'), JSON.parse(localStorage.getItem('elskole.meta')).schema]}})()")
+        tjek('opgradering fra skema 1 bevarer kortene, tilføjer resultater og tager backup', r == [['Gammelt kort'], 1, True, 2], r)
+        await ctx.close()
+
+        # ===== FASE 2: OPGAVER (js/opgaver.js) =====
+
+        # ===== FASE 4: CASES (js/cases.js) =====
+
+        # ===== FASE 5: FEJLFINDING (js/fejlfinding.js) =====
 
         # 7. Mobil: ingen vandret rulning, dialog passer
         ctx, pg = await ny_side(b, 375, 812, is_mobile=True, has_touch=True)

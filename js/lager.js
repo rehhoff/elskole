@@ -8,7 +8,7 @@ function idbAaben() {
     const r = indexedDB.open(IDB_NAVN, IDB_VER);
     r.onupgradeneeded = () => {
       const db = r.result;
-      for (const s of ['kort', 'tilstand', 'log']) if (!db.objectStoreNames.contains(s)) db.createObjectStore(s, { keyPath:'id' });
+      for (const s of ['kort', 'tilstand', 'log', 'resultater']) if (!db.objectStoreNames.contains(s)) db.createObjectStore(s, { keyPath:'id' });
     };
     r.onsuccess = () => ok(r.result); r.onerror = () => fejl(r.error); r.onblocked = () => fejl(new Error('Databasen er blokeret af en anden fane'));
   });
@@ -29,10 +29,11 @@ function APP_LAGER() {
       try { meta = JSON.parse(localStorage.getItem(K_META)); this.indst = normIndst(JSON.parse(localStorage.getItem(K_INDST))); } catch (e) { this.indst = normIndst(); }
       try {
         IDB = await idbAaben();
-        const [k, t, l] = await Promise.all([idbAlle('kort'), idbAlle('tilstand'), idbAlle('log')]);
+        const [k, t, l, r] = await Promise.all([idbAlle('kort'), idbAlle('tilstand'), idbAlle('log'), idbAlle('resultater')]);
         this.kort = k.map(normKort); this.log = l.map(normLog).sort((a, b) => a.tid < b.tid ? -1 : 1);
+        this.resultater = r.map(normResultat).sort((a, b) => a.tid < b.tid ? -1 : 1);
         const tm = {}; for (const x of t) { const n = normTilstand(x); if (n.id) tm[n.id] = n; } this.tilst = tm;
-      } catch (e) { IDB = null; this.storageOk = false; this.kort = []; this.tilst = {}; this.log = []; }
+      } catch (e) { IDB = null; this.storageOk = false; this.kort = []; this.tilst = {}; this.log = []; this.resultater = []; }
       /* Første start efter en hævning af SCHEMA: tag en backup, før noget ændres (CLAUDE.md afsnit 1) */
       const gl = meta ? Number(meta.schema) || 0 : 0;
       if (meta && gl < SCHEMA && this.kort.length) this.autoBackup('Automatisk før opdatering fra skema ' + gl + ' til ' + SCHEMA);
@@ -65,6 +66,14 @@ function APP_LAGER() {
       this.log.push(...liste); this.log.sort((a, b) => a.tid < b.tid ? -1 : 1);
       this.dataRev++; await this.skriv('log', liste); this.synkSenere();
     },
+    /* Resultater fra opgaver, cases og fejlfinding (skema 2). Kun tilføjes. Brug altid denne metode, så synk og backup kommer med. */
+    async tilfoejResultat(liste) {
+      liste = (Array.isArray(liste) ? liste : [liste]).map(normResultat);
+      const kendt = new Set(this.resultater.map(r => r.id)); liste = liste.filter(r => !kendt.has(r.id));
+      if (!liste.length) return [];
+      this.resultater.push(...liste); this.resultater.sort((a, b) => a.tid < b.tid ? -1 : 1);
+      this.dataRev++; await this.skriv('resultater', liste); this.synkSenere(); return liste;
+    },
     /* Log kan kun slettes, når en karakter fortrydes (samme session, sidste svar). */
     async fjernLog(id) {
       this.log = this.log.filter(l => l.id !== id); this.dataRev++;
@@ -73,7 +82,7 @@ function APP_LAGER() {
     },
 
     /* Backup: én JSON-fil med alt. Indlæsning fletter (nyeste vinder), så intet går tabt. */
-    backupData() { return { format:'elskole-backup', app:APP_VERSION, schema:SCHEMA, dato:nu(), kort:this.kort, tilstand:Object.values(this.tilst), log:this.log, indstillinger:this.indst }; },
+    backupData() { return { format:'elskole-backup', app:APP_VERSION, schema:SCHEMA, dato:nu(), kort:this.kort, tilstand:Object.values(this.tilst), log:this.log, resultater:this.resultater, indstillinger:this.indst }; },
     autoBackup(grund) { try { localStorage.setItem(K_BACKUP, JSON.stringify(Object.assign(this.backupData(), { grund }))); } catch (e) {} },
     hentBackup() {
       const tekst = JSON.stringify(this.backupData(), null, 1), a = document.createElement('a');
@@ -91,7 +100,7 @@ function APP_LAGER() {
       if ((Number(d.schema) || 0) > SCHEMA) return this.say('Backuppen er lavet af en nyere version af appen. Genindlæs siden med Ctrl+F5 og prøv igen.', true);
       const k = flet(this.kort, d.kort.map(normKort)).filter(x => { const g = this.kort.find(y => y.id === x.id); return !g || g !== x; });
       const nyT = flet(Object.values(this.tilst), (d.tilstand || []).map(normTilstand)).filter(x => x !== this.tilst[x.id]);
-      await this.gemKort(k, true); await this.gemTilst(nyT, true); await this.tilfoejLog(d.log || []);
+      await this.gemKort(k, true); await this.gemTilst(nyT, true); await this.tilfoejLog(d.log || []); await this.tilfoejResultat(d.resultater || []);
       this.say('Backup indlæst: ' + k.length + ' kort nye eller opdateret.');
     }
   };

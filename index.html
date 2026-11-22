@@ -37,7 +37,7 @@
   </header>
 
   <nav class="faner flex overflow-x-auto border-b border-line" role="tablist">
-    <template x-for="v in views" :key="v.id">
+    <template x-for="v in synligeViews()" :key="v.id">
       <button class="tab hd" role="tab" :aria-selected="view===v.id" :id="'tab-' + v.id" @click="gaaTil(v.id)"><span x-text="v.l"></span><kbd x-text="v.k"></kbd></button>
     </template>
   </nav>
@@ -134,6 +134,15 @@
       </div>
     </section>
   </template>
+
+  <!-- ===== OPGAVER (fase 2, js/opgaver.js) ===== -->
+  <!-- Fanen lægges her som <template x-if="klar && view==='opgaver'"><section id="v-opgaver">…</section></template> -->
+
+  <!-- ===== CASES (fase 4, js/cases.js) ===== -->
+  <!-- Fanen lægges her som <template x-if="klar && view==='cases'"><section id="v-cases">…</section></template> -->
+
+  <!-- ===== FEJLFINDING (fase 5, js/fejlfinding.js) ===== -->
+  <!-- Fanen lægges her som <template x-if="klar && view==='fejlfinding'"><section id="v-fejlfinding">…</section></template> -->
 
   <!-- ===== KORT ===== -->
   <template x-if="klar && view==='kort'">
@@ -305,6 +314,12 @@
     </div>
   </template>
 
+  <!-- ===== DIALOGER: OPGAVER (js/opgaver.js) ===== -->
+
+  <!-- ===== DIALOGER: CASES (js/cases.js) ===== -->
+
+  <!-- ===== DIALOGER: FEJLFINDING (js/fejlfinding.js) ===== -->
+
   <!-- ===== BEKRÆFTELSE ===== -->
   <template x-if="confirm">
     <div class="sloer" @click.self="confirm=null">
@@ -326,6 +341,9 @@
 <script src="js/oev.js?v=0.1.0"></script>
 <script src="js/kort.js?v=0.1.0"></script>
 <script src="js/import.js?v=0.1.0"></script>
+<script src="js/opgaver.js?v=0.1.0"></script>
+<script src="js/cases.js?v=0.1.0"></script>
+<script src="js/fejlfinding.js?v=0.1.0"></script>
 <script src="js/app.js?v=0.1.0"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.14.1/cdn.min.js" onerror="document.getElementById('fail').hidden=false"></script>
 <script>setTimeout(() => { if (!window.__alpineOk || typeof FSRS === 'undefined') document.getElementById('fail').hidden = false; }, 6000);</script>
