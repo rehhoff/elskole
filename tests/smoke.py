@@ -553,6 +553,95 @@ async def main():
         await ctx.close()
 
         # ===== FASE 5: FEJLFINDING (js/fejlfinding.js) =====
+        ctx, pg = await ny_side(b)
+        r = await pg.evaluate(f"""(()=>{{const a={A}; const ens = JSON.stringify(a.ffLavScenarie(42)) === JSON.stringify(a.ffLavScenarie(42));
+          const typer = new Set(); for (let s = 1; s <= 300; s++) typer.add(a.ffLavScenarie(s).fejl.type);
+          return [ens, [...typer].sort().join(',') === a.ffFejltyper.map(f=>f.id).sort().join(','), a.ffFejltyper.length]}})()""")
+        tjek('fejlfinding: samme seed giver samme scenarie, og alle fejltyper forekommer', r == [True, True, 7], r)
+        r = await pg.evaluate(f"""(()=>{{const a={A}, galt=[];
+          for (let seed = 1; seed <= 60; seed++) {{ const s = a.ffLavScenarie(seed);
+            for (const n of s.noder) {{ const zs = a.ffModel(s, n.id, 'zs', true, null).v, rcd = a.ffModel(s, n.id, 'rcd', true, null).v;
+              const iso = ['iso-lpe','iso-npe','iso-ln'].every(m => a.ffModel(s, n.id, m, false, null).tekst === '> 999 MΩ');
+              const pol = a.ffModel(s, n.id, 'pol', true, null).tekst === 'Korrekt';
+              if (!(zs <= a.ffZsGraense(s) && rcd <= 300 && iso && pol)) galt.push([seed, n.id, zs]); }}
+            if (s.noder.length < 4 || s.noder.length > 8) galt.push([seed, 'antal', s.noder.length]); }}
+          return galt}})()""")
+        tjek('fejlfinding: det fejlfri anlæg overholder kravene', not r, r[:5])
+        r = await pg.evaluate(f"""(()=>{{const a={A}, ud={{}};
+          for (const f of a.ffFejltyper) {{ ud[f.id] = 0;
+            for (let seed = 1; seed <= 15; seed++) {{ const s = a.ffLavScenarie(seed * 7919, {{ fejl:f.id }});
+              const afg = a.ffAfgoerende(s);
+              /* med stoej: mindst én af de afgoerende maalinger afviger stadig tydeligt fra fejlfri med stoej */
+              const ok = afg.some(x => {{ const lev = a.ffMaaleTilstand(x.m); return [0,1,2].every(g => a.ffAfviger(x.m, a.ffMaalModel(s, x.p, x.m, lev, s.fejl, g), a.ffMaalModel(s, x.p, x.m, lev, null, g))); }});
+              if (s.fejl.type === f.id && ok) ud[f.id]++; }} }}
+          return ud}})()""")
+        tjek('fejlfinding: hver fejltype giver målinger (med støj), der adskiller den fra fejlfri', all(v == 15 for v in r.values()) and len(r) == 7, r)
+        r = await pg.evaluate(f"""(()=>{{const a={A};
+          const s = a.ffLavScenarie(5, {{ fejl:'afbrudt-pe', sted:'n:D1' }});
+          const v = (sted, type) => a.ffVurder(s, {{ type:type || 'afbrudt-pe', sted }}, [], 0);
+          const s2 = a.ffLavScenarie(5, {{ fejl:'iso-lpe', sted:'n:D1' }});
+          const v2 = sted => a.ffVurder(s2, {{ type:'iso-lpe', sted }}, [], 0).stedOk;
+          const s3 = a.ffLavScenarie(5, {{ fejl:'daarlig-forb', sted:'n:D1' }});
+          return [s.fejl.sted, v('n:D1').korrekt, v('k:D1').korrekt, v('n:F1').korrekt, v('n:D1', 'afbrudt-n').korrekt, v('n:D1', 'afbrudt-n').fejltype,
+            v2('n:D1'), v2('k:D1'), a.ffVurder(s3, {{ type:'daarlig-forb', sted:'k:D1' }}, [], 0).stedOk, v('n:D1').score]}})()""")
+        tjek('fejlfinding: ens placeringer godkendes, forkerte afvises', r == ['n:D1', True, True, False, False, 'ff-type:afbrudt-pe>afbrudt-n', True, False, False, 1], r)
+
+        # Gennem brugerfladen: afbrudt PE i dåse 1
+        await pg.click('#tab-fejlfinding'); await pg.wait_for_selector('#v-fejlfinding #ff-diagram svg')
+        await pg.evaluate(f"{A}.ffNyt(11, {{ fejl:'afbrudt-pe', sted:'n:D1' }})"); await pg.wait_for_timeout(100)
+        await pg.click('#ff-p-D1'); await pg.wait_for_timeout(50)
+        r = await pg.evaluate(f"[{A}.ffPunkt, document.querySelector('#ff-punkt').value]")
+        tjek('fejlfinding: klik i diagrammet vælger målepunkt', r == ['D1', 'D1'], r)
+        await pg.click('#ff-m-u-lpe'); await pg.wait_for_selector('#ff-sidste')
+        u = await pg.evaluate(f"{A}.ffSidste().v")
+        await pg.click('#ff-m-iso-lpe'); await pg.wait_for_timeout(50)
+        r = await pg.evaluate(f"[{A}.ffSikFejl, {A}.ffSidste().fare, document.querySelector('#ff-sidste').className.includes('warn'), document.querySelectorAll('#ff-tabel tbody tr').length]")
+        tjek('fejlfinding: isolation på spændingsførende anlæg giver tydelig fejl og tæller', r == [1, True, True, 2] and u < 30, (r, u))
+        await pg.click('#ff-frakobl'); await pg.wait_for_selector('#ff-sik-dialog')
+        r = await pg.evaluate("[document.querySelector('#ff-sik-ok').disabled, document.querySelector('#ff-r1').disabled, document.querySelectorAll('#ff-sik-dialog input[type=checkbox]').length]")
+        await pg.click('#ff-r0'); await pg.click('#ff-r1'); await pg.click('#ff-r2'); await pg.click('#ff-r3')
+        r2 = await pg.evaluate("document.querySelector('#ff-sik-ok').disabled")
+        await pg.click('#ff-r1')  # fjern et kryds: de efterfølgende fjernes også
+        r3 = await pg.evaluate(f"[...{A}.ffTjek]")
+        for i in range(1, 5): await pg.click(f'#ff-r{i}')
+        await pg.click('#ff-sik-ok'); await pg.wait_for_timeout(100)
+        r4 = await pg.evaluate(f"[{A}.ffLevende, {A}.modal, !!document.querySelector('#ff-sik-dialog')]")
+        tjek('fejlfinding: sikkerhedstjeklisten håndhæves i rækkefølge', r == [True, True, 5] and r2 is True and r3 == [True, False, False, False, False] and r4 == [False, None, False], (r, r2, r3, r4))
+        await pg.select_option('#ff-punkt', 'T'); await pg.click('#ff-m-pe')
+        t1 = await pg.inner_text('#ff-sidste')
+        await pg.select_option('#ff-punkt', 'D1'); await pg.click('#ff-m-pe')
+        t2 = await pg.inner_text('#ff-sidste')
+        await pg.click('#ff-m-zs'); t3 = await pg.inner_text('#ff-sidste')
+        tjek('fejlfinding: kontinuitet måles spændingsløst og viser afbrydelsen', 'OL' not in t1 and 'OL' in t2 and 'Ingen spænding' in t3, (t1, t2, t3))
+        await pg.select_option('#ff-type', 'afbrudt-pe'); await pg.select_option('#ff-sted', 'k:D1')
+        foer = await pg.evaluate(f"{A}.resultater.length")
+        await pg.click('#ff-diagnose'); await pg.wait_for_selector('#ff-svar')
+        r = await pg.evaluate(f"""(()=>{{const a={A}, x=a.resultater[a.resultater.length-1];
+          return [a.resultater.length, x.art, x.ref, x.emne, x.korrekt, x.score, x.fejltype, x.data.seed, x.data.maalinger.length, x.data.sikkerhedsfejl,
+            document.querySelector('#ff-svar').innerText.includes('Kontinuitet PE'), !!document.querySelector('#ff-diagnose'), document.querySelector('#ff-m-u-ln').disabled]}})()""")
+        tjek('fejlfinding: scenarie gennemføres, og resultatet gemmes med fradrag for sikkerhedsfejl',
+             r == [foer + 1, 'fejlfinding', 'afbrudt-pe', 'dim', True, 0.75, 'ff-sikkerhed', 11, 5, 1, True, False, True], r)
+        await pg.reload(); await pg.wait_for_function(f"window.__alpineOk && {A}.klar")
+        r = await pg.evaluate(f"{A}.resultater.filter(x => x.art === 'fejlfinding').length")
+        tjek('fejlfinding: resultatet er gemt efter genindlæsning', r == 1, r)
+        await ctx.close()
+
+        ctx, pg = await ny_side(b, 375, 812, is_mobile=True, has_touch=True)
+        await pg.evaluate(f"{A}.gaaTil('fejlfinding')"); await pg.wait_for_selector('#ff-diagram svg')
+        bredder = []
+        for seed in [3, 4, 9]:
+            await pg.evaluate(f"{A}.ffNyt({seed})"); await pg.wait_for_timeout(80)
+            bredder.append(await pg.evaluate("document.documentElement.scrollWidth"))
+        await pg.click('#ff-m-u-ln'); await pg.wait_for_timeout(50)
+        bredder.append(await pg.evaluate("document.documentElement.scrollWidth"))
+        await pg.click('#ff-frakobl'); await pg.wait_for_selector('#ff-sik-dialog')
+        bredder.append(await pg.evaluate("document.querySelector('#ff-sik-dialog').getBoundingClientRect().width"))
+        bredder.append(await pg.evaluate("document.documentElement.scrollWidth"))
+        await pg.keyboard.press('Escape')
+        await pg.evaluate(f"(()=>{{const a={A}; a.ffDiag = {{ type:'iso-lpe', sted:'n:D1' }}; return a.ffDiagnose()}})()"); await pg.wait_for_selector('#ff-svar')
+        bredder.append(await pg.evaluate("document.documentElement.scrollWidth"))
+        tjek('fejlfinding: mobil 375 px uden vandret rulning', all(x <= 375 for x in bredder), bredder)
+        await ctx.close()
 
         # 7. Mobil: ingen vandret rulning, dialog passer
         ctx, pg = await ny_side(b, 375, 812, is_mobile=True, has_touch=True)
