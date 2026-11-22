@@ -1,0 +1,73 @@
+{
+ "id": "case-byggeplads",
+ "titel": "Byggepladstavle til rækkehusbyggeri",
+ "emne": "saer",
+ "intro": "En entreprenør skal bygge 12 rækkehuse. Du skal lave byggepladsinstallationen: en hovedtavle ved netselskabets midlertidige tilslutning, tre undertavler rundt på pladsen, en tårnkran på en 63 A stikkontakt, 16 A og 32 A stikkontakter til håndværktøj samt forsyning til skurbyen.",
+ "start": "t1",
+ "trin": {
+  "t1": {
+   "type": "valg",
+   "tekst": "Hvilke tavler bruger du til hovedtavle og undertavler?",
+   "regler": ["r-704-tavler"],
+   "svar": [
+    { "tekst": "Byggepladstavler, der er bygget og afprøvet efter DS/EN 61439-4, med en hovedafbryder, som kan låses i afbrudt stilling.", "til": "t2", "point": 2, "feedback": "Rigtigt. Byggepladstavler er bygget til at blive flyttet, stå udendørs og tåle hård behandling." },
+    { "tekst": "En almindelig boligtavle sat ind i en plastkasse.", "til": "t2", "point": 0, "feedback": "En boligtavle er ikke bygget eller afprøvet til forholdene på en byggeplads. Brug byggepladstavler efter DS/EN 61439-4.", "fejltype": "forkert-tavle" }
+   ]
+  },
+  "t2": {
+   "type": "valg",
+   "tekst": "Hvordan beskytter du grupperne med 16 A og 32 A stikkontakter til håndværktøj?",
+   "regler": ["r-704-rcd", "r-41-supplerende-rcd"],
+   "svar": [
+    { "tekst": "Med fejlstrømsafbrydere på højst 30 mA.", "til": "t3", "point": 2, "feedback": "Rigtigt. Stikkontakter til og med 32 A på byggepladser skal have RCD på højst 30 mA." },
+    { "tekst": "Med en fælles 300 mA fejlstrømsafbryder for hele tavlen.", "til": "t3", "point": 0, "feedback": "300 mA beskytter mod brand, men ikke mod livsfarligt stød. Stikkontakter til og med 32 A kræver højst 30 mA.", "fejltype": "rcd-for-hoej" },
+    { "tekst": "Kun med automatsikringer.", "til": "t3", "point": 0, "feedback": "Automatsikringer beskytter kablerne, ikke personer mod stød fra beskadiget værktøj. Der kræves RCD.", "fejltype": "ingen-rcd" }
+   ]
+  },
+  "t3": {
+   "type": "valg",
+   "tekst": "Tårnkranen tilsluttes en 63 A stikkontakt. Hvilken fejlstrømsbeskyttelse kræves mindst for den gruppe?",
+   "regler": ["r-704-rcd"],
+   "svar": [
+    { "tekst": "En fejlstrømsafbryder på højst 500 mA.", "til": "t4", "point": 2, "feedback": "Rigtigt. Stikkontakter over 32 A på byggepladser skal have RCD på højst 500 mA." },
+    { "tekst": "En fejlstrømsafbryder på 30 mA.", "til": "t4", "point": 1, "feedback": "Det er tilladt, fordi 30 mA er under 500 mA, men en stor maskine som en kran har ofte lækstrømme, der kan give unødige udkoblinger midt i et løft.", "fejltype": "rcd-unoedig-lav" },
+    { "tekst": "Ingen fejlstrømsafbryder. Kranen er en maskine, ikke håndværktøj.", "til": "t4", "point": 0, "feedback": "Kravet gælder stikkontakten, uanset hvad der sættes i den.", "fejltype": "ingen-rcd" }
+   ]
+  },
+  "t4": {
+   "type": "valg",
+   "tekst": "Kablet fra hovedtavlen til en undertavle skal krydse den vej, som lastbiler og gravemaskiner kører på. Hvordan gør du?",
+   "regler": ["r-704-kabler"],
+   "svar": [
+    { "tekst": "Bruger fleksibelt gummikabel (fx H07RN-F) og beskytter det mod overkørsel, fx i rør nedgravet under vejen eller i en kabelbro.", "til": "t5", "point": 2, "feedback": "Rigtigt. Kablet skal tåle slid og vand og beskyttes mod mekanisk overlast, hvor det krydser veje." },
+    { "tekst": "Lægger et PVC-installationskabel direkte hen over vejen. Det er kun midlertidigt.", "til": "t4k", "point": 0, "feedback": "Et PVC-installationskabel er ikke bygget til at ligge frit på en byggeplads, og intet kabel tåler gentagen overkørsel uden beskyttelse.", "fejltype": "kabel-paa-vej" }
+   ]
+  },
+  "t4k": {
+   "type": "valg",
+   "tekst": "Efter en uge har en gravemaskine kørt kappen af kablet. Fejlstrømsafbryderen i hovedtavlen kobler fra, og tre undertavler med kran og håndværktøj står stille. Entreprenøren ringer og spørger, hvornår der er strøm igen.",
+   "regler": ["r-704-kabler"],
+   "svar": [
+    { "tekst": "Jeg skifter kablet til gummikabel i et nedgravet rør under vejen.", "til": "t5", "point": 0, "feedback": "Lektien: kabler på byggepladser skal vælges og føres efter forholdene, også når installationen er midlertidig." }
+   ]
+  },
+  "t5": {
+   "type": "flere",
+   "tekst": "Installationen er klar. Hvad skal være på plads, før byggestrømmen tages i brug? Vælg alle rigtige.",
+   "point": 3,
+   "til": "slut",
+   "regler": ["r-6-verifikation", "r-704-tavler", "r-704-rcd"],
+   "fejltype": "byggeplads-aflevering",
+   "muligheder": [
+    { "tekst": "Eftersyn og afprøvning af installationen, herunder alle fejlstrømsafbrydere, og dokumentation af resultatet.", "rigtig": true, "feedback": "En midlertidig installation skal verificeres som enhver anden." },
+    { "tekst": "Tydelig mærkning af tavler, grupper og stikkontakter, så det er let at finde den rigtige afbryder.", "rigtig": true, "feedback": "Mærkning gør det muligt at afbryde det rigtige hurtigt, også for andre end dig." },
+    { "tekst": "En aftale med entreprenøren om, hvem der jævnligt trykker på RCD'ernes testknap og ser tavler og kabler efter i byggeperioden.", "rigtig": true, "feedback": "God praksis: byggepladser er hårde ved materiellet, så fejl opstår undervejs. (Hvor ofte, står ikke i denne app. Kontrollér krav og anbefalinger.)" },
+    { "tekst": "Ingen afprøvning er nødvendig, fordi installationen kun skal bruges i et år.", "rigtig": false, "feedback": "Midlertidige installationer skal verificeres før brug.", "fejltype": "midlertidig-uden-verifikation" }
+   ]
+  },
+  "slut": {
+   "type": "slut",
+   "tekst": "Byggestrømmen er sat i drift. Gennemgå forklaringerne nedenfor."
+  }
+ }
+}

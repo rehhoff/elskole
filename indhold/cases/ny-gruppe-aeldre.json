@@ -1,0 +1,146 @@
+{
+ "id": "case-ny-gruppe-aeldre",
+ "titel": "Ny gruppe i ældre installation",
+ "emne": "dim",
+ "intro": "Et parcelhus fra 1970'erne har et TT-system: jordspyd, jordleder til hovedjordskinnen og en gammel fejlstrømsafbryder for hele huset. Kunden vil have en ny 1-faset gruppe med stikkontakter til et værksted i garagen. Du skal tilslutte den nye gruppe i den eksisterende tavle.",
+ "start": "t1",
+ "trin": {
+  "t1": {
+   "type": "valg",
+   "tekst": "Hvad gør du først?",
+   "regler": ["r-41-tt-ra", "r-6-verifikation"],
+   "svar": [
+    { "tekst": "Måler jordmodstanden og afprøver den eksisterende fejlstrømsafbryder, før den nye gruppe tilsluttes.", "til": "t2", "point": 2, "feedback": "Rigtigt. Den nye gruppe bygger på den eksisterende jording og fejlbeskyttelse. Den skal virke, før du kobler mere på." },
+    { "tekst": "Tilslutter den nye gruppe. Den gamle installation er lovlig, som den er.", "til": "t2", "point": 0, "feedback": "Den eksisterende installation var måske lovlig, da den blev lavet, men din nye gruppe er kun sikker, hvis jording og fejlbeskyttelse virker. Det skal du kontrollere.", "fejltype": "eksisterende-ikke-kontrolleret" },
+    { "tekst": "Forbinder beskyttelseslederen til nullen i tavlen for at få en bedre jord.", "til": "t1k", "point": 0, "feedback": "I et TT-system må beskyttelseslederen ikke forbindes til nullen i installationen. Afbrydes nullen, kan alle udsatte dele få fasespænding.", "fejltype": "nulling-i-tt" }
+   ]
+  },
+  "t1k": {
+   "type": "valg",
+   "tekst": "Din kollega ser forbindelsen og stopper arbejdet: systemet er TT, og nullen fra nettet er ikke beregnet til at bære installationens beskyttelse. Forbindelsen skal fjernes.",
+   "regler": ["r-41-tt-ra"],
+   "svar": [
+    { "tekst": "Jeg fjerner forbindelsen og måler jordmodstanden i stedet.", "til": "t2", "point": 0, "feedback": "Lektien: find ud af systemets type (TN eller TT), før du ændrer noget ved jordingen." }
+   ]
+  },
+  "t2": {
+   "type": "tal",
+   "tekst": "Den nye gruppe beskyttes af en RCD med $I_{\\Delta n}$ = 30 mA. Hvad er den største jordmodstand $R_A$, betingelsen $R_A \\cdot I_{\\Delta n} \\le 50$ V tillader?",
+   "enhed": "Ω",
+   "facit": 1666.7,
+   "tol": 10,
+   "point": 2,
+   "til": "t3",
+   "regler": ["r-41-tt-ra"],
+   "loesning": "$R_A \\le \\dfrac{50\\ \\text{V}}{0{,}030\\ \\text{A}} \\approx 1667\\ \\Omega$",
+   "feedbackRigtig": "Rigtigt. Grænsen er høj, men jordmodstanden varierer med årstid og fugt, så i praksis vil man have en langt lavere og stabil værdi.",
+   "feedbackForkert": "Ikke helt. Del 50 V med mærkefejlstrømmen i ampere.",
+   "fejltype": "tt-ra",
+   "typiske": [
+    { "vaerdi": 1.667, "tol": 0.05, "fejltype": "enhed-ma", "feedback": "Du har regnet med 30 i stedet for 0,030 A. Husk at omregne mA til A." }
+   ]
+  },
+  "t3": {
+   "type": "valg",
+   "tekst": "Du måler $R_A$ = 85 Ω. Den gamle fejlstrømsafbryder udløser ikke, når du afprøver den med instrumentet. Hvad gør du?",
+   "regler": ["r-41-tt-ra", "r-rcd-typer"],
+   "svar": [
+    { "tekst": "Udskifter den gamle fejlstrømsafbryder med en ny, afprøver igen og dokumenterer det.", "til": "t4", "point": 2, "feedback": "Godt. Uden fungerende fejlstrømsafbryder er der ingen fejlbeskyttelse i et TT-system, fordi fejlstrømmen gennem jorden er for lille til at sikringer udløser." },
+    { "tekst": "Giver ejeren skriftlig besked om fejlen og anbefaler udskiftning straks. Den nye gruppe får sin egen fungerende RCD.", "til": "t4", "point": 2, "feedback": "Godt. Ejeren skal vide, at resten af huset er uden fejlbeskyttelse. Så kan fejlen blive udbedret." },
+    { "tekst": "Lader den sidde uden at sige noget. Det er ikke en del af opgaven.", "til": "t4", "point": 0, "feedback": "En fejl, der gør hele huset farligt, skal du sige til ejeren, også når den ligger uden for opgaven.", "fejltype": "fejl-ikke-meldt" }
+   ]
+  },
+  "t4": {
+   "type": "tal",
+   "tekst": "Kablet er 3G2,5 mm² og føres i en isoleret væg sammen med to andre belastede kabler. Forudsæt, at tabelværdien for forlægningsmetoden er $I_t$ = 21 A, korrektionsfaktoren for samlet forlægning er 0,8 og for temperatur 1,0. Hvad er $I_z$?",
+   "enhed": "A",
+   "facit": 16.8,
+   "tol": 0.2,
+   "point": 2,
+   "til": "t5",
+   "regler": ["r-52-stroemvaerdi"],
+   "loesning": "$I_z = I_t \\cdot k_{temp} \\cdot k_{samlet} = 21 \\cdot 1{,}0 \\cdot 0{,}8 = 16{,}8\\ \\text{A}$",
+   "feedbackRigtig": "Rigtigt.",
+   "feedbackForkert": "Ikke helt. Gang tabelværdien med begge korrektionsfaktorer.",
+   "fejltype": "iz-beregning",
+   "typiske": [
+    { "vaerdi": 21, "tol": 0.2, "fejltype": "glemt-ksamlet", "feedback": "Du har glemt korrektionen for samlet forlægning." },
+    { "vaerdi": 26.25, "tol": 0.2, "fejltype": "delt-med-k", "feedback": "Du har delt med korrektionsfaktoren. Den skal ganges på." }
+   ]
+  },
+  "t5": {
+   "type": "valg",
+   "tekst": "Belastningen er $I_b$ = 12 A, og kablets $I_z$ = 16,8 A. Må gruppen beskyttes af en 16 A automatsikring?",
+   "regler": ["r-43-koordinering"],
+   "svar": [
+    { "tekst": "Ja. $I_b \\le I_n \\le I_z$ (12 ≤ 16 ≤ 16,8), og for automatsikringer følger $I_2 \\le 1{,}45 \\cdot I_z$ af $I_n \\le I_z$.", "til": "t6", "point": 2, "feedback": "Rigtigt." },
+    { "tekst": "Nej. $I_z$ skal være mindst 1,45 · $I_n$ = 23,2 A.", "til": "t6", "point": 0, "feedback": "Faktoren 1,45 hører til $I_2$: $I_2 \\le 1{,}45 \\cdot I_z$. For automatsikringer er $I_2 = 1{,}45 \\cdot I_n$, så $I_n \\le I_z$ er nok.", "fejltype": "forkert-145" },
+    { "tekst": "Ja, fordi tabelværdien er 21 A.", "til": "t6", "point": 0, "feedback": "Svaret er ja, men begrundelsen er forkert. Det er den korrigerede $I_z$ = 16,8 A, der skal sammenlignes med.", "fejltype": "glemt-korrektion" }
+   ]
+  },
+  "t6": {
+   "type": "tal",
+   "tekst": "Gruppen er 35 m lang, 1-faset 230 V, $I_b$ = 12 A, 2,5 mm² kobber, $\\cos\\varphi$ = 1. Brug $\\rho$ = 0,0225 Ω·mm²/m og se bort fra reaktans. Beregn spændingsfaldet i procent af 230 V.",
+   "enhed": "%",
+   "facit": 3.29,
+   "tol": 0.1,
+   "point": 2,
+   "til": "t6b",
+   "regler": ["r-52-spaendingsfald"],
+   "loesning": "$R = \\dfrac{0{,}0225 \\cdot 35}{2{,}5} = 0{,}315\\ \\Omega$, $\\Delta U = 2 \\cdot 12 \\cdot 0{,}315 \\approx 7{,}56\\ \\text{V}$, $\\dfrac{7{,}56}{230} \\cdot 100 \\approx 3{,}29\\ \\%$",
+   "feedbackRigtig": "Rigtigt.",
+   "feedbackForkert": "Ikke helt. Ved 1-faset løber strømmen både ud og tilbage: $\\Delta U = 2 \\cdot I \\cdot R$.",
+   "fejltype": "deltau-beregning",
+   "typiske": [
+    { "vaerdi": 1.64, "tol": 0.06, "fejltype": "glemt-2-enfaset", "feedback": "Du har kun regnet med den ene leder. Ved 1-faset indgår både fase- og nulleder: $2 \\cdot I \\cdot R$." }
+   ]
+  },
+  "t6b": {
+   "type": "valg",
+   "tekst": "Projektets krav er, at spændingsfaldet fra tavlen til det fjerneste udtag højst må være 4 %. Gruppens spændingsfald er ca. 3,3 %. Hvad konkluderer du?",
+   "regler": ["r-52-spaendingsfald"],
+   "svar": [
+    { "tekst": "Kravet er overholdt for gruppen, men der er kun lidt luft. Ved længere kabel eller større belastning bør tværsnittet øges.", "til": "t7", "point": 2, "feedback": "Rigtigt. Overvej også spændingsfaldet før tavlen, hvis kravet gælder fra forsyningspunktet." },
+    { "tekst": "Kravet er ikke overholdt.", "til": "t7", "point": 0, "feedback": "3,3 % er under 4 %, så kravet er overholdt.", "fejltype": "deltau-vurdering" }
+   ]
+  },
+  "t7": {
+   "type": "tal",
+   "tekst": "Du måler sløjfeimpedansen mellem fase og nul i gruppens yderste ende til 0,92 Ω. Hvor stor er kortslutningsstrømmen $I_k$ ved 230 V?",
+   "enhed": "A",
+   "facit": 250,
+   "tol": 5,
+   "point": 2,
+   "til": "t8",
+   "regler": ["r-mcb-kurver"],
+   "loesning": "$I_k = \\dfrac{U_0}{Z} = \\dfrac{230}{0{,}92} = 250\\ \\text{A}$",
+   "feedbackRigtig": "Rigtigt.",
+   "feedbackForkert": "Ikke helt. Brug Ohms lov: $I_k = U_0 / Z$.",
+   "fejltype": "ik-beregning"
+  },
+  "t8": {
+   "type": "valg",
+   "tekst": "Hvilken 16 A automatsikring giver med sikkerhed momentan udløsning ved en kortslutning i gruppens yderste ende ($I_k$ = 250 A)?",
+   "regler": ["r-mcb-kurver"],
+   "svar": [
+    { "tekst": "B16. Momentan udløsning senest ved 5 · 16 = 80 A, og 250 A er langt over.", "til": "t9", "point": 2, "feedback": "Rigtigt." },
+    { "tekst": "D16. Den er bedst til værktøj med høj startstrøm.", "til": "t9", "point": 0, "feedback": "En D16 udløser først momentant ved op til 20 · 16 = 320 A, og 250 A er ikke nok til at være sikker.", "fejltype": "kurve-for-hoej" },
+    { "tekst": "Kurven er ligegyldig. Det er RCD'en, der beskytter.", "til": "t9", "point": 0, "feedback": "RCD'en beskytter ved fejl til jord. Ved kortslutning mellem fase og nul er det automatsikringen, der skal udløse.", "fejltype": "rcd-som-kortslutning" }
+   ]
+  },
+  "t9": {
+   "type": "valg",
+   "tekst": "Efter udskiftningen sidder der en 30 mA RCD for hele huset. Værkstedsgruppen får også sin egen 30 mA RCD. Hvordan sikrer du, at en fejl i værkstedet kun kobler værkstedet fra?",
+   "regler": ["r-selektivitet", "r-41-supplerende-rcd"],
+   "svar": [
+    { "tekst": "Grupperne fordeles på flere RCD'er side om side (eller RCBO'er), så værkstedets RCD ikke sidder i serie med en anden 30 mA RCD.", "til": "slut", "point": 2, "feedback": "Rigtigt. RCD'er side om side giver selektivitet og begrænser, hvor meget der falder ud ved en fejl." },
+    { "tekst": "Den forankoblede gøres tidsforsinket (type S) med højere mærkefejlstrøm, fx 300 mA, mens grupperne under den har 30 mA, hvor det kræves.", "til": "slut", "point": 2, "feedback": "Rigtigt. Husk, at alle grupper, der kræver 30 mA, så skal have deres egen 30 mA RCD under den selektive." },
+    { "tekst": "Ingenting. Den RCD, der sidder nærmest fejlen, udløser altid først.", "til": "slut", "point": 0, "feedback": "To 30 mA RCD'er i serie er ikke selektive. Det er tilfældigt, hvilken der udløser først, og ofte udløser begge.", "fejltype": "rcd-i-serie" }
+   ]
+  },
+  "slut": {
+   "type": "slut",
+   "tekst": "Værkstedsgruppen er tilsluttet, og den eksisterende fejlbeskyttelse virker igen. Gennemgå forklaringerne nedenfor."
+  }
+ }
+}

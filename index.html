@@ -139,7 +139,151 @@
   <!-- Fanen lægges her som <template x-if="klar && view==='opgaver'"><section id="v-opgaver">…</section></template> -->
 
   <!-- ===== CASES (fase 4, js/cases.js) ===== -->
-  <!-- Fanen lægges her som <template x-if="klar && view==='cases'"><section id="v-cases">…</section></template> -->
+  <template x-if="klar && view==='cases'">
+    <section class="flex flex-col gap-4" id="v-cases" x-init="caseStart()">
+      <div class="flex flex-wrap gap-2 items-center">
+        <button id="case-vis-liste" class="btn" :class="caseVis==='liste' && 'sel'" @click="caseVis='liste'">Cases</button>
+        <button id="case-vis-regler" class="btn" :class="caseVis==='regler' && 'sel'" @click="caseVis='regler'">Regelbibliotek</button>
+        <span class="text-xs text-muted sm:ml-auto">Vejledende indhold. Reglerne er ikke kontrolleret mod kilden.</span>
+      </div>
+      <p class="warn text-sm" x-show="caseFejl" x-text="caseFejl"></p>
+      <p class="text-muted" x-show="caseHenter">Henter cases …</p>
+
+      <!-- Liste over cases med fremskridt -->
+      <template x-if="caseVis==='liste' && !caseAktiv">
+        <div class="grid sm:grid-cols-2 gap-3" id="case-liste">
+          <template x-for="c in caseListe" :key="c.id">
+            <div class="panel p-4 flex flex-col gap-2">
+              <div class="flex flex-wrap gap-2 items-center text-xs text-muted">
+                <span class="tag" x-text="emneKort(c.emne)"></span>
+                <span class="num ml-auto" x-text="caseForsoeg(c.id).length + ' forsøg · bedste ' + casePct(caseBedste(c.id))"></span>
+              </div>
+              <h2 class="hd text-lg" x-text="c.titel"></h2>
+              <p class="text-sm text-muted klip" x-text="c.intro"></p>
+              <div class="meter"><i :style="'width:' + Math.round((caseBedste(c.id) || 0) * 100) + '%'"></i></div>
+              <button class="btn btn-primary self-start" :id="'case-start-' + c.id" @click="caseBegynd(c)" x-text="caseForsoeg(c.id).length ? 'Prøv igen' : 'Start'"></button>
+            </div>
+          </template>
+        </div>
+      </template>
+
+      <!-- En case i gang -->
+      <template x-if="caseVis==='liste' && caseAktiv">
+        <div class="flex flex-col gap-3" id="case-aktiv" x-data="{ get a() { return caseAktiv || CASE_TOM }, get t() { return caseTrin() || CASE_TOM.c.trin.slut } }">
+          <div class="flex flex-wrap items-center gap-2">
+            <h2 class="hd text-xl" x-text="a.c.titel"></h2>
+            <button class="btn btn-ghost ml-auto" id="case-luk" @click="a.slut ? caseLuk() : spoerg('Afbryd casen? Forsøget gemmes ikke.', () => caseLuk(), 'Afbryd')" x-text="a.slut ? 'Tilbage til listen' : 'Afbryd'"></button>
+          </div>
+          <details class="panel p-3 text-sm" :open="!a.vej.length">
+            <summary class="cursor-pointer text-muted">Situationen</summary>
+            <div class="mt-2" x-html="vis(a.c.intro)"></div>
+          </details>
+
+          <template x-if="!a.slut">
+            <article class="kortflade p-5 flex flex-col gap-4" id="case-trin">
+              <div class="flex flex-wrap items-center gap-2 text-xs text-muted">
+                <span class="num" x-text="'Trin ' + (a.vej.length + 1)"></span>
+                <template x-for="rid in (t.regler || [])" :key="rid">
+                  <button class="tag cursor-pointer" @click="caseVisRegel(rid)" x-text="caseRegel(rid) ? caseRegel(rid).titel : rid"></button>
+                </template>
+              </div>
+              <div class="kt-tekst" id="case-tekst" x-html="vis(t.tekst)"></div>
+
+              <template x-if="t.type==='valg'">
+                <div class="flex flex-col gap-2">
+                  <template x-for="(s, i) in t.svar" :key="i">
+                    <button class="btn !justify-start !whitespace-normal text-left !py-2 !text-sm" :id="'case-svar-' + i" :disabled="!!a.svar && a.svar.v !== i"
+                      :class="a.svar && a.svar.v === i && 'sel'" @click="caseSvarValg(i)"><span x-html="vis(s.tekst)"></span></button>
+                  </template>
+                </div>
+              </template>
+
+              <template x-if="t.type==='tal'">
+                <div class="flex flex-wrap items-end gap-2">
+                  <label class="f">Dit svar<input id="case-tal" class="inp num !w-40" inputmode="decimal" autocomplete="off" x-model="a.tal" :disabled="!!a.svar" @keydown.enter.prevent="caseSvarTal()"></label>
+                  <span class="pb-2" x-text="t.enhed"></span>
+                  <button id="case-tjek" class="btn btn-primary" x-show="!a.svar" @click="caseSvarTal()">Tjek</button>
+                </div>
+              </template>
+
+              <template x-if="t.type==='flere'">
+                <div class="flex flex-col gap-2">
+                  <template x-for="(m, i) in t.muligheder" :key="i">
+                    <label class="panel p-2 flex gap-2 items-start text-sm cursor-pointer" :style="a.svar ? 'border-color:' + (m.rigtig ? 'var(--ok)' : (a.flere[i] ? 'var(--crit)' : 'var(--line)')) : ''">
+                      <input type="checkbox" class="mt-1" :id="'case-flere-' + i" x-model="a.flere[i]" :disabled="!!a.svar">
+                      <span class="flex flex-col gap-1"><span x-html="vis(m.tekst)"></span>
+                        <span class="text-xs text-muted" x-show="a.svar" x-html="(m.rigtig ? 'Rigtig: ' : 'Forkert: ') + vis(m.feedback)"></span></span>
+                    </label>
+                  </template>
+                  <button id="case-tjek" class="btn btn-primary self-start" x-show="!a.svar" @click="caseSvarFlere()">Tjek</button>
+                </div>
+              </template>
+
+              <template x-if="a.svar">
+                <div class="panel p-3 flex flex-col gap-2 text-sm" id="case-feedback" x-data="{ get sv() { return a.svar || { p:0, m:0, feedback:'' } } }" :style="'border-left:4px solid ' + caseFarve(sv)">
+                  <p class="font-semibold" x-text="sv.m === 0 ? 'Konsekvens' : sv.p >= sv.m ? 'Rigtigt' : sv.p > 0 ? 'Delvis rigtigt' : 'Ikke rigtigt'"></p>
+                  <div x-show="sv.feedback" x-html="vis(sv.feedback)"></div>
+                  <div x-show="t.type==='tal' && t.loesning" class="kt-tekst !text-base" x-html="vis(t.loesning || '')"></div>
+                  <button id="case-videre" class="btn btn-primary self-start" @click="caseVidere()">Fortsæt</button>
+                </div>
+              </template>
+            </article>
+          </template>
+
+          <!-- Gennemgang efter casen -->
+          <template x-if="a.slut">
+            <div class="flex flex-col gap-3" id="case-slut">
+              <div class="panel p-4 flex flex-col gap-2">
+                <div class="flex flex-wrap items-baseline gap-3"><span class="num text-3xl" id="case-score" x-text="casePct(a.score)"></span>
+                  <span class="text-sm" x-text="a.score >= 0.8 ? 'Godt klaret.' : 'Gennemgå forklaringerne og prøv igen.'"></span></div>
+                <p class="text-sm" x-html="vis(t.tekst)"></p>
+              </div>
+              <template x-for="(g, i) in caseGennemgang()" :key="i">
+                <div class="panel p-3 flex flex-col gap-2 text-sm case-gennemgang" :style="'border-left:4px solid ' + caseFarve(g.v)">
+                  <div class="flex gap-2 items-baseline"><span class="num text-xs text-muted" x-text="(i + 1) + '.'"></span><div x-html="vis(g.t.tekst)"></div>
+                    <span class="num text-xs text-muted ml-auto whitespace-nowrap" x-show="g.v.m" x-text="g.v.p + '/' + g.v.m"></span></div>
+                  <p><span class="text-muted">Dit valg: </span><span x-html="vis(g.valg)"></span></p>
+                  <div class="text-muted" x-html="vis(g.fb)"></div>
+                  <div class="flex flex-wrap gap-1" x-show="(g.t.regler || []).length">
+                    <template x-for="rid in (g.t.regler || [])" :key="rid"><button class="tag cursor-pointer" @click="caseVisRegel(rid)" x-text="caseRegel(rid) ? caseRegel(rid).titel : rid"></button></template>
+                  </div>
+                </div>
+              </template>
+              <div class="flex flex-wrap gap-2">
+                <button class="btn btn-primary" @click="caseBegynd(a.c)">Prøv igen</button>
+                <button class="btn" @click="caseLuk()">Tilbage til listen</button>
+              </div>
+            </div>
+          </template>
+        </div>
+      </template>
+
+      <!-- Regelbibliotek -->
+      <template x-if="caseVis==='regler'">
+        <div class="flex flex-col gap-3" id="case-regler">
+          <label class="f">Søg i reglerne<input id="case-regel-soeg" class="inp" type="search" x-model="caseRegelQ" placeholder="Titel, tekst, tag, dokument eller afsnit"></label>
+          <p class="text-xs text-muted">Resuméerne er skrevet med egne ord. En regel er ikke kontrolleret mod kilden, før der står "Kontrolleret". Slå altid op i den gældende udgave.</p>
+          <p class="text-sm text-muted num" x-text="caseReglerListe().length + ' regler'"></p>
+          <template x-for="r in caseReglerListe()" :key="r.id">
+            <div class="panel p-3 flex flex-col gap-2 case-regel">
+              <div class="flex flex-wrap items-center gap-2">
+                <h3 class="font-semibold" x-text="r.titel"></h3>
+                <span class="st" :style="'color:' + (r.verificeret ? 'var(--ok)' : 'var(--crit)')" x-text="r.verificeret ? 'Kontrolleret' : 'Ikke kontrolleret mod kilden'"></span>
+              </div>
+              <p class="text-xs text-muted" x-text="caseKildeTxt(r)"></p>
+              <div class="text-sm" x-html="vis(r.resume)"></div>
+              <div class="flex flex-wrap items-center gap-1">
+                <span class="tag" x-text="emneKort(r.emne)"></span>
+                <template x-for="tg in (r.tags || [])" :key="tg"><span class="tag" x-text="tg"></span></template>
+                <a class="text-xs underline ml-2" x-show="r.url" :href="r.url" target="_blank" rel="noopener">Kilde</a>
+                <button class="btn ml-auto case-lav-kort" :disabled="caseHarKort(r)" @click="caseLavKort(r)" x-text="caseHarKort(r) ? 'Kort findes' : 'Lav kort'"></button>
+              </div>
+            </div>
+          </template>
+        </div>
+      </template>
+    </section>
+  </template>
 
   <!-- ===== FEJLFINDING (fase 5, js/fejlfinding.js) ===== -->
   <!-- Fanen lægges her som <template x-if="klar && view==='fejlfinding'"><section id="v-fejlfinding">…</section></template> -->
@@ -317,6 +461,24 @@
   <!-- ===== DIALOGER: OPGAVER (js/opgaver.js) ===== -->
 
   <!-- ===== DIALOGER: CASES (js/cases.js) ===== -->
+  <template x-if="modal==='caseRegel' && caseRegelVist">
+    <div class="sloer" @click.self="lukModal()">
+      <div class="dialog p-4 flex flex-col gap-3" role="dialog" aria-modal="true" aria-labelledby="case-regel-titel" id="case-regel-dialog">
+        <h2 id="case-regel-titel" class="hd text-xl" x-text="caseRegelVist.titel"></h2>
+        <div class="flex flex-wrap items-center gap-2">
+          <span class="st" :style="'color:' + (caseRegelVist.verificeret ? 'var(--ok)' : 'var(--crit)')" x-text="caseRegelVist.verificeret ? 'Kontrolleret' : 'Ikke kontrolleret mod kilden'"></span>
+          <span class="text-xs text-muted" x-text="caseKildeTxt(caseRegelVist)"></span>
+        </div>
+        <div class="kt-tekst !text-base" x-html="vis(caseRegelVist.resume)"></div>
+        <div class="flex flex-wrap gap-1"><template x-for="tg in (caseRegelVist.tags || [])" :key="tg"><span class="tag" x-text="tg"></span></template></div>
+        <div class="flex flex-wrap gap-2 justify-end items-center">
+          <a class="text-sm underline mr-auto" x-show="caseRegelVist.url" :href="caseRegelVist.url" target="_blank" rel="noopener">Kilde</a>
+          <button class="btn" :disabled="caseHarKort(caseRegelVist)" @click="caseLavKort(caseRegelVist)" x-text="caseHarKort(caseRegelVist) ? 'Kort findes' : 'Lav kort'"></button>
+          <button class="btn btn-primary" @click="lukModal()">Luk</button>
+        </div>
+      </div>
+    </div>
+  </template>
 
   <!-- ===== DIALOGER: FEJLFINDING (js/fejlfinding.js) ===== -->
 

@@ -1,0 +1,111 @@
+{
+ "id": "case-elbil-11kw",
+ "titel": "11 kW elbillader i parcelhus",
+ "emne": "saer",
+ "intro": "Familien i et parcelhus fra 2005 har købt en elbil og vil have en 11 kW lader (3 × 16 A) på væggen i carporten. Huset har 3 × 25 A hovedsikringer, elkomfur og luft/vand-varmepumpe. Installationen er et TN-system, og tavlen har plads til en ny gruppe. Du er elinstallatør på opgaven.",
+ "start": "t1",
+ "trin": {
+  "t1": {
+   "type": "tal",
+   "tekst": "Hvor stor strøm trækker laderen pr. fase ved fuld effekt? Brug $P$ = 11 kW, $U$ = 400 V og $\\cos\\varphi$ = 1.",
+   "enhed": "A",
+   "facit": 15.88,
+   "tol": 0.3,
+   "point": 2,
+   "til": "t2",
+   "regler": ["r-722-egen-gruppe"],
+   "loesning": "$I = \\dfrac{P}{\\sqrt{3} \\cdot U \\cdot \\cos\\varphi} = \\dfrac{11\\,000}{\\sqrt{3} \\cdot 400 \\cdot 1} \\approx 15{,}9\\ \\text{A}$",
+   "feedbackRigtig": "Rigtigt. 11 kW svarer til 16 A pr. fase, og laderen kan køre med den strøm i mange timer.",
+   "feedbackForkert": "Ikke helt. Brug formlen for 3-faset effekt.",
+   "fejltype": "3f-effekt",
+   "typiske": [
+    { "vaerdi": 27.5, "tol": 0.5, "fejltype": "glemt-sqrt3", "feedback": "Du har delt med 400 V uden $\\sqrt{3}$. Ved 3-faset effekt indgår $\\sqrt{3}$." },
+    { "vaerdi": 47.83, "tol": 0.5, "fejltype": "enfaset-formel", "feedback": "Du har regnet, som om laderen var 1-faset på 230 V. Laderen fordeler effekten på tre faser." }
+   ]
+  },
+  "t2": {
+   "type": "valg",
+   "tekst": "Hovedsikringerne er 3 × 25 A. Om vinteren kører varmepumpe og komfur ofte samtidig med andet forbrug. Hvad gør du, før du lover kunden en 11 kW lader?",
+   "regler": ["r-netselskab-anmeldelse", "r-722-egen-gruppe"],
+   "svar": [
+    { "tekst": "Laver en belastningsvurdering af hele huset og foreslår enten en lader med dynamisk belastningsstyring eller en større tilslutning aftalt med netselskabet.", "til": "t3", "point": 2, "feedback": "Godt. Laderen kører med fuld strøm i lang tid, så den skal lægges oven i husets øvrige belastning. Belastningsstyring kan sænke ladestrømmen, når huset bruger meget." },
+    { "tekst": "Tilslutter laderen direkte. 16 A er jo mindre end 25 A.", "til": "t2k", "point": 0, "feedback": "Laderens 16 A kommer oven i husets øvrige forbrug på de samme faser. Det er den samlede belastning, der skal holdes under hovedsikringen.", "fejltype": "ingen-belastningsvurdering" },
+    { "tekst": "Skifter selv hovedsikringerne til 35 A, så der er luft nok.", "til": "t2n", "point": 0, "feedback": "Hovedsikringerne er plomberet af netselskabet. En større tilslutning skal aftales med og meldes til netselskabet, og stikledningen skal kunne klare det.", "fejltype": "hovedsikring-uden-netselskab" }
+   ]
+  },
+  "t2k": {
+   "type": "valg",
+   "tekst": "En kold januaraften sætter kunden bilen til opladning, mens varmepumpen kører, og der laves mad. Efter en halv time springer en hovedsikring, og huset er delvis uden strøm. Kunden ringer til dig.",
+   "regler": ["r-722-egen-gruppe"],
+   "svar": [
+    { "tekst": "Jeg laver belastningsvurderingen nu og foreslår belastningsstyring eller større tilslutning.", "til": "t3", "point": 0, "feedback": "Lektien: vurdér altid den samlede belastning, før en stor, langvarig belastning som en lader tilsluttes." }
+   ]
+  },
+  "t2n": {
+   "type": "valg",
+   "tekst": "Netselskabet opdager ved en kontrol, at plomberingen er brudt, og at hovedsikringerne er større end den aftalte tilslutning. Kunden får en regning, og du skal redegøre for ændringen.",
+   "regler": ["r-netselskab-anmeldelse"],
+   "svar": [
+    { "tekst": "Jeg melder den ønskede ændring til netselskabet og laver en belastningsvurdering.", "til": "t3", "point": 0, "feedback": "Lektien: ændringer af tilslutningen går altid gennem netselskabet." }
+   ]
+  },
+  "t3": {
+   "type": "valg",
+   "tekst": "I laderens datablad står, at den selv registrerer jævnfejlstrøm på 6 mA (indbygget DC-detektering). Hvilken fejlstrømsbeskyttelse vælger du i tavlen?",
+   "regler": ["r-722-rcd", "r-rcd-typer"],
+   "svar": [
+    { "tekst": "En separat RCD type A, 30 mA, kun til laderens gruppe.", "til": "t4", "point": 2, "feedback": "Rigtigt. Ladepunktet skal have sin egen RCD på højst 30 mA, mindst type A. Da laderen selv registrerer jævnfejlstrøm, er type A tilstrækkelig." },
+    { "tekst": "En separat RCD type B, 30 mA, kun til laderens gruppe.", "til": "t4", "point": 1, "feedback": "Det er tilladt, men ikke nødvendigt her, fordi laderen selv registrerer jævnfejlstrøm. Type B koster mere. Kontrollér også, at der ikke sidder en type A foran, som jævnfejlstrøm kan påvirke.", "fejltype": "rcd-overdimensioneret" },
+    { "tekst": "Laderen kobles på husets eksisterende fælles RCD type A sammen med stikkontakterne.", "til": "t4", "point": 0, "feedback": "Hvert ladepunkt skal have sin egen fejlstrømsafbryder. En fejl i laderen må ikke slå andre grupper fra, og andre gruppers fejl må ikke påvirke laderens beskyttelse.", "fejltype": "ladepunkt-uden-egen-rcd" },
+    { "tekst": "En separat RCD type AC, 30 mA.", "til": "t4", "point": 0, "feedback": "Type AC reagerer kun på sinusformet vekselstrøm. Til ladepunkter kræves mindst type A.", "fejltype": "rcd-type-ac" }
+   ]
+  },
+  "t4": {
+   "type": "valg",
+   "tekst": "Gruppen til laderen får en 16 A automatsikring og et 5G2,5 mm² kabel, som føres 25 m gennem garagens isolerede væg og videre i rør på muren. Hvad skal være opfyldt for kabel og sikring?",
+   "regler": ["r-43-koordinering", "r-52-stroemvaerdi"],
+   "svar": [
+    { "tekst": "$I_b \\le I_n \\le I_z$, hvor $I_z$ er kablets strømværdi efter korrektion for forlægning, temperatur og samlet forlægning.", "til": "t5", "point": 2, "feedback": "Rigtigt. Isoleret væg og samlet forlægning kan sænke $I_z$ betydeligt, så tabelværdien skal korrigeres." },
+    { "tekst": "Det er nok, at sikringen er større end laderens strøm.", "til": "t5", "point": 0, "feedback": "Sikringen skal også være mindre end eller lig med kablets korrigerede strømværdi $I_z$, ellers kan kablet blive overbelastet uden at sikringen udløser.", "fejltype": "glemt-iz" },
+    { "tekst": "Kablet skal kunne tåle hovedsikringens strøm på 25 A.", "til": "t5", "point": 0, "feedback": "Kablet beskyttes af gruppens egen sikring. Det er den, kablet skal koordineres med.", "fejltype": "forkert-sikring-koordinering" }
+   ]
+  },
+  "t5": {
+   "type": "tal",
+   "tekst": "Beregn spændingsfaldet i procent for laderens gruppe: 3-faset, $I$ = 16 A, $L$ = 25 m, 2,5 mm² kobber, $\\cos\\varphi$ = 1. Brug $\\rho$ = 0,0225 Ω·mm²/m og se bort fra reaktans. Svar i procent af 400 V.",
+   "enhed": "%",
+   "facit": 1.56,
+   "tol": 0.08,
+   "point": 2,
+   "til": "t6",
+   "regler": ["r-52-spaendingsfald"],
+   "loesning": "$R = \\dfrac{0{,}0225 \\cdot 25}{2{,}5} = 0{,}225\\ \\Omega$, $\\Delta U = \\sqrt{3} \\cdot 16 \\cdot 0{,}225 \\approx 6{,}24\\ \\text{V}$, $\\dfrac{6{,}24}{400} \\cdot 100 \\approx 1{,}56\\ \\%$",
+   "feedbackRigtig": "Rigtigt. Spændingsfaldet i gruppen er lille. Husk, at det samlede spændingsfald fra forsyningspunktet tæller.",
+   "feedbackForkert": "Ikke helt. Brug $\\Delta U = \\sqrt{3} \\cdot I \\cdot R$ for 3-faset og del med 400 V.",
+   "fejltype": "deltau-beregning",
+   "typiske": [
+    { "vaerdi": 0.9, "tol": 0.05, "fejltype": "glemt-sqrt3", "feedback": "Du har glemt $\\sqrt{3}$ i det 3-fasede spændingsfald." },
+    { "vaerdi": 3.13, "tol": 0.1, "fejltype": "enfaset-formel", "feedback": "Du har brugt den 1-fasede formel ($2 \\cdot I \\cdot R$ og 230 V). Laderen er 3-faset." }
+   ]
+  },
+  "t6": {
+   "type": "flere",
+   "tekst": "Laderen er monteret. Hvad skal være på plads, før den tages i brug og overdrages til kunden? Vælg alle rigtige.",
+   "point": 3,
+   "til": "slut",
+   "regler": ["r-6-verifikation", "r-autorisation", "r-netselskab-anmeldelse"],
+   "fejltype": "aflevering-mangler",
+   "muligheder": [
+    { "tekst": "Eftersyn og afprøvning af gruppen, herunder kontinuitet af beskyttelseslederen, isolationsmodstand, udkobling og test af RCD'en.", "rigtig": true, "feedback": "Verifikationen skal udføres, før installationen tages i brug." },
+    { "tekst": "Dokumentation af verifikationen, som kunden får.", "rigtig": true, "feedback": "Resultatet af verifikationen dokumenteres, og kunden får dokumentationen." },
+    { "tekst": "Melding til netselskabet om den nye belastning eller den ændrede tilslutning, når netselskabets regler kræver det.", "rigtig": true, "feedback": "Netselskabet skal kende til ændringer af tilslutningen. Hvornår en lader skal meldes, afhænger af netselskabets regler." },
+    { "tekst": "Ingen afprøvning er nødvendig, fordi laderen er CE-mærket.", "rigtig": false, "feedback": "CE-mærket gælder laderen som produkt. Installationen skal stadig verificeres.", "fejltype": "ce-i-stedet-for-verifikation" },
+    { "tekst": "Kunden skal selv anmelde laderen til kommunen.", "rigtig": false, "feedback": "Det er ikke et elteknisk krav. Meldinger om tilslutningen går til netselskabet gennem elinstallatøren.", "fejltype": "forkert-myndighed" }
+   ]
+  },
+  "slut": {
+   "type": "slut",
+   "tekst": "Laderen er installeret, verificeret og overdraget. Gennemgå forklaringerne nedenfor, og lav kort af de regler, du var i tvivl om."
+  }
+ }
+}
