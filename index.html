@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Elskolen</title>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#0d6b63">
+<link rel="icon" href="ikoner/ikon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="ikoner/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Elskolen">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+<link rel="stylesheet" href="css/app.css?v=0.1.0">
+<link rel="stylesheet" href="css/tailwind.css?v=0.1.0">
+</head>
+<body class="min-h-full">
+<p id="fail" hidden style="margin:16px;padding:12px;border:1px solid var(--crit);color:var(--crit)">Appen kunne ikke starte, fordi et script ikke blev indlæst. Genindlæs siden.</p>
+
+<div x-data="app()" x-cloak class="mx-auto max-w-5xl px-4 pb-16 pt-4 flex flex-col gap-4" @keydown.window="key($event)">
+
+  <!-- ===== HOVED ===== -->
+  <header class="flex flex-wrap items-end justify-between gap-3">
+    <div class="min-w-0">
+      <h1 class="hd text-3xl font-bold leading-none">Elskolen</h1>
+      <p class="text-xs text-muted mt-1" x-text="(storageOk ? 'Gemmes i browseren' : 'Browseren tillader ikke lokal lagring. Intet gemmes!') + ' · ' + synkTxt() + ' · version ' + appVersion"></p>
+    </div>
+    <div class="flex flex-wrap gap-2">
+      <button class="btn" x-show="installPrompt && !installeret" @click="installer()">Installér app</button>
+      <select class="inp !w-auto text-sm" aria-label="Tema" :value="tema" @change="saetTema($event.target.value)">
+        <option value="auto">Tema: automatisk</option><option value="light">Tema: lyst</option><option value="dark">Tema: mørkt</option>
+      </select>
+    </div>
+  </header>
+
+  <nav class="faner flex overflow-x-auto border-b border-line" role="tablist">
+    <template x-for="v in views" :key="v.id">
+      <button class="tab hd" role="tab" :aria-selected="view===v.id" :id="'tab-' + v.id" @click="gaaTil(v.id)"><span x-text="v.l"></span><kbd x-text="v.k"></kbd></button>
+    </template>
+  </nav>
+
+  <p x-show="!klar" class="text-muted">Indlæser …</p>
+
+  <!-- ===== ØV ===== -->
+  <template x-if="klar && view==='oev'">
+    <section class="flex flex-col gap-4" id="v-oev">
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-2" x-data="{ get s() { return stat() } }">
+        <div class="panel p-3"><div class="text-xs text-muted hd">I dag</div><div class="num text-2xl" id="s-idag" x-text="s.idag"></div></div>
+        <div class="panel p-3"><div class="text-xs text-muted hd">Rigtige i dag</div><div class="num text-2xl" x-text="s.rigtige == null ? '–' : s.rigtige + ' %'"></div></div>
+        <div class="panel p-3"><div class="text-xs text-muted hd">Stribe</div><div class="num text-2xl" id="s-stribe" x-text="s.stribe + (s.stribe === 1 ? ' dag' : ' dage')"></div></div>
+        <div class="panel p-3"><div class="text-xs text-muted hd">Kort i alt</div><div class="num text-2xl" x-text="s.i_alt"></div><div class="text-xs text-muted" x-text="s.nye + ' nye'"></div></div>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-2">
+        <label class="text-sm text-muted" for="oev-emne">Emne</label>
+        <select id="oev-emne" class="inp !w-auto" :value="oevEmne" @change="oevSkiftEmne($event.target.value)">
+          <option value="">Alle emner (blandet)</option>
+          <template x-for="e in emner" :key="e.id"><option :value="e.id" x-text="e.navn"></option></template>
+        </select>
+        <span class="text-sm text-muted ml-auto num" x-show="oevId" x-text="oevRest() + ' tilbage i økten'"></span>
+      </div>
+
+      <!-- Kortet -->
+      <template x-if="oevId && oevKortet()">
+        <div class="flex flex-col gap-3" x-data="{ get k() { return oevKortet() || normKort({ id:'-' }) } }">
+          <article class="kortflade p-5 flex flex-col gap-4" id="oev-kort">
+            <div class="flex flex-wrap items-center gap-2 text-xs text-muted">
+              <span class="tag" x-text="emneKort(k.emne)"></span><span class="tag" x-text="korttyper[k.type]"></span>
+              <span class="st" :class="kortStatus(k)" x-text="statusNavn[kortStatus(k)]"></span>
+              <button class="btn btn-ghost ml-auto" @click="redigerKort(k)">Ret kort</button>
+            </div>
+            <div class="kt-tekst" id="oev-front" x-html="vis(k.front)"></div>
+            <template x-if="oevVist">
+              <div class="flex flex-col gap-3 border-t border-line pt-4">
+                <div class="kt-tekst" id="oev-bag" x-html="vis(k.bag)"></div>
+                <p class="text-xs text-muted" x-show="kildeTxt(k)">Kilde: <span x-text="kildeTxt(k)"></span><span x-show="k.kilde.gyldigFra" x-text="' · gyldig fra ' + k.kilde.gyldigFra"></span></p>
+              </div>
+            </template>
+          </article>
+          <div x-show="!oevVist"><button id="oev-vis" class="btn btn-primary w-full !py-3 text-base kb" @click="oevVis()">Vis svar <kbd>Mellemrum</kbd></button></div>
+          <div x-show="oevVist" class="grid grid-cols-4 gap-2" x-data="{ get iv() { return oevVist ? oevIntervaller() : {} } }">
+            <template x-for="r in karakterer" :key="r.r">
+              <button class="btn rate kb" :class="'r' + r.r" :id="'oev-r' + r.r" @click="oevKarakter(r.r)">
+                <span class="font-semibold" x-text="r.l"></span><small x-text="iv[r.r]"></small><kbd x-text="r.k"></kbd>
+              </button>
+            </template>
+          </div>
+          <div class="flex justify-between text-xs text-muted">
+            <span class="kb" x-show="oevFortrydListe.length"><button class="btn btn-ghost" @click="oevFortryd()">Fortryd sidste</button> <kbd>Z</kbd></span>
+            <span></span>
+          </div>
+        </div>
+      </template>
+
+      <!-- Færdig eller tomt -->
+      <template x-if="!oevId">
+        <div class="panel p-6 flex flex-col gap-3 items-start" id="oev-faerdig">
+          <template x-if="aktiveKort().length">
+            <div class="flex flex-col gap-3 items-start">
+              <h2 class="hd text-xl" x-text="oevSet ? 'Færdig for i dag' : 'Intet at øve lige nu'"></h2>
+              <p class="text-sm text-muted" x-text="'Du har svaret på ' + stat().idag + ' kort i dag. ' + stat().imorgen + ' kort forfalder senest i morgen.'"></p>
+              <div class="flex flex-wrap gap-2">
+                <button class="btn" @click="oevFlereNye(5)" :disabled="!aktiveKort().some(k => !tilst[k.id])">5 nye kort mere</button>
+                <button class="btn" @click="oevStart()">Tjek igen</button>
+              </div>
+            </div>
+          </template>
+          <template x-if="!aktiveKort().length">
+            <div class="flex flex-col gap-3 items-start">
+              <h2 class="hd text-xl">Ingen kort endnu</h2>
+              <p class="text-sm text-muted">Opret dine egne kort, importér fra Anki, eller start med en pakke startkort.</p>
+              <div class="flex flex-wrap gap-2">
+                <button class="btn btn-primary" @click="gaaTil('kort'); nytKortForm()">Opret kort</button>
+                <template x-for="p in startpakker" :key="p.fil"><button class="btn" @click="indlaesStartpakke(p)" x-text="'Hent ' + p.navn"></button></template>
+              </div>
+            </div>
+          </template>
+        </div>
+      </template>
+
+      <!-- Beherskelse pr. emne -->
+      <div class="panel p-4 flex flex-col gap-2" x-show="emneStat().length">
+        <h2 class="hd text-lg">Beherskelse pr. emne</h2>
+        <p class="text-xs text-muted">Andel af emnets kort, du husker sikkert i mindst 21 dage.</p>
+        <template x-for="e in emneStat()" :key="e.id">
+          <div class="grid grid-cols-[minmax(0,1fr)_auto] gap-x-3 items-center text-sm">
+            <span x-text="e.navn"></span><span class="num text-muted" x-text="e.modne + '/' + e.antal"></span>
+            <div class="meter col-span-2"><i :style="'width:' + e.pct + '%'"></i></div>
+          </div>
+        </template>
+      </div>
+    </section>
+  </template>
+
+  <!-- ===== KORT ===== -->
+  <template x-if="klar && view==='kort'">
+    <section class="flex flex-col gap-3" id="v-kort">
+      <div class="flex flex-wrap gap-2 items-end">
+        <label class="f grow min-w-[12rem]">Søg<input id="k-soeg" class="inp" type="search" x-model="kf.q" placeholder="Tekst, tag eller kilde"></label>
+        <label class="f">Emne<select class="inp" x-model="kf.emne"><option value="">Alle</option><template x-for="e in emner" :key="e.id"><option :value="e.id" x-text="e.kort"></option></template></select></label>
+        <label class="f">Type<select class="inp" x-model="kf.type"><option value="">Alle</option><template x-for="(n, t) in korttyper" :key="t"><option :value="t" x-text="n"></option></template></select></label>
+        <label class="f">Status<select class="inp" x-model="kf.status"><option value="">Alle</option><template x-for="(n, s) in statusNavn" :key="s"><option :value="s" x-text="n"></option></template></select></label>
+        <label class="f" x-show="alleTags().length">Tag<select class="inp" x-model="kf.tag"><option value="">Alle</option><template x-for="t in alleTags()" :key="t"><option :value="t" x-text="t"></option></template></select></label>
+      </div>
+      <div class="flex flex-wrap gap-2">
+        <button id="k-ny" class="btn btn-primary" @click="nytKortForm()">Nyt kort</button>
+        <!-- ===== IMPORT-KNAP (js/import.js) ===== -->
+        <button id="k-import" class="btn" x-show="typeof aabnImport === 'function'" @click="aabnImport()">Importér fra Anki</button>
+        <template x-for="p in startpakker" :key="p.fil"><button class="btn" @click="indlaesStartpakke(p)" x-text="'Hent ' + p.navn"></button></template>
+      </div>
+      <p class="text-sm text-muted num" x-text="kortListe().length + ' kort'"></p>
+      <div class="panel overflow-x-auto">
+        <table class="kt" id="k-tabel">
+          <thead><tr><th>Forside</th><th>Emne</th><th>Status</th><th class="hidden sm:table-cell">Kilde</th></tr></thead>
+          <tbody>
+            <template x-for="k in kortListe().slice(0, kSide)" :key="k.id">
+              <tr @click="redigerKort(k)">
+                <td><div class="klip" x-text="k.front"></div><div class="flex flex-wrap gap-1 mt-1" x-show="k.tags.length"><template x-for="t in k.tags" :key="t"><span class="tag" x-text="t"></span></template></div></td>
+                <td class="whitespace-nowrap" x-text="emneKort(k.emne)"></td>
+                <td class="whitespace-nowrap"><span class="st" :class="kortStatus(k)" x-text="statusNavn[kortStatus(k)]"></span><div class="text-xs text-muted num" x-text="naesteTxt(k)"></div></td>
+                <td class="hidden sm:table-cell text-xs text-muted" x-text="kildeTxt(k)"></td>
+              </tr>
+            </template>
+          </tbody>
+        </table>
+        <p class="p-4 text-sm text-muted" x-show="!kortListe().length">Ingen kort matcher.</p>
+      </div>
+      <button class="btn self-start" x-show="kortListe().length > kSide" @click="kSide += 100">Vis flere</button>
+    </section>
+  </template>
+
+  <!-- ===== DATA OG INDSTILLINGER ===== -->
+  <template x-if="klar && view==='data'">
+    <section class="flex flex-col gap-4" id="v-data">
+      <div class="panel p-4 flex flex-col gap-3">
+        <h2 class="hd text-lg">Læring</h2>
+        <div class="grid sm:grid-cols-3 gap-3">
+          <label class="f">Nye kort pr. dag<input id="i-nye" class="inp num" type="number" min="0" max="200" x-model.number="indst.nyePrDag" @change="gemIndst(); oevStart()"></label>
+          <label class="f">Ønsket hukommelse<select class="inp" x-model.number="indst.retention" @change="gemIndst()">
+            <option value="0.8">80 % (færre gentagelser)</option><option value="0.85">85 %</option><option value="0.9">90 % (anbefalet)</option><option value="0.95">95 % (mange gentagelser)</option></select></label>
+          <label class="f">Længste interval (dage)<input class="inp num" type="number" min="30" max="36500" x-model.number="indst.maksInterval" @change="gemIndst()"></label>
+        </div>
+        <p class="text-xs text-muted">Gentagelserne planlægges med FSRS, som beregner, hvornår du med den valgte sandsynlighed stadig kan huske hvert kort.</p>
+      </div>
+
+      <div class="panel p-4 flex flex-col gap-3">
+        <h2 class="hd text-lg">Backup</h2>
+        <p class="text-sm text-muted">Hent alle kort, læringstilstand og svar som én fil. Når en backup indlæses, flettes den med det, der er her. Intet slettes.</p>
+        <p class="text-xs text-muted" x-text="sidstBackup ? 'Seneste backup: ' + datoTxt(sidstBackup) : 'Der er ikke hentet en backup endnu.'"></p>
+        <div class="flex flex-wrap gap-2">
+          <button id="d-backup" class="btn btn-primary" @click="hentBackup()">Hent backup</button>
+          <label class="btn">Indlæs backup<input id="d-indlaes" type="file" accept=".json,application/json" class="hidden" @change="indlaesBackupFil($event)"></label>
+        </div>
+      </div>
+
+      <div class="panel p-4 flex flex-col gap-3" id="d-synk">
+        <h2 class="hd text-lg">Synkronisering mellem enheder</h2>
+        <template x-if="!synk">
+          <div class="flex flex-col gap-2">
+            <p class="text-sm text-muted">Data gemmes i en hemmelig Gist på din GitHub-konto. Lav et token med adgangen <b>gist</b> på github.com under Settings → Developer settings → Personal access tokens, og indsæt det her. Tokenet gemmes kun i denne browser.</p>
+            <div class="flex flex-wrap gap-2"><input id="d-token" class="inp grow !w-auto" type="password" autocomplete="off" x-model="synkTokenInput" placeholder="GitHub-token">
+              <button class="btn btn-primary" :disabled="!synkTokenInput.trim() || synkKoerer" @click="synkForbind()">Forbind</button></div>
+          </div>
+        </template>
+        <template x-if="synk">
+          <div class="flex flex-col gap-2">
+            <p class="text-sm"><span x-text="synkTxt()"></span><span class="text-muted" x-show="synk.login" x-text="' · konto ' + synk.login"></span></p>
+            <div class="flex flex-wrap gap-2"><button class="btn" :disabled="synkKoerer" @click="synkNu()">Synkronisér nu</button><button class="btn btn-danger" @click="synkAfbryd()">Slå fra på denne enhed</button></div>
+          </div>
+        </template>
+        <p class="warn text-sm" x-show="synkFejl" x-text="synkFejl"></p>
+      </div>
+
+      <div class="panel p-4 text-sm text-muted flex flex-col gap-1">
+        <h2 class="hd text-lg text-ink">Om</h2>
+        <p x-text="'Elskolen version ' + appVersion + '. ' + kort.filter(k => !k.slettet).length + ' kort, ' + log.length + ' svar i loggen.'"></p>
+        <p>Indholdet er vejledende. Kontrollér altid mod gældende love, bekendtgørelser og standarder.</p>
+      </div>
+    </section>
+  </template>
+
+  <!-- ===== DIALOG: KORT ===== -->
+  <template x-if="modal==='kort' && kRed">
+    <div class="sloer" @click.self="lukModal()">
+      <div class="dialog p-4 flex flex-col gap-3" role="dialog" aria-modal="true" aria-labelledby="k-titel" id="k-dialog">
+        <h2 id="k-titel" class="hd text-xl" x-text="kRed.ny ? 'Nyt kort' : 'Ret kort'"></h2>
+        <div class="grid grid-cols-2 gap-3">
+          <label class="f">Emne<select class="inp" x-model="kRed.f.emne"><template x-for="e in emner" :key="e.id"><option :value="e.id" :selected="e.id===kRed.f.emne" x-text="e.navn"></option></template></select></label>
+          <label class="f">Type<select class="inp" x-model="kRed.f.type"><template x-for="(n, t) in korttyper" :key="t"><option :value="t" :selected="t===kRed.f.type" x-text="n"></option></template></select></label>
+        </div>
+        <label class="f">Forside (spørgsmål)<textarea id="k-front" class="inp" rows="3" x-model="kRed.f.front"></textarea></label>
+        <label class="f">Bagside (svar)<textarea id="k-bag" class="inp" rows="4" x-model="kRed.f.bag"></textarea></label>
+        <p class="text-xs text-muted">Formler skrives mellem dollartegn, fx <code>$P = \sqrt{3} \cdot U \cdot I \cdot \cos\varphi$</code>. **Fed** med to stjerner.</p>
+        <div class="panel p-3 kt-tekst !text-base" x-show="kRed.f.front || kRed.f.bag">
+          <div x-html="vis(kRed.f.front)"></div><hr class="my-2 border-line"><div x-html="vis(kRed.f.bag)"></div>
+        </div>
+        <fieldset class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <legend class="text-xs font-semibold text-muted uppercase tracking-wide mb-1">Kilde</legend>
+          <label class="f col-span-2">Dokument<input id="k-dok" class="inp" x-model="kRed.f.kilde.dok" placeholder="fx DS/HD 60364-5-52" list="k-dok-liste"></label>
+          <label class="f">Afsnit<input class="inp" x-model="kRed.f.kilde.afsnit" placeholder="fx 525"></label>
+          <label class="f">Udgave<input class="inp" x-model="kRed.f.kilde.udgave" placeholder="fx 2011"></label>
+          <label class="f col-span-2 sm:col-span-1">Gyldig fra<input class="inp" type="date" x-model="kRed.f.kilde.gyldigFra"></label>
+          <label class="f col-span-2 sm:col-span-3">Tags (komma imellem)<input class="inp" x-model="kRed.f.tagsTxt" placeholder="fx ΔU, kabler"></label>
+        </fieldset>
+        <datalist id="k-dok-liste"><template x-for="d in [...new Set(kort.map(k => k.kilde.dok).filter(Boolean))]" :key="d"><option :value="d"></option></template></datalist>
+        <div class="flex flex-wrap gap-2 justify-between">
+          <div class="flex flex-wrap gap-2" x-show="!kRed.ny">
+            <button class="btn btn-danger" @click="sletKort(kort.find(k => k.id === kRed.f.id))">Slet</button>
+            <button class="btn" x-show="tilst[kRed.f.id]" @click="nulstilKort(kort.find(k => k.id === kRed.f.id))">Start forfra</button>
+          </div>
+          <span x-show="kRed.ny"></span>
+          <div class="flex flex-wrap gap-2">
+            <button class="btn" @click="lukModal()">Annullér</button>
+            <button class="btn" x-show="kRed.ny" @click="gemKortForm(true)">Gem og opret næste</button>
+            <button id="k-gem" class="btn btn-primary" @click="gemKortForm(false)">Gem</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <!-- ===== DIALOG: IMPORT (js/import.js) ===== -->
+
+  <!-- ===== BEKRÆFTELSE ===== -->
+  <template x-if="confirm">
+    <div class="sloer" @click.self="confirm=null">
+      <div class="dialog p-4 flex flex-col gap-3 !max-w-md" role="alertdialog" aria-modal="true">
+        <p x-text="confirm.tekst"></p>
+        <div class="flex justify-end gap-2"><button class="btn" @click="confirm=null">Annullér</button><button id="bekraeft-ja" class="btn btn-primary" @click="bekraeft()" x-text="confirm.jaTekst"></button></div>
+      </div>
+    </div>
+  </template>
+
+  <div class="toasts" aria-live="polite"><template x-for="t in toasts" :key="t.id"><div class="toast" :class="t.fejl && 'fejl'" x-text="t.tekst"></div></template></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/ts-fsrs@5.2.3/dist/index.umd.js"></script>
+<script src="js/data.js?v=0.1.0"></script>
+<script src="js/lager.js?v=0.1.0"></script>
+<script src="js/synk.js?v=0.1.0"></script>
+<script src="js/oev.js?v=0.1.0"></script>
+<script src="js/kort.js?v=0.1.0"></script>
+<script src="js/app.js?v=0.1.0"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.14.1/cdn.min.js" onerror="document.getElementById('fail').hidden=false"></script>
+<script>setTimeout(() => { if (!window.__alpineOk || typeof FSRS === 'undefined') document.getElementById('fail').hidden = false; }, 6000);</script>
+</body>
+</html>

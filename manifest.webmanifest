@@ -1,0 +1,17 @@
+{
+  "name": "Elskolen: træning til elektrikerfaget",
+  "short_name": "Elskolen",
+  "description": "Gentagelse med mellemrum, regneopgaver og cases til elektrikere.",
+  "lang": "da",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#13171a",
+  "theme_color": "#0d6b63",
+  "icons": [
+    { "src": "ikoner/ikon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "ikoner/ikon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "ikoner/ikon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "ikoner/ikon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}

@@ -1,0 +1,252 @@
+"""Røgtest af Elskolen i headless Chromium.
+
+Kør fra repoets rod:  python tests/smoke.py
+Filerne serveres fra disken under http://app.test/. Alpine, ts-fsrs og KaTeX serveres fra node_modules/
+(se CLAUDE.md for, hvordan de hentes). Kræver Python-pakken playwright.
+"""
+import asyncio, functools, http.server, json, os, re, sys, threading
+from pathlib import Path
+from playwright.async_api import async_playwright
+
+ROD = Path(__file__).resolve().parent.parent
+TYPER = {'.html': 'text/html', '.js': 'application/javascript', '.css': 'text/css', '.json': 'application/json', '.svg': 'image/svg+xml', '.png': 'image/png', '.webmanifest': 'application/manifest+json'}
+LIB = {'alpinejs': ROD / 'node_modules/alpinejs/dist/cdn.min.js', 'ts-fsrs': ROD / 'node_modules/ts-fsrs/dist/index.umd.js',
+       'katex.min.js': ROD / 'node_modules/katex/katex.min.js', 'katex.min.css': ROD / 'node_modules/katex/katex.min.css'}
+URL = 'http://app.test/'
+TRIN_MS = int(os.environ.get('SMOKE_TRIN_MS', '15000'))
+SAMLET_S = int(os.environ.get('SMOKE_SAMLET_S', '300'))
+A = "Alpine.$data(document.querySelector('[x-data]'))"
+fejl, kontrol = [], []
+
+
+def tjek(navn, ok, info=''):
+    kontrol.append((navn, bool(ok), info))
+
+
+async def lib(r):
+    u = r.request.url
+    for k, f in LIB.items():
+        if k in u:
+            await r.fulfill(body=f.read_bytes(), content_type=TYPER[f.suffix], headers={'access-control-allow-origin': '*'}); return True
+    return False
+
+
+async def route(r):
+    u = r.request.url
+    if await lib(r): return
+    if u.startswith(URL):
+        sti = u[len(URL):].split('?')[0].split('#')[0] or 'index.html'
+        fil = (ROD / sti).resolve()
+        if ROD in fil.parents and fil.is_file():
+            await r.fulfill(body=fil.read_bytes(), content_type=TYPER.get(fil.suffix, 'application/octet-stream'))
+        else:
+            await r.fulfill(status=404, body='')
+    elif u.startswith('https://api.github.com/') or u.startswith('https://gist.test/'):
+        await github(r)
+    else:
+        await r.abort()
+
+
+# Falsk GitHub-API: én hemmelig Gist delt mellem to "enheder"
+GIST = {}
+CORS = {'access-control-allow-origin': '*', 'access-control-allow-headers': 'authorization, content-type, accept', 'access-control-allow-methods': 'GET, POST, PATCH, OPTIONS'}
+
+
+def gist_json():
+    return {'id': 'g1', 'files': {n: {'filename': n, 'content': c, 'truncated': False, 'raw_url': 'https://gist.test/raw/' + n} for n, c in GIST.items()}}
+
+
+async def github(r):
+    req, u = r.request, r.request.url
+    if req.method == 'OPTIONS':
+        return await r.fulfill(status=204, headers=CORS)
+    svar = lambda d, s=200: r.fulfill(status=s, body=json.dumps(d), content_type='application/json', headers=CORS)
+    if u.endswith('/user'): return await svar({'login': 'test'})
+    if '/gists?' in u: return await svar([gist_json()] if GIST else [])
+    if u.endswith('/gists') and req.method == 'POST':
+        for n, f in json.loads(req.post_data)['files'].items(): GIST[n] = f['content']
+        return await svar(gist_json(), 201)
+    if u.endswith('/gists/g1') and req.method == 'GET': return await svar(gist_json())
+    if u.endswith('/gists/g1') and req.method == 'PATCH':
+        for n, f in json.loads(req.post_data)['files'].items():
+            if f is None: GIST.pop(n, None)
+            else: GIST[n] = f['content']
+        return await svar(gist_json())
+    await svar({'message': 'ukendt'}, 404)
+
+
+async def ny_side(b, bredde=1200, hoejde=900, **kw):
+    ctx = await b.new_context(viewport={'width': bredde, 'height': hoejde}, service_workers='block', **kw); ctx.set_default_timeout(TRIN_MS)
+    await ctx.route('**/*', route)
+    pg = await ctx.new_page()
+    pg.on('pageerror', lambda e: fejl.append(str(e)))
+    pg.on('console', lambda m: fejl.append('konsol: ' + m.text) if m.type == 'error' and 'Failed to load resource' not in m.text else None)
+    await pg.goto(URL); await pg.wait_for_function(f"window.__alpineOk && {A}.klar")
+    return ctx, pg
+
+
+async def vent_synk(pg):
+    await pg.wait_for_timeout(100)
+    await pg.wait_for_function(f"!{A}.synkKoerer")
+
+
+async def main():
+    # 0. Versionen skal være ens fire steder
+    v_data = re.search(r"APP_VERSION = '([^']+)'", (ROD / 'js/data.js').read_text(encoding='utf-8')).group(1)
+    v_sw = re.search(r"VERSION = '([^']+)'", (ROD / 'sw.js').read_text(encoding='utf-8')).group(1)
+    v_pkg = json.loads((ROD / 'package.json').read_text(encoding='utf-8'))['version']
+    v_html = set(re.findall(r'\?v=([0-9.]+)', (ROD / 'index.html').read_text(encoding='utf-8')))
+    tjek('version ens i data.js, sw.js, package.json og index.html', v_data == v_sw == v_pkg and v_html == {v_data}, (v_data, v_sw, v_pkg, v_html))
+    sw = (ROD / 'sw.js').read_text(encoding='utf-8')
+    mangler = [f for f in re.findall(r'src="(js/[^"?]+)', (ROD / 'index.html').read_text(encoding='utf-8')) if f not in sw]
+    tjek('alle scripts står i SKAL i sw.js', not mangler, mangler)
+
+    async with async_playwright() as p:
+        b = await p.chromium.launch(executable_path=os.environ.get('CHROME') or None)
+
+        # 1. Start, tomt lager, opret kort
+        ctx, pg = await ny_side(b)
+        tom = await pg.evaluate(f"(()=>{{const a={A};return [a.kort.length, a.storageOk, !!document.querySelector('#oev-faerdig'), typeof FSRS.fsrs, !!window.katex]}})()")
+        tjek('starter tom med lager, FSRS og KaTeX', tom == [0, True, True, 'function', True], tom)
+        await pg.click('#tab-kort'); await pg.click('#k-ny')
+        await pg.fill('#k-front', 'Hvad er effekten i et 3-faset system?')
+        await pg.fill('#k-bag', '$P = \\sqrt{3} \\cdot U \\cdot I \\cdot \\cos\\varphi$')
+        await pg.fill('#k-dok', 'Lærebog'); await pg.click('#k-gem')
+        await pg.wait_for_timeout(100)
+        r = await pg.evaluate(f"(()=>{{const a={A};return [a.kort.length, a.kort[0].kilde.dok, document.querySelectorAll('#k-tabel tbody tr').length]}})()")
+        tjek('kort oprettes med kilde og vises i listen', r == [1, 'Lærebog', 1], r)
+        await pg.click('#k-tabel tbody tr'); await pg.wait_for_selector('#k-dialog')
+        await pg.fill('#k-front', 'Effekt i 3-faset system?'); await pg.click('#k-gem'); await pg.wait_for_timeout(100)
+        r = await pg.evaluate(f"{A}.kort[0].front")
+        tjek('kort kan rettes', r == 'Effekt i 3-faset system?', r)
+
+        # 2. Øv: vis svar, karakter, fortryd
+        await pg.click('#tab-oev'); await pg.evaluate(f"{A}.oevStart()"); await pg.wait_for_selector('#oev-vis')
+        await pg.keyboard.press('Space'); await pg.wait_for_selector('#oev-bag .katex')
+        iv = await pg.evaluate(f"{A}.oevIntervaller()")
+        tjek('svar vises med formel og intervaller for alle fire karakterer', len(iv) == 4 and all(iv.values()), iv)
+        await pg.keyboard.press('3'); await pg.wait_for_timeout(150)
+        r = await pg.evaluate(f"(()=>{{const a={A}, k=a.kort[0];return [a.log.length, a.log[0].karakter, a.log[0].ny, !!a.tilst[k.id], a.tilst[k.id].reps]}})()")
+        tjek('karakteren gemmes i log og tilstand', r == [1, 3, True, True, 1], r)
+        await pg.keyboard.press('z'); await pg.wait_for_timeout(150)
+        r = await pg.evaluate(f"(()=>{{const a={A}, k=a.kort[0];return [a.log.length, !!a.tilst[k.id], a.oevId === k.id, a.oevVist]}})()")
+        tjek('fortryd fjerner svaret igen', r == [0, False, True, True], r)
+        await pg.keyboard.press('4'); await pg.wait_for_timeout(150)
+        r = await pg.evaluate(f"(()=>{{const a={A}, k=a.kort[0];return [a.log.length, a.tilst[k.id].state, a.oevId, a.stat().idag, a.stat().stribe]}})()")
+        tjek('"Let" sender kortet til gentagelse senere og tæller i dag', r == [1, 2, '', 1, 1], r)
+
+        # 3. Data overlever genindlæsning (IndexedDB)
+        await pg.reload(); await pg.wait_for_function(f"window.__alpineOk && {A}.klar")
+        r = await pg.evaluate(f"(()=>{{const a={A};return [a.kort.length, a.log.length, Object.keys(a.tilst).length]}})()")
+        tjek('kort, log og tilstand er gemt efter genindlæsning', r == [1, 1, 1], r)
+
+        # 4. Startkort (hvis pakken findes)
+        if (ROD / 'indhold/start-matematik.json').exists():
+            n = len(json.loads((ROD / 'indhold/start-matematik.json').read_text(encoding='utf-8'))['kort'])
+            await pg.evaluate(f"{A}.indlaesStartpakke({A}.startpakker[0])"); await pg.wait_for_timeout(200)
+            await pg.evaluate(f"{A}.indlaesStartpakke({A}.startpakker[0])"); await pg.wait_for_timeout(200)
+            r = await pg.evaluate(f"{A}.kort.length")
+            tjek('startkort indlæses én gang uden dubletter', r == 1 + n, (r, n))
+            ugyldig = await pg.evaluate(f"(()=>{{const a={A};return a.kort.filter(k=>k.oprindelse.startsWith('start:')).filter(k=>/katex-error/.test(a.vis(k.front)+a.vis(k.bag))).map(k=>k.id)}})()")
+            tjek('alle startkort har gyldige formler', not ugyldig, ugyldig)
+
+        # 5. Backup: hent data, ryd lager, indlæs igen
+        bk = await pg.evaluate(f"JSON.stringify({A}.backupData())")
+        await ctx.close()
+        ctx, pg = await ny_side(b)
+        await pg.evaluate(f"{A}.indlaesBackup(JSON.parse({json.dumps(bk)}))"); await pg.wait_for_timeout(200)
+        r = await pg.evaluate(f"(()=>{{const a={A};return [a.kort.length, a.log.length, Object.keys(a.tilst).length]}})()")
+        d = json.loads(bk)
+        tjek('backup indlæses i en tom browser', r == [len(d['kort']), len(d['log']), len(d['tilstand'])], (r, len(d['kort'])))
+        await pg.evaluate(f"{A}.indlaesBackup(JSON.parse({json.dumps(bk)}))"); await pg.wait_for_timeout(200)
+        r2 = await pg.evaluate(f"{A}.kort.length")
+        tjek('samme backup to gange giver ingen dubletter', r2 == r[0], r2)
+
+        # 6. Synk mellem to enheder
+        await pg.evaluate(f"(()=>{{const a={A}; a.synkTokenInput='tok'; return a.synkForbind()}})()"); await vent_synk(pg)
+        r = await pg.evaluate(f"[{A}.synkFejl, {A}.synk && {A}.synk.gistId]")
+        tjek('synk forbinder og sender data til Gist', r == ['', 'g1'] and 'elskole-kort.json' in GIST and any(k.startswith('elskole-log-') for k in GIST), (r, list(GIST)))
+        ctx2, pg2 = await ny_side(b)
+        await pg2.evaluate(f"(()=>{{const a={A}; a.synkTokenInput='tok'; return a.synkForbind()}})()"); await vent_synk(pg2)
+        r = await pg2.evaluate(f"(()=>{{const a={A};return [a.kort.length, a.log.length, Object.keys(a.tilst).length]}})()")
+        tjek('anden enhed henter kort, log og tilstand', r == [len(d['kort']), len(d['log']), len(d['tilstand'])], r)
+        # enhed 2 sletter et kort og opretter et nyt; enhed 1 får begge dele
+        await pg2.evaluate(f"(async()=>{{const a={A}; await a.gemKort(Object.assign({{}}, a.kort[0], {{slettet:true}})); await a.gemKort(nytKort({{front:'Ny fra 2', bag:'b'}})); await a.synkNu()}})()"); await vent_synk(pg2)
+        await pg.evaluate(f"{A}.synkNu()"); await vent_synk(pg)
+        r = await pg.evaluate(f"(()=>{{const a={A};return [a.kort.filter(k=>!k.slettet).length, a.kort.some(k=>k.front==='Ny fra 2'), a.synkFejl]}})()")
+        tjek('sletning og nyt kort synkroniseres til den anden enhed', r == [len(d['kort']), True, ''], r)
+        # nyere skema i Gist'en: der må hverken læses eller skrives
+        foer = dict(GIST); GIST['elskole.json'] = json.dumps({'format': 'elskole-sync', 'schema': 999})
+        await pg.evaluate(f"(async()=>{{const a={A}; await a.gemKort(nytKort({{front:'x', bag:'y'}})); await a.synkNu()}})()"); await vent_synk(pg)
+        r = await pg.evaluate(f"{A}.synkFejl")
+        tjek('nyere skema i Gist blokerer synk', 'nyere version' in r and GIST['elskole-kort.json'] == foer['elskole-kort.json'], r)
+        await ctx.close(); await ctx2.close()
+
+        # 7. Mobil: ingen vandret rulning, dialog passer
+        ctx, pg = await ny_side(b, 375, 812, is_mobile=True, has_touch=True)
+        await pg.evaluate(f"{A}.gemKort(nytKort({{front:'Et langt spørgsmål om korrektionsfaktorer for kabler i jord og luft', bag:'$$I_z = I_t \\\\cdot k_{{temp}} \\\\cdot k_{{samlet}}$$'}}))")
+        bredder = []
+        for v in ['oev', 'kort', 'data']:
+            await pg.evaluate(f"{A}.gaaTil('{v}')"); await pg.wait_for_timeout(100)
+            bredder.append(await pg.evaluate("document.documentElement.scrollWidth"))
+        await pg.evaluate(f"{A}.gaaTil('kort')"); await pg.click('#k-ny'); await pg.wait_for_timeout(100)
+        bredder.append(await pg.evaluate("document.querySelector('#k-dialog').getBoundingClientRect().width"))
+        tjek('mobil 375 px: ingen vandret rulning i nogen fane', all(x <= 375 for x in bredder), bredder)
+        await ctx.close()
+
+        # 8. Mørkt tema
+        ctx, pg = await ny_side(b, color_scheme='dark')
+        r = await pg.evaluate("getComputedStyle(document.body).backgroundColor")
+        tjek('mørkt tema følger systemet', r == 'rgb(19, 23, 26)', r)
+        await ctx.close()
+
+        # 9. Offline-app med service worker på localhost
+        class Stille(http.server.SimpleHTTPRequestHandler):
+            def log_message(self, *a): pass
+        class Server(http.server.ThreadingHTTPServer):
+            request_queue_size = 128
+            daemon_threads = True
+        srv = Server(('127.0.0.1', 0), functools.partial(Stille, directory=str(ROD)))
+        threading.Thread(target=srv.serve_forever, daemon=True).start()
+        lok = 'http://127.0.0.1:%d/' % srv.server_address[1]
+        async def lok_route(r):
+            if await lib(r): return
+            if r.request.url.startswith(lok): await r.continue_()
+            else: await r.abort()
+        ctx = await b.new_context(viewport={'width': 1200, 'height': 900}, service_workers='allow'); ctx.set_default_timeout(TRIN_MS)
+        await ctx.route('**/*', lok_route)
+        pg = await ctx.new_page()
+        pg.on('pageerror', lambda e: fejl.append('offline: ' + str(e)))
+        await pg.goto(lok); await pg.wait_for_function(f"window.__alpineOk && {A}.klar")
+        klar = await pg.evaluate("Promise.race([navigator.serviceWorker.ready.then(()=>new Promise(f=>setTimeout(()=>f(!!navigator.serviceWorker.controller),300))), new Promise(f=>setTimeout(()=>f(false),10000))])")
+        if not klar:
+            await pg.reload(); await pg.wait_for_timeout(500); klar = await pg.evaluate("!!navigator.serviceWorker.controller")
+        await pg.evaluate(f"{A}.gemKort(nytKort({{front:'offline', bag:'ok'}}))")
+        await ctx.set_offline(True); await pg.reload()
+        await pg.wait_for_function(f"window.__alpineOk && {A}.klar")
+        r = await pg.evaluate(f"(()=>{{const a={A};return [a.appVersion, a.kort.length, a.online, typeof FSRS, getComputedStyle(document.querySelector('header')).display]}})()")
+        tjek('offline: appen starter uden net med data, FSRS og styling', klar and r == [v_data, 1, False, 'object', 'flex'], (klar, r))
+        await ctx.close(); srv.shutdown()
+
+        await b.close()
+
+    for navn, ok, info in kontrol:
+        print(('OK    ' if ok else 'FEJL  ') + navn + ('' if ok else f'  {info}'))
+    for f in fejl:
+        print('JS-FEJL ' + f)
+    if fejl or not all(ok for _, ok, _ in kontrol):
+        sys.exit(1)
+    print('OK')
+
+
+async def med_tidsgraense():
+    try:
+        await asyncio.wait_for(main(), timeout=SAMLET_S)
+    except (asyncio.TimeoutError, TimeoutError):
+        for navn, ok, info in kontrol:
+            print(('OK    ' if ok else 'FEJL  ') + navn + ('' if ok else f'  {info}'))
+        print(f'FEJL  røgtesten blev stoppet efter {SAMLET_S} s. Sidste færdige tjek: {kontrol[-1][0] if kontrol else "intet"}.')
+        sys.exit(1)
+
+
+asyncio.run(med_tidsgraense())
