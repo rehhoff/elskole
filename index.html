@@ -481,6 +481,88 @@
     </section>
   </template>
 
+  <!-- ===== KOMPETENCE (fase 3, js/kompetence.js) ===== -->
+  <template x-if="klar && view==='kompetence'">
+    <section class="flex flex-col gap-4" id="v-kompetence" x-init="kompStart()">
+      <p class="text-xs text-muted">Beherskelse samles af kortenes hukommelse (FSRS), opgaver, cases og fejlfinding. Tallene er en vejledende rettesnor, ikke en prøve. Områder uden data vises som «Ingen data».</p>
+
+      <template x-if="kompSvageste().length">
+        <div class="panel p-3 flex flex-col gap-2" id="komp-svageste">
+          <h2 class="hd text-lg">Svageste områder lige nu</h2>
+          <template x-for="x in kompSvageste()" :key="x.emne + x.d.id">
+            <div class="flex flex-wrap items-center gap-2 text-sm">
+              <span class="tag" x-text="x.emneNavn"></span><span x-text="x.d.navn"></span><span class="num text-muted" x-text="kompPct(x.d.beh)"></span>
+              <button class="btn ml-auto" @click="kompOev(x.emne, x.d)">Øv her</button>
+            </div>
+          </template>
+        </div>
+      </template>
+
+      <div class="flex flex-col gap-2" id="komp-trae" x-data="{ get t() { return kompTrae() } }">
+        <template x-for="e in t" :key="e.id">
+          <div class="panel" :id="'komp-emne-' + e.id">
+            <div class="p-3 flex flex-wrap items-center gap-3">
+              <button class="btn btn-ghost" :id="'komp-vis-' + e.id" :aria-expanded="!!kompAaben[e.id]" @click="kompToggle(e.id)" x-text="kompAaben[e.id] ? '▾' : '▸'"></button>
+              <div class="min-w-0 grow">
+                <div class="flex flex-wrap items-center gap-2"><span class="hd text-lg" x-text="e.navn"></span><span class="tag" x-show="e.niveau" x-text="e.niveau && e.niveau.navn"></span></div>
+                <div class="h-2 rounded-sm mt-1" style="background:var(--line)"><div class="h-2 rounded-sm" :style="'width:' + Math.round((e.beh || 0) * 100) + '%;background:' + kompFarve(e.beh)"></div></div>
+                <div class="text-xs text-muted mt-1" x-text="e.beh == null ? 'Ingen data' : ['kort', 'opgave', 'case', 'fejlfinding'].filter(a => e.kilder[a]).map(a => kompKildeTxt(a, e.kilder[a])).join(' · ')"></div>
+              </div>
+              <span class="num text-xl komp-pct" x-text="kompPct(e.beh)"></span>
+              <button class="btn" @click="kompOev(e.id, null)">Øv emnet</button>
+            </div>
+            <div class="border-t border-line p-3 flex flex-col gap-2" x-show="kompAaben[e.id]" x-cloak>
+              <p class="text-sm text-muted" x-show="!e.delemner.length">Ingen delemner endnu.</p>
+              <template x-for="d in e.delemner" :key="d.id">
+                <div class="flex flex-wrap items-center gap-3 text-sm" :id="'komp-del-' + e.id + '-' + d.id">
+                  <div class="min-w-0 grow">
+                    <div class="flex flex-wrap items-center gap-2"><span x-text="d.navn"></span><span class="tag" x-show="d.niveau" x-text="d.niveau && d.niveau.navn"></span></div>
+                    <div class="h-1.5 rounded-sm mt-1" style="background:var(--line)"><div class="h-1.5 rounded-sm" :style="'width:' + Math.round((d.beh || 0) * 100) + '%;background:' + kompFarve(d.beh)"></div></div>
+                    <div class="text-xs text-muted mt-1" x-text="d.beh == null ? 'Ingen data' : ['kort', 'opgave', 'case', 'fejlfinding'].filter(a => d.kilder[a]).map(a => kompKildeTxt(a, d.kilder[a])).join(' · ')"></div>
+                  </div>
+                  <span class="num" x-text="kompPct(d.beh)"></span>
+                  <button class="btn btn-ghost" x-show="kompHarOev(d)" @click="kompOev(e.id, d)">Øv</button>
+                </div>
+              </template>
+            </div>
+          </div>
+        </template>
+      </div>
+
+      <div class="panel p-4 flex flex-col gap-3" id="komp-fejl">
+        <div class="flex flex-wrap items-center gap-2">
+          <h2 class="hd text-xl">Typiske fejl</h2>
+          <select id="komp-periode" class="inp !w-auto ml-auto" aria-label="Periode" x-model="kompPeriode">
+            <option value="30">Seneste 30 dage</option><option value="90">Seneste 90 dage</option><option value="alt">Alt</option>
+          </select>
+          <select id="komp-art" class="inp !w-auto" aria-label="Art" x-model="kompArtFilter">
+            <option value="">Alle arter</option><option value="opgave">Opgaver</option><option value="case">Cases</option><option value="fejlfinding">Fejlfinding</option>
+          </select>
+        </div>
+        <p class="text-sm text-muted" x-show="!kompFejlLog().length">Ingen registrerede fejl i perioden. Fejl dukker op her, når du laver opgaver, cases og fejlfinding.</p>
+        <ul class="flex flex-col divide-y divide-line">
+          <template x-for="x in kompFejlLog()" :key="x.art + x.kode">
+            <li class="py-2 flex flex-wrap items-center gap-3 komp-fejl-raekke">
+              <div class="min-w-0 grow">
+                <div class="flex flex-wrap items-center gap-2"><span class="tag" x-text="kompArter[x.art]"></span><span class="text-sm" x-text="x.navn"></span></div>
+                <div class="text-xs text-muted mt-1"><span class="num" x-text="x.antal + (x.antal === 1 ? ' gang' : ' gange') + ' · ' + Math.round(x.andel * 100) + ' %'"></span>
+                  <span x-show="x.tendens" x-text="' · ' + kompTendensTxt(x)"></span><span x-text="' · sidst ' + datoTxt(x.sidst)"></span></div>
+              </div>
+              <div class="flex items-end gap-0.5 h-6" aria-hidden="true" title="Seneste 8 uger">
+                <template x-for="(u, i) in x.uger" :key="i"><div class="w-1.5 rounded-sm" :style="'height:' + Math.max(8, Math.round(u * 100)) + '%;background:' + (u ? 'var(--ok)' : 'var(--line)')"></div></template>
+              </div>
+              <div class="flex flex-wrap gap-1">
+                <template x-for="g in x.gens" :key="g"><button class="btn btn-ghost" @click="kompOevOpgave(g)" x-text="'Træn: ' + kompGenNavn(g)"></button></template>
+                <button class="btn btn-ghost" x-show="x.caseId" @click="kompAabnCase(x.caseId)">Åbn casen</button>
+                <button class="btn btn-ghost" x-show="x.art === 'fejlfinding'" @click="kompOevFejlfinding(x.kode)">Træn fejlfinding</button>
+              </div>
+            </li>
+          </template>
+        </ul>
+      </div>
+    </section>
+  </template>
+
   <!-- ===== KORT ===== -->
   <template x-if="klar && view==='kort'">
     <section class="flex flex-col gap-3" id="v-kort">
@@ -727,6 +809,7 @@
 <script src="js/opgaver.js?v=0.2.0"></script>
 <script src="js/cases.js?v=0.2.0"></script>
 <script src="js/fejlfinding.js?v=0.2.0"></script>
+<script src="js/kompetence.js?v=0.2.0"></script>
 <script src="js/app.js?v=0.2.0"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.14.1/cdn.min.js" onerror="document.getElementById('fail').hidden=false"></script>
 <script>setTimeout(() => { if (!window.__alpineOk || typeof FSRS === 'undefined') document.getElementById('fail').hidden = false; }, 6000);</script>

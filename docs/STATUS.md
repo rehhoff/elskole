@@ -22,7 +22,7 @@ Elskolen er en dansk webapp, der skal gøre ejeren til en meget dygtig elektrike
 | 2 | Opgavegeneratorer (10 stk., 25 fejlkoder) | Merget på `main` i 0.2.0, ikke pushet |
 | 4 | Cases (5) og regelbibliotek (28 regler, alle `verificeret:false`) | Merget på `main` i 0.2.0, ikke pushet |
 | 5 | Fejlfinding (7 fejltyper, 10 målinger, 5 sikkerhedsregler) | Merget på `main` i 0.2.0, ikke pushet |
-| 3 | Kompetencetræ og log over typiske fejl | Klar til start (fase 2 er på `main`) |
+| 3 | Kompetencetræ og log over typiske fejl | Bygget på branch `claude/fase3-kompetence-324db2`, ikke merget. Plan: `docs/planer/2026-11-22-fase-3-kompetence.md` |
 | 6 | Kobling til El-oversigtsappen, prøvesimulering | Klar til start. Prøvesimuleringen afhænger af åbent punkt 2 (niveau) |
 | 7 | AI-retning af forklaringer | Kræver ejerens beslutning om API-nøgle eller backend |
 
