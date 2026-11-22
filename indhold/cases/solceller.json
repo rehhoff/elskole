@@ -1,0 +1,100 @@
+{
+ "id": "case-solceller",
+ "titel": "Solceller på parcelhus",
+ "emne": "saer",
+ "intro": "Et parcelhus får et solcelleanlæg på taget med to strenge moduler og en 3-faset inverter i bryggerset. Inverteren tilsluttes en ny gruppe i husets tavle i gangen. Anlægget skal kobles på nettet.",
+ "start": "t1",
+ "trin": {
+  "t1": {
+   "type": "valg",
+   "tekst": "Tagdækkeren skal reparere en tagsten ved modulerne og spørger: \"Kan du slukke for panelerne, så jeg kan arbejde sikkert?\" Hvad svarer du?",
+   "regler": ["r-712-dc-adskillelse", "r-712-isc"],
+   "svar": [
+    { "tekst": "Nej, ikke helt. Modulerne laver spænding, så snart der er lys. DC-afbryderen adskiller inverteren, men kablerne og modulerne på taget er stadig spændingsførende.", "til": "t2", "point": 2, "feedback": "Rigtigt. DC-siden kan ikke gøres spændingsløs ved modulerne i dagslys. Arbejdet skal planlægges efter det." },
+    { "tekst": "Ja. Når hovedafbryderen i tavlen er slået fra, er hele anlægget spændingsløst.", "til": "t1k", "point": 0, "feedback": "Hovedafbryderen afbryder kun AC-siden. Modulerne og DC-kablerne er spændingsførende, så længe der er lys.", "fejltype": "pv-dc-stadig-levende" }
+   ]
+  },
+  "t1k": {
+   "type": "valg",
+   "tekst": "Tagdækkeren løfter et modul og rører ved et stik, hvor isoleringen er beskadiget. Han får et stød fra DC-siden, selv om hovedafbryderen er slået fra. Han kommer heldigvis ikke alvorligt til skade.",
+   "regler": ["r-712-dc-adskillelse"],
+   "svar": [
+    { "tekst": "Jeg forklarer, at DC-siden altid er spændingsførende i dagslys, og får stikket skiftet.", "til": "t2", "point": 0, "feedback": "Lektien: \"slukket\" betyder ikke spændingsløst på et solcelleanlæg." }
+   ]
+  },
+  "t2": {
+   "type": "valg",
+   "tekst": "Hvad skal der være på DC-siden lige før inverteren?",
+   "regler": ["r-712-dc-adskillelse"],
+   "svar": [
+    { "tekst": "En afbryder, der er beregnet til jævnstrøm ved anlæggets spænding og strøm, så inverteren kan adskilles på DC-siden.", "til": "t3", "point": 2, "feedback": "Rigtigt. Jævnstrøm er sværere at afbryde end vekselstrøm, fordi lysbuen ikke slukker af sig selv i en nulgennemgang." },
+    { "tekst": "En almindelig AC-afbryder med høj nok mærkestrøm.", "til": "t3", "point": 0, "feedback": "En AC-afbryder er ikke bygget til at slukke en DC-lysbue. Den skal være beregnet til DC ved anlæggets spænding.", "fejltype": "ac-afbryder-paa-dc" }
+   ]
+  },
+  "t3": {
+   "type": "valg",
+   "tekst": "Hvorfor kan man ikke regne med, at en sikring på DC-siden udløser ved en fejl i en streng?",
+   "regler": ["r-712-isc"],
+   "svar": [
+    { "tekst": "Fordi modulernes kortslutningsstrøm kun er lidt større end deres driftsstrøm.", "til": "t4", "point": 2, "feedback": "Rigtigt. En sikring, der skal kunne klare driftsstrømmen, får næsten ingen ekstra strøm ved en fejl. Derfor bygger sikkerheden på isolering og korrekt kabelføring." },
+    { "tekst": "Fordi DC-sikringer altid er langsomme.", "til": "t4", "point": 0, "feedback": "Det er ikke sikringens hastighed, men at fejlstrømmen fra modulerne er næsten lige så lille som driftsstrømmen.", "fejltype": "pv-isc-misforstaaet" }
+   ]
+  },
+  "t4": {
+   "type": "tal",
+   "tekst": "Inverteren leverer højst 6 kW på tre faser ved 400 V og $\\cos\\varphi$ = 1. Hvor stor er strømmen pr. fase?",
+   "enhed": "A",
+   "facit": 8.66,
+   "tol": 0.2,
+   "point": 2,
+   "til": "t5",
+   "regler": ["r-43-koordinering"],
+   "loesning": "$I = \\dfrac{6000}{\\sqrt{3} \\cdot 400} \\approx 8{,}66\\ \\text{A}$",
+   "feedbackRigtig": "Rigtigt. Gruppen dimensioneres efter inverterens største AC-strøm fra databladet.",
+   "feedbackForkert": "Ikke helt. Brug formlen for 3-faset effekt.",
+   "fejltype": "3f-effekt",
+   "typiske": [
+    { "vaerdi": 15, "tol": 0.3, "fejltype": "glemt-sqrt3", "feedback": "Du har delt med 400 V uden $\\sqrt{3}$." },
+    { "vaerdi": 26.09, "tol": 0.4, "fejltype": "enfaset-formel", "feedback": "Du har regnet 1-faset på 230 V. Inverteren er 3-faset." }
+   ]
+  },
+  "t5": {
+   "type": "valg",
+   "tekst": "Inverterens datablad oplyser, at den ikke kan føre jævnfejlstrøm ud på AC-siden. Hvis du sætter en fejlstrømsafbryder i inverterens gruppe, hvilken type skal den mindst være?",
+   "regler": ["r-712-rcd", "r-rcd-typer"],
+   "svar": [
+    { "tekst": "Type A, fordi producenten oplyser, at inverteren ikke kan give jævnfejlstrøm.", "til": "t6", "point": 2, "feedback": "Rigtigt. Uden den oplysning i databladet skulle det være type B." },
+    { "tekst": "Type B. Det kræves altid ved solceller.", "til": "t6", "point": 1, "feedback": "Type B er altid sikker at bruge, men kravet bortfalder, når producenten oplyser, at inverteren ikke kan give jævnfejlstrøm.", "fejltype": "rcd-overdimensioneret" },
+    { "tekst": "Type AC.", "til": "t6", "point": 0, "feedback": "Type AC reagerer kun på sinusformet vekselstrøm og er ikke egnet her.", "fejltype": "rcd-type-ac" }
+   ]
+  },
+  "t6": {
+   "type": "flere",
+   "tekst": "Hvordan mærker du anlægget? Vælg alle rigtige.",
+   "point": 3,
+   "til": "t7",
+   "regler": ["r-712-maerkning"],
+   "fejltype": "pv-maerkning",
+   "muligheder": [
+    { "tekst": "Skilt ved installationens forsyningspunkt eller måleren om, at installationen også forsynes fra et solcelleanlæg.", "rigtig": true, "feedback": "Den, der afbryder ved måleren, skal vide, at der er en forsyning mere." },
+    { "tekst": "Skilt i tavlen, hvor inverteren er tilsluttet, om de to forsyninger.", "rigtig": true, "feedback": "Afbrydes kun nettet, kan inverterens gruppe stadig være spændingsførende, indtil inverteren har koblet fra." },
+    { "tekst": "Advarsel ved inverter og DC-afbryder om, at DC-siden kan være spændingsførende efter afbrydning.", "rigtig": true, "feedback": "DC-siden er spændingsførende i dagslys." },
+    { "tekst": "Ingen mærkning, fordi inverteren er CE-mærket.", "rigtig": false, "feedback": "CE-mærket siger intet om installationens to forsyninger.", "fejltype": "ce-i-stedet-for-maerkning" }
+   ]
+  },
+  "t7": {
+   "type": "valg",
+   "tekst": "Anlægget er færdigt og verificeret. Hvem skal have besked, før det kobles på nettet?",
+   "regler": ["r-netselskab-anmeldelse", "r-autorisation"],
+   "svar": [
+    { "tekst": "Netselskabet, gennem elinstallatørens anmeldelse (typisk i Installatørportalen), før anlægget tilsluttes.", "til": "slut", "point": 2, "feedback": "Rigtigt. Produktionsanlæg skal meldes til netselskabet, før de kobles på nettet." },
+    { "tekst": "Ingen, så længe anlægget er lille.", "til": "slut", "point": 0, "feedback": "Også små anlæg, der kobles på nettet, skal meldes til netselskabet.", "fejltype": "pv-ikke-anmeldt" },
+    { "tekst": "Kun kommunen.", "til": "slut", "point": 0, "feedback": "Kommunen kan have regler om byggeri og udseende, men tilslutningen til elnettet meldes til netselskabet.", "fejltype": "forkert-myndighed" }
+   ]
+  },
+  "slut": {
+   "type": "slut",
+   "tekst": "Solcelleanlægget er installeret, mærket og meldt til netselskabet. Gennemgå forklaringerne nedenfor."
+  }
+ }
+}

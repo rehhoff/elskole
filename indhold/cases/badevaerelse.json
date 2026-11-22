@@ -1,0 +1,101 @@
+{
+ "id": "case-badevaerelse",
+ "titel": "Renovering af badeværelse",
+ "emne": "saer",
+ "intro": "Et badeværelse i en lejlighed fra 1960'erne skal renoveres. Der kommer en bruseniche uden kar med fast bruser på væggen, elektrisk gulvvarme, lys i loftet og et spejl med lys over håndvasken. Kunden vil gerne have en stikkontakt ved håndvasken. Installationen er et TN-system, og de eksisterende grupper har ingen fejlstrømsafbryder.",
+ "start": "t1",
+ "trin": {
+  "t1": {
+   "type": "valg",
+   "tekst": "Bruseren er en fast bruser uden kar. Hvor langt ud går zone 1 vandret?",
+   "regler": ["r-701-zoner"],
+   "svar": [
+    { "tekst": "1,2 m fra vandudløbet.", "til": "t2", "point": 2, "feedback": "Rigtigt. Ved en bruser uden kar regnes zone 1 ud til 1,2 m fra vandudløbet og op til 2,25 m over gulvet." },
+    { "tekst": "0,6 m fra vandudløbet.", "til": "t2", "point": 0, "feedback": "0,6 m er bredden af zone 2 uden for zone 1 ved et kar. Zone 1 ved en bruser uden kar går ud til 1,2 m.", "fejltype": "zone-afstand" },
+    { "tekst": "Zonerne gælder kun for rum med badekar.", "til": "t2", "point": 0, "feedback": "Zonerne gælder både for badekar og brusere, også brusere uden kar.", "fejltype": "zone-kun-kar" }
+   ]
+  },
+  "t2": {
+   "type": "valg",
+   "tekst": "Hvor placerer du kundens stikkontakt?",
+   "regler": ["r-701-materiel", "r-701-zoner"],
+   "svar": [
+    { "tekst": "Ved håndvasken, men uden for zonerne, og gruppen beskyttes af en RCD på højst 30 mA.", "til": "t3", "point": 2, "feedback": "Rigtigt. Almindelige stikkontakter placeres uden for zonerne, og gruppen skal have RCD." },
+    { "tekst": "På væggen inde i brusezonen i 1 m højde, så længe stikkontakten er IP44.", "til": "t2k", "point": 0, "feedback": "Almindelige stikkontakter må ikke sidde i zonerne, uanset kapslingsklasse.", "fejltype": "stik-i-zone" },
+    { "tekst": "Hvor kunden ønsker det. Det er kundens badeværelse.", "til": "t2k", "point": 0, "feedback": "Placeringen er styret af zonerne. Kundens ønske skal opfyldes inden for reglerne.", "fejltype": "stik-i-zone" }
+   ]
+  },
+  "t2k": {
+   "type": "valg",
+   "tekst": "Ved gennemgangen af dit arbejde peger din kollega på stikkontakten: den sidder inden for 1,2 m fra bruseren. Den skal flyttes, og flisen skal repareres.",
+   "regler": ["r-701-zoner", "r-701-materiel"],
+   "svar": [
+    { "tekst": "Jeg flytter den uden for zonerne.", "til": "t3", "point": 0, "feedback": "Lektien: tegn zonerne ind på planen, før du placerer udtag." }
+   ]
+  },
+  "t3": {
+   "type": "valg",
+   "tekst": "Ingen af de eksisterende grupper har fejlstrømsafbryder. Hvad gør du med de grupper, der forsyner badeværelset (lys, spejl, stikkontakt og gulvvarme)?",
+   "regler": ["r-701-rcd", "r-41-supplerende-rcd"],
+   "svar": [
+    { "tekst": "Alle grupper, der forsyner udstyr i badeværelset, beskyttes af RCD med højst 30 mA.", "til": "t4", "point": 2, "feedback": "Rigtigt. I rum med badekar eller bruser skal alle grupper til rummets udstyr have RCD på højst 30 mA (med få undtagelser som SELV)." },
+    { "tekst": "Kun stikkontakten får RCD.", "til": "t4", "point": 0, "feedback": "Kravet i baderum gælder alle grupper til rummets udstyr, ikke kun stikkontakter.", "fejltype": "rcd-kun-stik" },
+    { "tekst": "Der skal ikke RCD på. Den eksisterende installation var lovlig, da den blev lavet.", "til": "t4", "point": 0, "feedback": "Det, du laver om eller laver nyt, skal opfylde de gældende regler. Renoveringen udløser kravet om RCD for rummets grupper.", "fejltype": "eksisterende-undtagelse" }
+   ]
+  },
+  "t4": {
+   "type": "valg",
+   "tekst": "Gulvvarmen skal lægges i badeværelsets gulv. Hvilket varmekabel vælger du?",
+   "regler": ["r-701-materiel", "r-701-rcd"],
+   "svar": [
+    { "tekst": "Et varmekabel eller en måtte med metalskærm eller metalnet, som forbindes til beskyttelseslederen, og gruppen får RCD 30 mA.", "til": "t5", "point": 2, "feedback": "Rigtigt. Gulvvarme i baderum skal have en jordforbundet metalskærm eller et jordforbundet net." },
+    { "tekst": "Et kabel uden skærm. Det ligger jo i beton under fliserne.", "til": "t5", "point": 0, "feedback": "Uden jordforbundet skærm kan en fejl i kablet give spænding i et vådt gulv uden at beskyttelsen kobler fra.", "fejltype": "gulvvarme-uden-skaerm" }
+   ]
+  },
+  "t5": {
+   "type": "valg",
+   "tekst": "Vandrørene er nye PEX-rør, men afløbet er et gammelt støbejernsrør, der går gennem gulvet. Hvad gør du med potentialudligningen?",
+   "regler": ["r-41-hovedudligning", "r-701-supplerende-udligning"],
+   "svar": [
+    { "tekst": "Kontrollerer, at hovedudligningen ved bygningens hovedjordklemme er i orden, og vurderer efter den gældende udgave af 701, om supplerende udligning af støbejernsrøret er påkrævet.", "til": "t6", "point": 2, "feedback": "Godt. Hovedudligningen er grundlaget. Om der kræves supplerende udligning i rummet, skal kontrolleres i den gældende udgave." },
+    { "tekst": "Forbinder støbejernsrøret til neutrallederen i spejlets lampeudtag.", "til": "t5k", "point": 0, "feedback": "Neutrallederen må aldrig bruges til udligning eller jording. Den fører driftsstrøm og kan få spænding ved en afbrydelse.", "fejltype": "nul-som-udligning" },
+    { "tekst": "Potentialudligning er kun nødvendig i TT-systemer.", "til": "t6", "point": 0, "feedback": "Beskyttende potentialudligning hører til automatisk afbrydelse i alle systemer, også TN.", "fejltype": "udligning-kun-tt" }
+   ]
+  },
+  "t5k": {
+   "type": "valg",
+   "tekst": "Et halvt år senere afbrydes neutrallederen i en samledåse. Afløbsrøret får nu spænding gennem lampen, og kunden mærker et stød ved bruseren.",
+   "regler": ["r-41-hovedudligning"],
+   "svar": [
+    { "tekst": "Jeg fjerner forbindelsen og laver udligningen med en grøn/gul leder til beskyttelseslederen.", "til": "t6", "point": 0, "feedback": "Lektien: udligning laves altid med beskyttelsesleder, aldrig med neutrallederen." }
+   ]
+  },
+  "t6": {
+   "type": "valg",
+   "tekst": "Loftslampen sidder lige over bruseren i 2,1 m højde, altså i zone 1. Hvilken kapslingsklasse skal lampen mindst have? Badeværelset rengøres ikke med vandstråle.",
+   "regler": ["r-701-materiel"],
+   "svar": [
+    { "tekst": "IPX4.", "til": "t7", "point": 2, "feedback": "Rigtigt. Zone 1 og 2 kræver mindst IPX4, og IPX5, hvis der spules med vandstråle." },
+    { "tekst": "IP20 er nok. Lampen sidder i loftet.", "til": "t7", "point": 0, "feedback": "Lampen sidder under 2,25 m og dermed i zone 1, hvor der kræves mindst IPX4.", "fejltype": "ip-zone" }
+   ]
+  },
+  "t7": {
+   "type": "flere",
+   "tekst": "Arbejdet er færdigt. Hvad afprøver du, før badeværelset tages i brug? Vælg alle rigtige.",
+   "point": 3,
+   "til": "slut",
+   "regler": ["r-6-verifikation"],
+   "fejltype": "afproevning-mangler",
+   "muligheder": [
+    { "tekst": "Kontinuitet af beskyttelsesledere, også til gulvvarmens skærm og eventuelle udligningsforbindelser.", "rigtig": true, "feedback": "Beskyttelsesledernes forbindelse skal måles." },
+    { "tekst": "Isolationsmodstand for de nye og ændrede grupper.", "rigtig": true, "feedback": "Isolationsmodstanden måles, før der sættes spænding på." },
+    { "tekst": "Udløsning af fejlstrømsafbryderne.", "rigtig": true, "feedback": "RCD'erne afprøves med instrument, ikke kun med testknappen." },
+    { "tekst": "Kun at der er spænding i stikkontakten.", "rigtig": false, "feedback": "Spænding i stikkontakten siger intet om, at beskyttelsen virker.", "fejltype": "kun-spaending" }
+   ]
+  },
+  "slut": {
+   "type": "slut",
+   "tekst": "Badeværelset er færdigt og afprøvet. Gennemgå forklaringerne nedenfor. Reglerne om baderum er ikke kontrolleret mod kilden, så slå dem op i den gældende udgave af DS/HD 60364-7-701."
+  }
+ }
+}

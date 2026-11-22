@@ -436,6 +436,121 @@ async def main():
         await ctx.close()
 
         # ===== FASE 4: CASES (js/cases.js) =====
+        # Casefilerne og regelbiblioteket: alle henvisninger findes, alle trin kan nås og alle veje ender i slut
+        cjs = (ROD / 'js/cases.js').read_text(encoding='utf-8')
+        cfiler = ['indhold/cases/%s.json' % n for n in re.findall(r"'([^']+)'", re.search(r"CASE_FILER = \[([^\]]*)\]", cjs).group(1))]
+        regler = json.loads((ROD / 'indhold/regler.json').read_text(encoding='utf-8'))['regler']
+        rid = {r['id'] for r in regler}
+        prob = [] if len(rid) == len(regler) else ['dubletter i regel-id']
+        rfelter = {'id', 'titel', 'emne', 'dok', 'afsnit', 'udgave', 'gyldigFra', 'resume', 'tags', 'url', 'verificeret'}
+        for r in regler:
+            if rfelter - set(r): prob.append((r.get('id'), 'mangler', sorted(rfelter - set(r))))
+            if not isinstance(r.get('verificeret'), bool): prob.append((r.get('id'), 'verificeret skal være true/false'))
+        cases = []
+        for f in cfiler:
+            c = json.loads((ROD / f).read_text(encoding='utf-8')); cases.append(c); T = c['trin']; ud = {}
+            if c.get('emne') not in ('mat', 'dim', 'saer', 'love', 'erhv', 'arb', 'andet'): prob.append((f, 'ukendt emne'))
+            if c['start'] not in T: prob.append((f, 'start findes ikke'))
+            for tid, t in T.items():
+                typ = t.get('type')
+                if typ == 'valg':
+                    ud[tid] = [s.get('til') for s in t['svar']]
+                    prob += [(f, tid, i, 'svar mangler felt') for i, s in enumerate(t['svar']) if not (s.get('tekst') and 'point' in s and s.get('feedback'))]
+                elif typ == 'tal':
+                    ud[tid] = [t.get('rigtigTil') or t.get('til'), t.get('forkertTil') or t.get('til')]
+                    if not isinstance(t.get('facit'), (int, float)) or not isinstance(t.get('tol'), (int, float)): prob.append((f, tid, 'facit/tol'))
+                    prob += [(f, tid, 'typisk fejl ligger inden for facit') for x in t.get('typiske', []) if abs(x['vaerdi'] - t['facit']) <= t['tol']]
+                elif typ == 'flere':
+                    ud[tid] = [t.get('til')]
+                    if not any(m.get('rigtig') for m in t['muligheder']): prob.append((f, tid, 'ingen rigtige'))
+                elif typ == 'slut': ud[tid] = []
+                else: prob.append((f, tid, 'ukendt type', typ))
+                prob += [(f, tid, 'til findes ikke', u) for u in ud.get(tid, []) if u not in T]
+                prob += [(f, tid, 'regel findes ikke', r) for r in t.get('regler', []) if r not in rid]
+            set_, kø = set(), [c['start']]
+            while kø:
+                x = kø.pop()
+                if x in set_ or x not in T: continue
+                set_.add(x); kø += ud.get(x, [])
+            if set(T) - set_: prob.append((f, 'trin kan ikke nås', sorted(set(T) - set_)))
+            slut = {x for x in T if T[x].get('type') == 'slut'}; naar = set(slut); ændret = True
+            while ændret:
+                ændret = False
+                for x in T:
+                    if x not in naar and any(u in naar for u in ud.get(x, [])): naar.add(x); ændret = True
+            if set(T) - naar: prob.append((f, 'trin uden vej til slut', sorted(set(T) - naar)))
+        swtxt = (ROD / 'sw.js').read_text(encoding='utf-8')
+        prob += [(f, 'mangler i SKAL i sw.js') for f in ['indhold/regler.json'] + cfiler if Path(f).stem not in swtxt]
+        tjek('casefiler og regelbibliotek er gyldige (til, regler, nåbarhed, slut, sw.js)', not prob and len(cases) == 5, prob)
+        tjek('alle regler er markeret som ikke kontrolleret', all(r['verificeret'] is False for r in regler), [r['id'] for r in regler if r['verificeret'] is not False])
+
+        ctx, pg = await ny_side(b)
+        await pg.click('#tab-cases')
+        await pg.wait_for_function(f"{A}.caseListe.length === {len(cases)} && {A}.caseRegler.length === {len(regler)}")
+        ugyldig = await pg.evaluate(f"""(()=>{{const a={A}, ud=[];
+          const gaa=(o,sti)=>{{ if (typeof o==='string') {{ if (/katex-error/.test(a.vis(o))) ud.push(sti); }} else if (o && typeof o==='object') for (const k in o) gaa(o[k], sti+'.'+k); }};
+          a.caseListe.forEach(c=>gaa(c,c.id)); a.caseRegler.forEach(r=>gaa(r,r.id)); return ud}})()""")
+        tjek('ingen katex-error i cases og regler', not ugyldig, ugyldig)
+
+        async def spil(cid, rigtigt):
+            await pg.click(f'#case-start-{cid}'); await pg.wait_for_selector('#case-trin')
+            for _ in range(60):
+                t = await pg.evaluate(f"(()=>{{const a={A}; return a.caseAktiv.slut ? null : JSON.parse(JSON.stringify(a.caseTrin()))}})()")
+                if t is None: break
+                if t['type'] == 'valg':
+                    pts = [s['point'] for s in t['svar']]
+                    await pg.click('#case-svar-%d' % (pts.index(max(pts)) if rigtigt else pts.index(min(pts))))
+                elif t['type'] == 'tal':
+                    v = t['facit'] if rigtigt else (t.get('typiske') or [{'vaerdi': t['facit'] * 3 + 1}])[0]['vaerdi']
+                    await pg.fill('#case-tal', str(v).replace('.', ',')); await pg.click('#case-tjek')
+                elif t['type'] == 'flere':
+                    for i, m in enumerate(t['muligheder']):
+                        if bool(m['rigtig']) == rigtigt: await pg.check(f'#case-flere-{i}')
+                    await pg.click('#case-tjek')
+                await pg.click('#case-videre')
+            await pg.wait_for_selector('#case-slut'); await pg.wait_for_timeout(100)
+            return await pg.evaluate(f"(()=>{{const a={A}, r=a.resultater[a.resultater.length-1]; return [r.art, r.ref, r.emne, r.korrekt, r.score, r.fejltype, r.data.vej.map(v=>v.t), document.querySelectorAll('.case-gennemgang').length, document.querySelector('#case-score').textContent]}})()")
+
+        # Regel-dialog fra et trin
+        await pg.click('#case-start-case-elbil-11kw'); await pg.click('#case-trin button.tag'); await pg.wait_for_selector('#case-regel-dialog')
+        r = await pg.inner_text('#case-regel-dialog')
+        tjek('regel åbnes fra et trin og viser "Ikke kontrolleret mod kilden"', 'Ikke kontrolleret mod kilden' in r and 'DS/HD 60364-7-722' in r, r[:200])
+        await pg.keyboard.press('Escape'); await pg.click('#case-luk'); await pg.click('#bekraeft-ja')
+        r = await pg.evaluate(f"[{A}.caseAktiv, {A}.resultater.length]")
+        tjek('afbrudt case gemmer intet resultat', r == [None, 0], r)
+
+        alle = []
+        for c in cases:
+            r = await spil(c['id'], True); alle.append(r)
+            await pg.click('#case-luk')
+        tjek('alle 5 cases kan gennemføres med alle rigtige og giver score 1', all(x[0] == 'case' and x[3] is True and x[4] == 1 and x[5] == '' and x[7] == len(x[6]) and x[8].strip() == '100 %' for x in alle)
+             and [x[1] for x in alle] == [c['id'] for c in cases], alle)
+        r = await spil('case-elbil-11kw', False)
+        tjek('forkerte svar i elbil-casen giver konsekvenstrin, score 0 og fejltype', r[3] is False and r[4] == 0 and r[5] == 'glemt-sqrt3' and 't2k' in r[6], r)
+        await pg.click('#case-luk')
+        r = await pg.evaluate(f"(()=>{{const a={A}; return [a.caseForsoeg('case-elbil-11kw').length, a.caseBedste('case-elbil-11kw'), document.querySelector('#case-liste').textContent.includes('2 forsøg · bedste 100 %')]}})()")
+        tjek('listen viser antal forsøg og bedste score pr. case', r == [2, 1, True], r)
+
+        # Regelbibliotek: søgning og "Lav kort"
+        await pg.click('#case-vis-regler'); await pg.fill('#case-regel-soeg', '7-722'); await pg.wait_for_timeout(100)
+        n722 = len([x for x in regler if '7-722' in x['dok']])
+        vist = await pg.evaluate("[document.querySelectorAll('.case-regel').length, [...document.querySelectorAll('.case-regel')].every(e => e.textContent.includes('Ikke kontrolleret mod kilden'))]")
+        tjek('søgning i regelbiblioteket og mærket "ikke kontrolleret"', vist == [n722, True] and n722 > 0, (vist, n722))
+        foer = await pg.evaluate(f"{A}.kort.length")
+        await pg.click('.case-lav-kort'); await pg.wait_for_timeout(150)
+        await pg.evaluate(f"{A}.caseLavKort({A}.caseReglerListe()[0])"); await pg.wait_for_timeout(150)
+        r = await pg.evaluate(f"(()=>{{const a={A}, k=a.kort.filter(k=>k.oprindelse.startsWith('regel:')); return [a.kort.length, k.length, k[0] && k[0].type, k[0] && k[0].emne, k[0] && k[0].kilde.dok, k[0] && /katex-error/.test(a.vis(k[0].front)+a.vis(k[0].bag)), document.querySelector('.case-lav-kort').disabled]}})()")
+        tjek('"Lav kort" opretter ét regelkort med kilde og emne', r == [foer + 1, 1, 'regel', 'saer', 'DS/HD 60364-7-722', False, True], r)
+        await ctx.close()
+
+        # Mobil: Cases-fanen uden vandret rulning
+        ctx, pg = await ny_side(b, 375, 812, is_mobile=True, has_touch=True)
+        await pg.evaluate(f"{A}.gaaTil('cases')"); await pg.wait_for_function(f"{A}.caseListe.length === {len(cases)}")
+        bredder = [await pg.evaluate("document.documentElement.scrollWidth")]
+        await pg.click('#case-start-case-elbil-11kw'); await pg.wait_for_timeout(100); bredder.append(await pg.evaluate("document.documentElement.scrollWidth"))
+        await pg.evaluate(f"{A}.caseVis='regler'"); await pg.wait_for_timeout(100); bredder.append(await pg.evaluate("document.documentElement.scrollWidth"))
+        tjek('mobil 375 px: Cases-fanen uden vandret rulning', all(x <= 375 for x in bredder), bredder)
+        await ctx.close()
 
         # ===== FASE 5: FEJLFINDING (js/fejlfinding.js) =====
 
