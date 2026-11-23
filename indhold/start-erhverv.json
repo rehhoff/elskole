@@ -1,0 +1,894 @@
+{
+ "navn": "Erhverv og industri (startkort)",
+ "kort": [
+  {
+   "id": "erhv-001",
+   "type": "formel",
+   "emne": "erhv",
+   "front": "Hvordan beregner du dækningsbidrag og dækningsgrad?",
+   "bag": "$$DB = O - V \\qquad DG = \\dfrac{DB}{O} \\cdot 100\\ \\%$$\n$O$ omsætning (kr), $V$ variable omkostninger (kr), $DB$ dækningsbidrag (kr), $DG$ dækningsgrad.\n**Eksempel:** $O = 100\\,000$ kr og $V = 65\\,000$ kr giver $DB = 35\\,000$ kr og $DG = 35\\ \\%$.",
+   "tags": [
+    "økonomi",
+    "dækningsbidrag"
+   ],
+   "kilde": {
+    "dok": "",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "erhv-002",
+   "type": "formel",
+   "emne": "erhv",
+   "front": "Hvordan finder du salgsprisen, når du kender kostprisen og den ønskede dækningsgrad?",
+   "bag": "$$\\text{Pris} = \\dfrac{K}{1 - DG}$$\n$K$ kostpris (kr), $DG$ som decimaltal.\n**Eksempel:** $K = 600$ kr og $DG = 40\\ \\%$ giver $600 / 0{,}6 = 1000$ kr.\nTypisk fejl: $600 \\cdot 1{,}4 = 840$ kr. Det er 40 % **avance**, kun 28,6 % dækningsgrad.",
+   "tags": [
+    "økonomi",
+    "dækningsbidrag",
+    "pris"
+   ],
+   "kilde": {
+    "dok": "",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "erhv-003",
+   "type": "formel",
+   "emne": "erhv",
+   "front": "Hvad er forskellen på avance og dækningsgrad?",
+   "bag": "**Avance** regnes af kostprisen, **dækningsgrad** af salgsprisen.\n$$DG = \\dfrac{a}{1 + a} \\qquad a = \\dfrac{DG}{1 - DG}$$\n**Eksempel:** 25 % avance giver $0{,}25 / 1{,}25 = 20\\ \\%$ dækningsgrad.",
+   "tags": [
+    "økonomi",
+    "dækningsbidrag",
+    "pris"
+   ],
+   "kilde": {
+    "dok": "",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "erhv-004",
+   "type": "formel",
+   "emne": "erhv",
+   "front": "Hvordan regner du moms til og fra en pris?",
+   "bag": "Momsen er $25\\ \\%$ af prisen **uden** moms.\n$$P_{inkl} = P_{ekskl} \\cdot 1{,}25 \\qquad \\text{moms} = P_{inkl} \\cdot 0{,}20$$\n**Eksempel:** $8000$ kr inkl. moms indeholder $1600$ kr i moms; prisen uden moms er $6400$ kr.\nTypisk fejl: at trække 25 % fra prisen inkl. moms.",
+   "tags": [
+    "økonomi",
+    "moms"
+   ],
+   "kilde": {
+    "dok": "Momsloven",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "erhv-005",
+   "type": "regel",
+   "emne": "erhv",
+   "front": "Hvornår skal en ny virksomhed momsregistreres?",
+   "bag": "Når det momspligtige salg overstiger **50.000 kr.** inden for 12 måneder. Man kan også vælge at lade sig registrere frivilligt fra start.\nVirksomheden skal også have et **CVR-nummer**.",
+   "tags": [
+    "økonomi",
+    "moms",
+    "virksomhed",
+    "usikker"
+   ],
+   "kilde": {
+    "dok": "Momsloven",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "erhv-006",
+   "type": "formel",
+   "emne": "erhv",
+   "front": "Hvordan fastsætter du en timepris, der dækker omkostningerne?",
+   "bag": "$$\\text{Timepris} = \\dfrac{\\text{omkostninger} + \\text{overskud}}{\\text{fakturerbare timer}}$$\nOmkostningerne er bl.a. løn, pension, feriepenge og sociale bidrag, bil, værktøj, forsikringer, administration og husleje.\nTypisk fejl: at regne med alle betalte timer. Transport, tilbudsgivning, kurser og sygdom kan ikke faktureres.",
+   "tags": [
+    "økonomi",
+    "timepris",
+    "kalkulation"
+   ],
+   "kilde": {
+    "dok": "",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "erhv-007",
+   "type": "regel",
+   "emne": "erhv",
+   "front": "Hvad er forskellen på et tilbud og et overslag?",
+   "bag": "**Tilbud:** en fast pris for det beskrevne arbejde. Den er bindende, når den er accepteret.\n**Overslag:** et skøn over prisen. Over for en forbruger kan en væsentlig overskridelse ikke kræves betalt; i praksis regnes ofte med 10–15 %.\nGiv kunden besked med det samme, hvis et overslag ikke kan holde.",
+   "tags": [
+    "tilbud",
+    "aftale",
+    "forbruger",
+    "usikker"
+   ],
+   "kilde": {
+    "dok": "",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "erhv-008",
+   "type": "regel",
+   "emne": "erhv",
+   "front": "Hvordan håndterer du ekstraarbejde, som kunden beder om undervejs?",
+   "bag": "Aftal pris og omfang **før** arbejdet udføres, helst skriftligt (fx en mail eller en ændringsseddel, kunden godkender).\nDokumentér ændringen, og hold det adskilt på fakturaen. Uaftalt ekstraarbejde er en hyppig kilde til tvister.",
+   "tags": [
+    "tilbud",
+    "aftale",
+    "dokumentation"
+   ],
+   "kilde": {
+    "dok": "",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "erhv-009",
+   "type": "fakta",
+   "emne": "erhv",
+   "front": "Hvad er AB 18 og ABForbruger?",
+   "bag": "**AB 18:** almindelige betingelser for arbejder og leverancer i bygge- og anlægsvirksomhed mellem professionelle parter.\n**ABForbruger:** tilsvarende betingelser til aftaler med forbrugere.\nDe gælder **kun, når de er aftalt**. Efter AB 18 ophører entreprenørens mangelsansvar som udgangspunkt 5 år efter afleveringen.",
+   "tags": [
+    "aftale",
+    "AB18",
+    "mangler"
+   ],
+   "kilde": {
+    "dok": "AB 18",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "erhv-010",
+   "type": "regel",
+   "emne": "erhv",
+   "front": "Hvornår har en forbruger fortrydelsesret over for en håndværker?",
+   "bag": "Ved aftaler indgået **uden for virksomhedens faste forretningssted** (fx hjemme hos kunden) eller ved **fjernsalg** (telefon, mail, web): **14 dage**.\nVil kunden have arbejdet startet inden for fristen, skal kunden udtrykkeligt bede om det. Fortryder kunden derefter, skal kunden betale for den udførte del.",
+   "tags": [
+    "forbruger",
+    "aftale",
+    "fortrydelsesret"
+   ],
+   "kilde": {
+    "dok": "Forbrugeraftaleloven",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "erhv-011",
+   "type": "regel",
+   "emne": "erhv",
+   "front": "Hvor længe kan en kunde gøre et krav om en fejl i dit arbejde gældende?",
+   "bag": "Efter forældelsesloven forældes krav som udgangspunkt efter **3 år** fra det tidspunkt, kunden kendte eller burde kende fejlen, og senest **10 år** efter arbejdet.\nEr AB 18 eller ABForbruger aftalt, gælder deres regler om mangelsansvar (5 år efter aflevering).",
+   "tags": [
+    "mangler",
+    "ansvar",
+    "forældelse",
+    "usikker"
+   ],
+   "kilde": {
+    "dok": "Forældelsesloven",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "erhv-012",
+   "type": "regel",
+   "emne": "erhv",
+   "front": "Hvilke forsikringer har en elvirksomhed brug for?",
+   "bag": "- **Arbejdsskadeforsikring:** lovpligtig for arbejdsgivere.\n- **Erhvervsansvarsforsikring:** dækker skader på andres personer og ting, som virksomheden er ansvarlig for (fx brand efter en fejl). Kunder kræver den ofte.\n- **Produktansvar** for materiel, virksomheden leverer.\nTjek undtagelser: fx skade på selve arbejdet dækkes typisk ikke.",
+   "tags": [
+    "forsikring",
+    "ansvar",
+    "virksomhed"
+   ],
+   "kilde": {
+    "dok": "Arbejdsskadesikringsloven",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "erhv-013",
+   "type": "fakta",
+   "emne": "erhv",
+   "front": "Hvordan læser du en IP-kode, fx IP44 eller IP65?",
+   "bag": "**1. ciffer (0–6):** beskyttelse mod faste genstande og berøring. 4 = genstande over 1 mm, 5 = støvbeskyttet, 6 = støvtæt.\n**2. ciffer (0–9):** beskyttelse mod vand. 4 = vandsprøjt fra alle retninger, 5 = vandstråler, 7 = kortvarig neddykning.\n**X** betyder, at egenskaben ikke er angivet.",
+   "tags": [
+    "IP",
+    "kapsling",
+    "materiel"
+   ],
+   "kilde": {
+    "dok": "DS/EN 60529",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "erhv-014",
+   "type": "fakta",
+   "emne": "erhv",
+   "front": "Hvad angiver en IK-kode?",
+   "bag": "Kapslingens beskyttelse mod **mekaniske slag**, fra IK00 (ingen) til **IK10 (20 J)**.\nVælg en høj IK-kode, hvor materiel kan blive ramt, fx i værksteder, på lagre, i offentlige rum og ved boldbaner.",
+   "tags": [
+    "IK",
+    "kapsling",
+    "materiel"
+   ],
+   "kilde": {
+    "dok": "DS/EN 62262",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "erhv-015",
+   "type": "regel",
+   "emne": "erhv",
+   "front": "Hvordan virker stjerne-trekantstart, og hvornår kan den bruges?",
+   "bag": "Motoren starter i **stjerne**, hvor hver vikling får $U / \\sqrt{3}$, og skifter til **trekant**, når den er oppe i omdrejninger.\nStartstrøm og startmoment bliver ca. $1/3$ af direkte start i trekant.\nKræver en motor, der er viklet til trekant ved netspændingen (fx $400\\ \\text{V}\\ \\Delta$ / $690\\ \\text{V}$ Y på et 400 V-net), og en belastning, der kan starte med lavt moment.",
+   "tags": [
+    "motor",
+    "start",
+    "stjerne",
+    "trekant"
+   ],
+   "kilde": {
+    "dok": "",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "erhv-016",
+   "type": "regel",
+   "emne": "erhv",
+   "front": "Hvad gør en frekvensomformer, og hvad skal du være opmærksom på ved installationen?",
+   "bag": "Den ændrer **frekvens og spænding** til motoren og styrer dermed hastigheden. Giver blød start og sparer energi ved pumper og ventilatorer.\nOpmærksom på:\n- **harmoniske** og **lækstrømme**: valg af fejlstrømsafbryder (ofte type B eller F) efter producentens anvisning\n- **skærmet motorkabel**, korrekt afsluttet, af hensyn til EMC\n- opladede kondensatorer: vent den angivne afladningstid",
+   "tags": [
+    "motor",
+    "frekvensomformer",
+    "RCD",
+    "EMC"
+   ],
+   "kilde": {
+    "dok": "",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "erhv-017",
+   "type": "regel",
+   "emne": "erhv",
+   "front": "Hvordan indstiller du et motorværn, og hvad beskytter det mod?",
+   "bag": "Indstil det til motorens **mærkestrøm** fra mærkepladen ved den aktuelle spænding og kobling (stjerne eller trekant).\nMotorværnet beskytter mod **overbelastning** og fasesvigt. Kortslutningsbeskyttelsen kommer fra den magnetiske udløser eller forsikringen.",
+   "tags": [
+    "motor",
+    "motorværn",
+    "beskyttelse"
+   ],
+   "kilde": {
+    "dok": "",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "erhv-018",
+   "type": "fakta",
+   "emne": "erhv",
+   "front": "Hvad betyder brugskategorien AC-3 på en kontaktor?",
+   "bag": "Kontaktoren er beregnet til at **starte og stoppe kortslutningsmotorer** under normal drift (afbryder motorens mærkestrøm).\nAC-1 er til ohmske belastninger. Den samme kontaktor har en lavere mærkestrøm i AC-3 end i AC-1.",
+   "tags": [
+    "motor",
+    "kontaktor"
+   ],
+   "kilde": {
+    "dok": "DS/EN 60947-4-1",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "erhv-019",
+   "type": "regel",
+   "emne": "erhv",
+   "front": "Hvorfor kan nullederen blive overbelastet i en installation med mange LED-drivere og computere?",
+   "bag": "Ikke-lineære belastninger giver **3. harmoniske** (150 Hz). I et 3-faset system udligner de sig ikke i nullederen, men **lægges sammen**.\nNullederens strøm kan derfor blive større end fasestrømmen. Tag hensyn til det ved dimensioneringen (DS/HD 60364-5-52 har regler for det), og reducer ikke nullederens tværsnit.",
+   "tags": [
+    "harmoniske",
+    "nulleder",
+    "dimensionering"
+   ],
+   "kilde": {
+    "dok": "DS/HD 60364-5-52",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "erhv-020",
+   "type": "fakta",
+   "emne": "erhv",
+   "front": "Hvilke stopkategorier findes for maskiner, og hvilke må et nødstop have?",
+   "bag": "**Kategori 0:** energien fjernes straks (ukontrolleret stop).\n**Kategori 1:** kontrolleret stop, derefter fjernes energien.\n**Kategori 2:** kontrolleret stop, energien bevares.\nEt **nødstop** skal være kategori 0 eller 1. Nødstop er ikke en måde at gøre maskinen sikker til vedligehold: brug adskiller og lås.",
+   "tags": [
+    "maskine",
+    "nødstop",
+    "sikkerhed"
+   ],
+   "kilde": {
+    "dok": "DS/EN 60204-1",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "erhv-021",
+   "type": "regel",
+   "emne": "erhv",
+   "front": "Hvad kræver det at bygge eller væsentligt ombygge en maskine?",
+   "bag": "Den, der gør det, bliver **producent** og skal bl.a. lave en **risikovurdering**, opfylde de væsentlige sikkerhedskrav, udarbejde teknisk dokumentation og brugsanvisning, udstede **EU-overensstemmelseserklæring** og CE-mærke.\nMaskinforordningen (EU) 2023/1230 afløser maskindirektivet 2006/42/EF.",
+   "tags": [
+    "maskine",
+    "CE",
+    "EU"
+   ],
+   "kilde": {
+    "dok": "Maskinforordningen (EU) 2023/1230",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": "2027-01-20"
+   }
+  },
+  {
+   "id": "erhv-022",
+   "type": "fakta",
+   "emne": "erhv",
+   "front": "Hvad betyder ATEX-zonerne 0, 1, 2 og 20, 21, 22?",
+   "bag": "**Gas:** zone 0, 1, 2. **Støv:** zone 20, 21, 22.\n0/20: eksplosiv atmosfære konstant eller i lange perioder.\n1/21: kan forekomme lejlighedsvis under normal drift.\n2/22: forekommer sjældent og kun kortvarigt.\nMateriel skal være **Ex-mærket** til zonen, og installationen udføres efter DS/EN 60079-14.",
+   "tags": [
+    "ATEX",
+    "eksplosion",
+    "industri"
+   ],
+   "kilde": {
+    "dok": "ATEX-direktivet 2014/34/EU; DS/EN 60079-14",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "erhv-023",
+   "type": "regel",
+   "emne": "erhv",
+   "front": "Må et nødstop eller en anden sikkerhedsfunktion alene styres af en almindelig PLC?",
+   "bag": "**Nej.** Sikkerhedsfunktioner skal udføres med komponenter, der er beregnet til det, fx et **sikkerhedsrelæ** eller en **sikkerheds-PLC**, med det sikkerhedsniveau, risikovurderingen kræver.\nDen almindelige PLC må gerne få besked om, at nødstoppet er aktiveret.",
+   "tags": [
+    "PLC",
+    "nødstop",
+    "maskine",
+    "sikkerhed"
+   ],
+   "kilde": {
+    "dok": "DS/EN ISO 13849-1",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "erhv-024",
+   "type": "regel",
+   "emne": "erhv",
+   "front": "Hvem er ansvarlig for en lavspændingstavle, som du selv samler?",
+   "bag": "Den, der samler tavlen, er **tavlefabrikant** og skal sikre, at den opfylder **DS/EN 61439**: verifikation af konstruktionen, stykprøvning af den færdige tavle, mærkning og dokumentation.\nAt bruge godkendte komponenter er ikke nok i sig selv; kombinationen skal være verificeret.",
+   "tags": [
+    "tavle",
+    "ansvar",
+    "dokumentation"
+   ],
+   "kilde": {
+    "dok": "DS/EN 61439-1",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "erhv-025",
+   "type": "regel",
+   "emne": "erhv",
+   "front": "Hvilke elinstallationer i virksomheder kræver ekstra opmærksomhed på grund af lagret energi?",
+   "bag": "- **Frekvensomformere og UPS**: kondensatorer kan holde farlig spænding efter frakobling.\n- **Batterianlæg**: kan ikke gøres spændingsløse ved at slukke.\n- **Kondensatorbatterier** til kompensering skal aflades.\nVent den angivne tid, og **mål** altid, før du arbejder.",
+   "tags": [
+    "lagret-energi",
+    "industri",
+    "sikkerhed"
+   ],
+   "kilde": {
+    "dok": "",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "erhv-026",
+   "type": "fakta",
+   "emne": "erhv",
+   "front": "Hvad dækker DS/EN 60204-1?",
+   "bag": "Det **elektriske udstyr på maskiner**: fra maskinens forsyningsklemmer og ind, op til **1000 V AC** og 1500 V DC.\nDen er harmoniseret til maskinreglerne, så følges den, formodes de elektriske sikkerhedskrav opfyldt. Installationen frem til maskinen følger HD 60364.",
+   "tags": [
+    "60204-1",
+    "maskine",
+    "anvendelsesområde"
+   ],
+   "kilde": {
+    "dok": "DS/EN 60204-1",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "erhv-027",
+   "type": "regel",
+   "emne": "erhv",
+   "front": "Hvilke krav er der til forsyningsadskilleren (hovedafbryderen) på en maskine?",
+   "bag": "- Én for hver forsyning, **manuelt betjent**, med tydelige positioner **0/I**\n- Skal kunne **låses i fra** (hængelås)\n- Egnet til adskillelse, fx lastadskiller, effektafbryder egnet til adskillelse eller stikprop (små maskiner)\n- Håndtaget er **sort eller grå**, men **rødt på gul baggrund**, hvis det også bruges som nødafbryder",
+   "tags": [
+    "60204-1",
+    "maskine",
+    "adskiller"
+   ],
+   "kilde": {
+    "dok": "DS/EN 60204-1",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "erhv-028",
+   "type": "regel",
+   "emne": "erhv",
+   "front": "Hvad gælder for kredse, der ikke afbrydes af maskinens forsyningsadskiller?",
+   "bag": "Visse kredse må undtages, fx belysning til vedligehold, stikkontakt til værktøj og kredse til **forrigling** eller hukommelse.\nDe skal have egen adskiller, være tydeligt **mærket** med advarsel ved hovedafbryderen, og lederne bør være **orange**, så man kan se, at de stadig er spændingsførende.",
+   "tags": [
+    "60204-1",
+    "maskine",
+    "adskiller",
+    "usikker"
+   ],
+   "kilde": {
+    "dok": "DS/EN 60204-1",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "erhv-029",
+   "type": "regel",
+   "emne": "erhv",
+   "front": "Hvordan skal et nødstop se ud og virke?",
+   "bag": "- **Rød** paddehatteknap på **gul** baggrund\n- **Låser** i aktiveret stilling (kan ikke springe tilbage af sig selv)\n- Tilbagestilling må **ikke** starte maskinen: der skal en ny startkommando til\n- Virker som stopkategori 0 eller 1 og har forrang for alle andre funktioner",
+   "tags": [
+    "60204-1",
+    "nødstop",
+    "maskine"
+   ],
+   "kilde": {
+    "dok": "DS/EN 60204-1",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "erhv-030",
+   "type": "fakta",
+   "emne": "erhv",
+   "front": "Hvad er forskellen på nødstop og nødafbrydelse?",
+   "bag": "**Nødstop:** stopper en **farlig bevægelse** eller proces hurtigst muligt (stopkategori 0 eller 1).\n**Nødafbrydelse:** fjerner **forsyningen** for at undgå fare fra **elektricitet**, fx stød. Svarer til stopkategori 0.\nBegge er nødfunktioner; ingen af dem erstatter sikker adskillelse ved vedligehold.",
+   "tags": [
+    "60204-1",
+    "nødstop",
+    "nødafbrydelse"
+   ],
+   "kilde": {
+    "dok": "DS/EN 60204-1",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "erhv-031",
+   "type": "regel",
+   "emne": "erhv",
+   "front": "Hvad kræver DS/EN 60204-1 om maskinens beskyttelsesforbindelser?",
+   "bag": "- Klemme mærket **PE** for den indgående beskyttelsesleder\n- Alle udsatte ledende dele forbundet til beskyttelseskredsen, også låger og dæksler med elektrisk udstyr\n- Er **berøringsstrømmen over 10 mA** (fx frekvensomformere og filtre), skal beskyttelseslederen forstærkes, fx mindst **10 mm² Cu** eller en ekstra beskyttelsesleder",
+   "tags": [
+    "60204-1",
+    "maskine",
+    "beskyttelsesleder"
+   ],
+   "kilde": {
+    "dok": "DS/EN 60204-1",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "erhv-032",
+   "type": "regel",
+   "emne": "erhv",
+   "front": "Hvordan skal styrekredse på en maskine forsynes?",
+   "bag": "Typisk via en **styretransformer** med adskilte viklinger, så styrespændingen er lav og adskilt fra kraftforsyningen.\nKredsen udføres, så en **jordfejl** ikke kan starte maskinen eller forhindre et stop, fx ved at jorde den ene side og afbryde den anden.",
+   "tags": [
+    "60204-1",
+    "maskine",
+    "styrestrøm"
+   ],
+   "kilde": {
+    "dok": "DS/EN 60204-1",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "erhv-033",
+   "type": "regel",
+   "emne": "erhv",
+   "front": "Hvad skal der ske, når spændingen vender tilbage efter et spændingssvigt?",
+   "bag": "Maskinen må **ikke starte af sig selv**, hvis det kan give fare. Der skal en ny, bevidst startkommando til.\nEt typisk eksempel er en kontaktor med selvhold: falder spændingen, falder kontaktoren ud og bliver ude.",
+   "tags": [
+    "60204-1",
+    "maskine",
+    "genstart"
+   ],
+   "kilde": {
+    "dok": "DS/EN 60204-1",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "erhv-034",
+   "type": "regel",
+   "emne": "erhv",
+   "front": "Hvornår skal en motor på en maskine have overbelastningsbeskyttelse?",
+   "bag": "Motorer over **0,5 kW** skal som udgangspunkt have overbelastningsbeskyttelse, fx motorværn eller motorbeskyttelse i frekvensomformeren.\nUndtaget er fx motorer, der ikke kan overbelastes, eller hvor en afbrydelse i sig selv ville give større fare.",
+   "tags": [
+    "60204-1",
+    "motor",
+    "overbelastning"
+   ],
+   "kilde": {
+    "dok": "DS/EN 60204-1",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "erhv-035",
+   "type": "fakta",
+   "emne": "erhv",
+   "front": "Hvad betyder farverne på signallamper efter DS/EN 60204-1?",
+   "bag": "- **Rød:** nødsituation, farlig tilstand, kræver handling straks\n- **Gul:** unormal tilstand, kritisk tilstand nærmer sig\n- **Grøn:** normal tilstand\n- **Blå:** obligatorisk handling fra operatøren\n- **Hvid:** neutral information",
+   "tags": [
+    "60204-1",
+    "maskine",
+    "farver"
+   ],
+   "kilde": {
+    "dok": "DS/EN 60204-1",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "erhv-036",
+   "type": "fakta",
+   "emne": "erhv",
+   "front": "Hvilke lederfarver anbefaler DS/EN 60204-1 inde i maskinens udstyr?",
+   "bag": "- **Sort:** AC og DC kraftkredse\n- **Rød:** AC styrekredse\n- **Blå:** DC styrekredse\n- **Orange:** undtagne kredse, der ikke afbrydes af hovedafbryderen\n- **Lyseblå:** nulleder\n- **Grøn/gul:** beskyttelsesleder (kun)",
+   "tags": [
+    "60204-1",
+    "maskine",
+    "farver",
+    "usikker"
+   ],
+   "kilde": {
+    "dok": "DS/EN 60204-1",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "erhv-037",
+   "type": "regel",
+   "emne": "erhv",
+   "front": "Hvilke prøvninger skal det elektriske udstyr på en maskine have?",
+   "bag": "- Kontrol af, at udstyret svarer til **dokumentationen**\n- **Kontinuitet** af beskyttelseskredsen\n- **Isolationsmodstand:** 500 V DC, mindst **1 MΩ**\n- Evt. spændingsprøve og kontrol af **restspænding**\n- **Funktionsprøve**, især af sikkerhedsfunktioner og nødstop\nResultaterne dokumenteres.",
+   "tags": [
+    "60204-1",
+    "maskine",
+    "prøvning"
+   ],
+   "kilde": {
+    "dok": "DS/EN 60204-1",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "erhv-038",
+   "type": "regel",
+   "emne": "erhv",
+   "front": "Hvad er kravet til restspænding, når en maskine er afbrudt?",
+   "bag": "Berørbare spændingsførende dele med en restspænding over **60 V** skal aflades til højst 60 V inden for **5 s** efter afbrydelse.\nKan det ikke lade sig gøre, fx på grund af kondensatorer i frekvensomformere, skal der være en **advarsel** med den nødvendige ventetid.",
+   "tags": [
+    "60204-1",
+    "maskine",
+    "lagret-energi"
+   ],
+   "kilde": {
+    "dok": "DS/EN 60204-1",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "erhv-039",
+   "type": "regel",
+   "emne": "erhv",
+   "front": "Hvilken dokumentation skal følge maskinens elektriske udstyr?",
+   "bag": "Bl.a. **diagrammer** (kraft og styring), **komponentliste**, oplysninger om forsyning (spænding, strøm, kortslutningsniveau), installationsanvisning, **betjenings- og vedligeholdelsesanvisning** og resultater af prøvninger.\nDokumentationen skal passe til den maskine, der er leveret, og opdateres ved ændringer.",
+   "tags": [
+    "60204-1",
+    "maskine",
+    "dokumentation"
+   ],
+   "kilde": {
+    "dok": "DS/EN 60204-1",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "erhv-040",
+   "type": "fakta",
+   "emne": "erhv",
+   "front": "Hvilke dele består DS/EN 61439-serien af?",
+   "bag": "- **-1:** generelle regler\n- **-2:** krafttavler (PSC)\n- **-3:** fordelingstavler, der betjenes af almindelige personer (DBO)\n- **-4:** byggepladstavler (ACS)\n- **-5:** tavler i offentlige net (kabelskabe)\n- **-6:** kanalskinnesystemer\n- **-7:** særlige anvendelser, fx marinaer, campingpladser og ladestationer\nDel 1 bruges altid sammen med den relevante produktdel.",
+   "tags": [
+    "61439",
+    "tavle",
+    "opbygning"
+   ],
+   "kilde": {
+    "dok": "DS/EN 61439-1",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "erhv-041",
+   "type": "fakta",
+   "emne": "erhv",
+   "front": "Hvad er forskellen på den oprindelige fabrikant og tavlefabrikanten?",
+   "bag": "**Den oprindelige fabrikant** har konstrueret tavlesystemet og udført **konstruktionsverifikationen** (designverifikation).\n**Tavlefabrikanten** samler den konkrete tavle, udfører **stykverifikationen** og påtager sig ansvaret for den færdige tavle. Det er ofte installatøren.\nAfviger tavlefabrikanten fra systemets anvisninger, bliver den selv ansvarlig for konstruktionsverifikationen.",
+   "tags": [
+    "61439",
+    "tavle",
+    "ansvar"
+   ],
+   "kilde": {
+    "dok": "DS/EN 61439-1",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "erhv-042",
+   "type": "fakta",
+   "emne": "erhv",
+   "front": "Hvordan kan en tavles konstruktion verificeres?",
+   "bag": "Med tre metoder, afhængigt af egenskaben:\n- **Prøvning** af en prøvetavle\n- **Beregning** eller sammenligning med en prøvet referencekonstruktion\n- **Vurdering** efter konstruktionsregler\nEksempler på egenskaber: temperaturstigning, kortslutningsstyrke, dielektriske egenskaber, kapslingsklasse og beskyttelseskredsen.",
+   "tags": [
+    "61439",
+    "tavle",
+    "verifikation"
+   ],
+   "kilde": {
+    "dok": "DS/EN 61439-1",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "erhv-043",
+   "type": "regel",
+   "emne": "erhv",
+   "front": "Hvad omfatter stykverifikationen af en færdig tavle?",
+   "bag": "Bl.a.:\n- **kapslingsklasse** (IP) og luft- og krybeafstande\n- beskyttelse mod elektrisk stød og **beskyttelseskredsens** kontinuitet\n- korrekt indbygning af komponenter og interne forbindelser, tilspændingsmomenter\n- klemmer til ydre ledere\n- mekanisk funktion\n- **dielektrisk prøvning** (eller isolationsmåling efter standarden)\n- ledningsføring, funktion og mærkning",
+   "tags": [
+    "61439",
+    "tavle",
+    "stykverifikation"
+   ],
+   "kilde": {
+    "dok": "DS/EN 61439-1",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "erhv-044",
+   "type": "fakta",
+   "emne": "erhv",
+   "front": "Hvad betyder $I_{nA}$, $I_{nc}$ og RDF for en tavle?",
+   "bag": "**$I_{nA}$:** tavlens mærkestrøm, den største strøm, tavlen kan fordele.\n**$I_{nc}$:** en strømkreds' mærkestrøm i tavlen.\n**RDF** (mærkebelastningsfaktor): den andel af $I_{nc}$, udgående kredse kan belastes med **samtidig og vedvarende**. Med RDF = 0,8 må hver kreds belastes med 80 % samtidigt.",
+   "tags": [
+    "61439",
+    "tavle",
+    "mærkeværdier"
+   ],
+   "kilde": {
+    "dok": "DS/EN 61439-1",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "erhv-045",
+   "type": "fakta",
+   "emne": "erhv",
+   "front": "Hvilke kortslutningsværdier kan en tavle have?",
+   "bag": "- **$I_{cw}$:** mærkekorttidsstrømtålighed, den strøm tavlen tåler i en angivet tid (fx 1 s)\n- **$I_{pk}$:** mærkespidsstrømtålighed, den største spidsværdi\n- **$I_{cc}$:** betinget kortslutningsstrøm, den strøm tavlen tåler, når den er beskyttet af et angivet beskyttelsesudstyr\nKortslutningsniveauet på stedet må ikke overstige tavlens værdier.",
+   "tags": [
+    "61439",
+    "tavle",
+    "kortslutning"
+   ],
+   "kilde": {
+    "dok": "DS/EN 61439-1",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "erhv-046",
+   "type": "fakta",
+   "emne": "erhv",
+   "front": "Hvad betyder form 1 til 4 for intern adskillelse i en tavle?",
+   "bag": "- **Form 1:** ingen intern adskillelse\n- **Form 2:** samleskinner adskilt fra funktionsenhederne\n- **Form 3:** desuden funktionsenhederne adskilt fra hinanden\n- **Form 4:** desuden klemmerne til ydre ledere adskilt fra funktionsenhederne\nHøjere form giver bedre beskyttelse ved arbejde i en tavle, hvor dele er i drift.",
+   "tags": [
+    "61439",
+    "tavle",
+    "adskillelse"
+   ],
+   "kilde": {
+    "dok": "DS/EN 61439-2",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "erhv-047",
+   "type": "fakta",
+   "emne": "erhv",
+   "front": "Hvad er en DBO-tavle efter DS/EN 61439-3?",
+   "bag": "En **fordelingstavle, der betjenes af almindelige personer**, fx en gruppetavle i en bolig eller et kontor. Almindelige personer må betjene afbrydere og nulstille automatsikringer.\nDen har derfor krav om berøringsbeskyttelse ved betjening og begrænsning af strøm og spænding.",
+   "tags": [
+    "61439",
+    "tavle",
+    "DBO",
+    "usikker"
+   ],
+   "kilde": {
+    "dok": "DS/EN 61439-3",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "erhv-048",
+   "type": "regel",
+   "emne": "erhv",
+   "front": "Hvad skal stå på mærkepladen på en tavle?",
+   "bag": "Mindst **tavlefabrikantens navn** eller varemærke, en **typebetegnelse** eller identifikation, som gør det muligt at finde dokumentationen, **fremstillingsdato** og henvisning til den relevante del af DS/EN 61439.\nØvrige mærkeværdier ($I_{nA}$, kortslutningsværdier, IP) står på mærkepladen eller i dokumentationen.",
+   "tags": [
+    "61439",
+    "tavle",
+    "mærkning"
+   ],
+   "kilde": {
+    "dok": "DS/EN 61439-1",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "erhv-049",
+   "type": "regel",
+   "emne": "erhv",
+   "front": "Hvad skal du være opmærksom på, når du bygger en tavle om eller udvider den?",
+   "bag": "Ændringer kan påvirke den verificerede **temperaturstigning**, **kortslutningsstyrken** og beskyttelsen mod stød.\nBrug kun komponenter og løsninger, som tavlesystemets fabrikant har godkendt, og lav ny **stykverifikation** af det, du har ændret. En udvidelse uden for den eksisterende kapsling er en ny tavle (BEK 1082 § 68).",
+   "tags": [
+    "61439",
+    "tavle",
+    "ændring",
+    "BEK-1082"
+   ],
+   "kilde": {
+    "dok": "DS/EN 61439-1",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  }
+ ]
+}

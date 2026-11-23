@@ -1,0 +1,869 @@
+{
+ "navn": "Dimensionering og standarder (startkort)",
+ "kort": [
+  {
+   "id": "dim-001",
+   "type": "fakta",
+   "emne": "dim",
+   "front": "Hvordan er standardserien DS/HD 60364 bygget op?",
+   "bag": "- **Del 1:** grundlæggende principper og definitioner\n- **Del 4-4x:** beskyttelse for sikkerhed: 4-41 elektrisk stød, 4-42 termiske påvirkninger, 4-43 overstrøm, 4-44 spændings- og elektromagnetiske forstyrrelser\n- **Del 5-5x:** valg og installation af materiel: 5-51 fælles regler, 5-52 ledningssystemer, 5-53 beskyttelse, adskillelse og kobling, 5-54 jording og beskyttelsesledere, 5-55 andet materiel, 5-56 sikkerhedsinstallationer\n- **Del 6:** verifikation\n- **Del 7-7xx:** særlige installationer og områder\n- **Del 8-1:** energieffektivitet",
+   "tags": [
+    "60364",
+    "opbygning"
+   ],
+   "kilde": {
+    "dok": "DS/HD 60364",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "dim-002",
+   "type": "fakta",
+   "emne": "dim",
+   "front": "Hvad betyder bogstaverne i TN-S, TN-C-S, TT og IT?",
+   "bag": "**1. bogstav**, forsyningens forbindelse til jord: **T** et punkt er direkte jordet, **I** isoleret fra jord eller jordet gennem en impedans.\n**2. bogstav**, de udsatte ledende dele: **T** egen jordelektrode, **N** forbundet til forsyningens jordede punkt.\n**S** separate nul- og beskyttelsesledere, **C** kombineret i én PEN-leder.\nTN-C-S: PEN i første del, derefter adskilt.",
+   "tags": [
+    "60364",
+    "jordingssystem",
+    "TN",
+    "TT",
+    "IT"
+   ],
+   "kilde": {
+    "dok": "DS/HD 60364-1",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "dim-003",
+   "type": "fakta",
+   "emne": "dim",
+   "front": "Hvad er forskellen på en udsat ledende del og en fremmed ledende del?",
+   "bag": "**Udsat ledende del:** en ledende del af det elektriske materiel, som kan berøres, og som kan blive spændingsførende ved fejl, fx metalkappen på en vaskemaskine.\n**Fremmed ledende del:** en ledende del, der ikke hører til installationen, men kan føre et potential, typisk jordpotentialet, fx vandrør, fjernvarmerør og bygningsstål.\nUdsatte dele forbindes til **beskyttelseslederen**, fremmede dele til **udligningen**.",
+   "tags": [
+    "60364",
+    "definition",
+    "udligning"
+   ],
+   "kilde": {
+    "dok": "DS/HD 60364-1",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "dim-004",
+   "type": "fakta",
+   "emne": "dim",
+   "front": "Hvilke beskyttelsesforanstaltninger mod elektrisk stød giver HD 60364-4-41?",
+   "bag": "De almindelige, der kan bruges overalt:\n- **automatisk afbrydelse af forsyningen** (den mest brugte)\n- **dobbelt eller forstærket isolation** (klasse II)\n- **elektrisk adskillelse** (separat strømkreds) til ét brugsapparat\n- **ekstra lav spænding**, SELV eller PELV\nHindringer og placering uden for rækkevidde må kun bruges, hvor kun sagkyndige eller instruerede har adgang.",
+   "tags": [
+    "60364",
+    "stød",
+    "beskyttelse"
+   ],
+   "kilde": {
+    "dok": "DS/HD 60364-4-41",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "dim-005",
+   "type": "regel",
+   "emne": "dim",
+   "front": "Hvilke maksimale udkoblingstider gælder ved automatisk afbrydelse (230 V)?",
+   "bag": "**Slutgrupper til og med 32 A:**\n- TN-system: **0,4 s**\n- TT-system: **0,2 s**\n**Fordelingskredse og grupper over 32 A:**\n- TN-system: **5 s**\n- TT-system: **1 s**",
+   "tags": [
+    "60364",
+    "udkoblingstid",
+    "TN",
+    "TT"
+   ],
+   "kilde": {
+    "dok": "DS/HD 60364-4-41",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "dim-006",
+   "type": "formel",
+   "emne": "dim",
+   "front": "Hvilken betingelse skal sløjfeimpedansen opfylde i et TN-system?",
+   "bag": "$$Z_s \\cdot I_a \\leq U_0$$\n$Z_s$ fejlsløjfens impedans ($\\Omega$), $I_a$ strømmen, der giver udkobling inden for den krævede tid (A), $U_0$ spændingen mod jord (V).\n**Eksempel:** B16 udløser momentant ved $5 \\cdot 16 = 80\\ \\text{A}$, så $Z_s \\leq 230 / 80 = 2{,}88\\ \\Omega$.",
+   "tags": [
+    "60364",
+    "TN",
+    "sløjfeimpedans",
+    "regn-selv"
+   ],
+   "kilde": {
+    "dok": "DS/HD 60364-4-41",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "dim-007",
+   "type": "formel",
+   "emne": "dim",
+   "front": "Hvilken betingelse skal jordmodstanden opfylde i et TT-system med RCD?",
+   "bag": "$$R_A \\cdot I_{\\Delta n} \\leq 50\\ \\text{V}$$\n$R_A$ summen af jordelektrodens og beskyttelseslederens modstand ($\\Omega$), $I_{\\Delta n}$ RCD'ens mærkeudløsestrøm (A).\n**Eksempel:** $I_{\\Delta n} = 30\\ \\text{mA}$ giver $R_A \\leq 50 / 0{,}03 \\approx 1667\\ \\Omega$. I praksis bør jordmodstanden være meget lavere og stabil over året.",
+   "tags": [
+    "60364",
+    "TT",
+    "jordmodstand",
+    "RCD"
+   ],
+   "kilde": {
+    "dok": "DS/HD 60364-4-41",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "dim-008",
+   "type": "regel",
+   "emne": "dim",
+   "front": "Hvornår kræver HD 60364-4-41 supplerende beskyttelse med RCD på højst 30 mA?",
+   "bag": "Bl.a. for **stikkontakter til og med 32 A**, der kan bruges af almindelige personer, og for **transportabelt udstyr udendørs** til og med 32 A.\nI Danmark gælder desuden **BEK 1082 § 35**: stikkontakter til og med 20 A og andre tilslutningssteder til og med 32 A. Del 7 skærper kravene i særlige rum, fx baderum.",
+   "tags": [
+    "60364",
+    "RCD",
+    "supplerende-beskyttelse"
+   ],
+   "kilde": {
+    "dok": "DS/HD 60364-4-41",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "dim-009",
+   "type": "fakta",
+   "emne": "dim",
+   "front": "Hvad er forskellen på SELV og PELV, og hvad er grænsen for ekstra lav spænding?",
+   "bag": "Ekstra lav spænding: højst **50 V AC** eller **120 V jævnspænding uden rippel**.\n**SELV:** ingen forbindelse til jord, heller ikke ved en jordfejl i andre kredse.\n**PELV:** må være jordforbundet, fx af hensyn til funktion eller EMC.\nBegge skal forsynes fra en sikker kilde, fx en **sikkerhedstransformer** (DS/EN 61558-2-6), og være adskilt fra andre kredse.",
+   "tags": [
+    "60364",
+    "SELV",
+    "PELV"
+   ],
+   "kilde": {
+    "dok": "DS/HD 60364-4-41",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "dim-010",
+   "type": "regel",
+   "emne": "dim",
+   "front": "Hvad kræves ved elektrisk adskillelse (separat strømkreds)?",
+   "bag": "Kredsen forsynes fra en **skilletransformer**, og den separate kreds må **ikke jordforbindes**. Som udgangspunkt forsynes kun **ét brugsapparat**.\nForsynes flere apparater, skal deres udsatte ledende dele forbindes med **isolerede, ikke-jordforbundne udligningsledere** (BEK 1082 § 48).",
+   "tags": [
+    "60364",
+    "separat-strømkreds",
+    "BEK-1082"
+   ],
+   "kilde": {
+    "dok": "DS/HD 60364-4-41",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "dim-011",
+   "type": "regel",
+   "emne": "dim",
+   "front": "Hvad handler HD 60364-4-42 om, og hvilke eksempler på krav skal du kende?",
+   "bag": "Beskyttelse mod **termiske påvirkninger**: brand, forbrændinger og overophedning.\nEksempler:\n- materiel må ikke antænde omgivelserne, og varme dele skal holdes på afstand af brændbart materiale\n- berørbare dele må ikke blive for varme\n- ekstra krav i rum med brandfare og ved brændbare bygningsdele\n- **lysbuedetektorer (AFDD)** nævnes som ekstra beskyttelse mod brand fra serielle lysbuer",
+   "tags": [
+    "60364",
+    "brand",
+    "AFDD",
+    "usikker"
+   ],
+   "kilde": {
+    "dok": "DS/HD 60364-4-42",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "dim-012",
+   "type": "formel",
+   "emne": "dim",
+   "front": "Hvilke betingelser skal overbelastningsbeskyttelsen opfylde?",
+   "bag": "$$I_B \\leq I_n \\leq I_Z \\qquad I_2 \\leq 1{,}45 \\cdot I_Z$$\n$I_B$ belastningsstrøm, $I_n$ beskyttelsens mærkestrøm, $I_Z$ kablets strømværdi, $I_2$ den strøm, der sikkert udløser beskyttelsen inden for den konventionelle tid.",
+   "tags": [
+    "60364",
+    "overbelastning",
+    "dimensionering"
+   ],
+   "kilde": {
+    "dok": "DS/HD 60364-4-43",
+    "afsnit": "433",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "dim-013",
+   "type": "formel",
+   "emne": "dim",
+   "front": "Hvorfor er der forskel på at bruge automatsikring og smeltesikring (gG) mod overbelastning?",
+   "bag": "**Automatsikring** (DS/EN 60898-1): $I_2 = 1{,}45 \\cdot I_n$. Er $I_n \\leq I_Z$, er $I_2 \\leq 1{,}45 \\cdot I_Z$ automatisk opfyldt.\n**Smeltesikring gG**: $I_2 \\approx 1{,}6 \\cdot I_n$, så der skal gælde\n$$I_n \\leq \\dfrac{1{,}45}{1{,}6} \\cdot I_Z \\approx 0{,}9 \\cdot I_Z$$\n**Eksempel:** $I_Z = 20\\ \\text{A}$ tillader B20, men kun en 16 A gG-sikring (højst 18 A).",
+   "tags": [
+    "60364",
+    "overbelastning",
+    "sikring",
+    "MCB"
+   ],
+   "kilde": {
+    "dok": "DS/HD 60364-4-43",
+    "afsnit": "433",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "dim-014",
+   "type": "formel",
+   "emne": "dim",
+   "front": "Hvordan kontrollerer du, at et kabel tåler en kortslutning (adiabatisk opvarmning)?",
+   "bag": "$$t = \\left( \\dfrac{k \\cdot S}{I} \\right)^2$$\n$t$ tilladt tid (s, højst 5 s), $S$ tværsnit (mm²), $I$ kortslutningsstrøm (A), $k$ materialefaktor: ca. **115** for Cu/PVC og **143** for Cu/PEX.\nBeskyttelsen skal afbryde, før $t$ er gået.\n**Eksempel:** $2{,}5\\ \\text{mm}^2$ Cu/PVC ved $500\\ \\text{A}$: $t = (115 \\cdot 2{,}5 / 500)^2 \\approx 0{,}33\\ \\text{s}$.",
+   "tags": [
+    "60364",
+    "kortslutning",
+    "dimensionering",
+    "regn-selv"
+   ],
+   "kilde": {
+    "dok": "DS/HD 60364-4-43",
+    "afsnit": "434",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "dim-015",
+   "type": "regel",
+   "emne": "dim",
+   "front": "Hvad skal kortslutningsbeskyttelsens brydeevne være, og hvornår må den være lavere?",
+   "bag": "Brydeevnen skal være mindst den **største kortslutningsstrøm** på stedet.\nEn lavere brydeevne er tilladt, hvis et **foransiddende** beskyttelsesudstyr med tilstrækkelig brydeevne beskytter det (**back-up** eller kaskade), og fabrikanten har dokumenteret kombinationen.",
+   "tags": [
+    "60364",
+    "kortslutning",
+    "brydeevne",
+    "back-up"
+   ],
+   "kilde": {
+    "dok": "DS/HD 60364-4-43",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "dim-016",
+   "type": "fakta",
+   "emne": "dim",
+   "front": "Hvad er forskellen på overspændingsafledere af type 1, 2 og 3?",
+   "bag": "**Type 1 (T1):** tåler en direkte lynstrøm. Bruges ved indgangen, når bygningen har lynbeskyttelse eller luftledningsforsyning.\n**Type 2 (T2):** mod induceret overspænding fra lyn og kobling, typisk i hovedtavlen.\n**Type 3 (T3):** finbeskyttelse tæt ved følsomt udstyr.\nKrav om overspændingsbeskyttelse og risikovurdering står i HD 60364-4-44, valg og montering i 5-534.",
+   "tags": [
+    "60364",
+    "overspænding",
+    "SPD"
+   ],
+   "kilde": {
+    "dok": "DS/HD 60364-5-534",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "dim-017",
+   "type": "fakta",
+   "emne": "dim",
+   "front": "Hvad beskriver de ydre påvirkninger i HD 60364-5-51 (fx AD4)?",
+   "bag": "En kode for de **miljøforhold**, materiellet skal klare. Første bogstav er gruppen (A miljø), andet bogstav parameteren, tallet graden. Eksempler:\n- **AA** omgivelsestemperatur\n- **AD** vand (AD4 = vandsprøjt, svarer til mindst IPX4)\n- **AE** faste fremmedlegemer og støv\n- **AG** mekaniske slag\nMateriellet vælges, så det passer til de ydre påvirkninger, eller beskyttes ekstra (BEK 1082 § 17).",
+   "tags": [
+    "60364",
+    "ydre-påvirkninger",
+    "IP",
+    "usikker"
+   ],
+   "kilde": {
+    "dok": "DS/HD 60364-5-51",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "dim-018",
+   "type": "fakta",
+   "emne": "dim",
+   "front": "Hvad betyder referenceinstallationsmetoderne A1, B1, C, D og E?",
+   "bag": "- **A1/A2:** i rør i termisk isoleret væg (dårligst køling)\n- **B1/B2:** i rør eller kanal på væg\n- **C:** fastgjort direkte på væg\n- **D1/D2:** i rør i jord eller direkte i jord\n- **E/F/G:** i fri luft (kabelbakke eller -stige)\nMetoden afgør kablets **strømværdi** i tabellerne i HD 60364-5-52.",
+   "tags": [
+    "60364",
+    "installationsmetode",
+    "strømværdi"
+   ],
+   "kilde": {
+    "dok": "DS/HD 60364-5-52",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "dim-019",
+   "type": "formel",
+   "emne": "dim",
+   "front": "Hvordan korrigerer du kablets strømværdi for temperatur og samlet fremføring?",
+   "bag": "$$I_Z = I_{Z0} \\cdot k_t \\cdot k_g$$\n$I_{Z0}$ strømværdi fra tabellen for installationsmetoden (reference 30 °C i luft, 20 °C i jord), $k_t$ temperaturfaktor, $k_g$ faktor for samlet fremføring. Termisk isolering giver en yderligere reduktion.\n**Eksempel:** $I_{Z0} = 24\\ \\text{A}$, $k_t = 0{,}87$, $k_g = 0{,}7$ giver $I_Z \\approx 14{,}6\\ \\text{A}$.",
+   "tags": [
+    "60364",
+    "strømværdi",
+    "korrektion",
+    "regn-selv"
+   ],
+   "kilde": {
+    "dok": "DS/HD 60364-5-52",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "dim-020",
+   "type": "regel",
+   "emne": "dim",
+   "front": "Hvilke spændingsfald anbefaler HD 60364-5-52, anneks G?",
+   "bag": "Annekset er **vejledende**. Ved forsyning fra det offentlige lavspændingsnet: **3 %** til belysning og **5 %** til andet. Ved egen transformer: 6 % og 8 %.\nSpændingsfaldet regnes fra forsyningspunktet til brugsgenstanden. Motorer ved start og materiel med stor startstrøm kan kræve mere.",
+   "tags": [
+    "60364",
+    "spændingsfald",
+    "usikker"
+   ],
+   "kilde": {
+    "dok": "DS/HD 60364-5-52",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "dim-021",
+   "type": "regel",
+   "emne": "dim",
+   "front": "Hvilke mindste ledertværsnit gælder i faste installationer?",
+   "bag": "- Kobber til **kraft og belysning:** mindst **1,5 mm²**\n- Kobber til **signal- og styrekredse:** mindst 0,5 mm²\n- **PEN-leder:** mindst **10 mm² Cu** (16 mm² Al)\nTværsnittet skal derudover passe til strømværdi, spændingsfald og kortslutning.",
+   "tags": [
+    "60364",
+    "tværsnit",
+    "PEN"
+   ],
+   "kilde": {
+    "dok": "DS/HD 60364-5-52",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "dim-022",
+   "type": "regel",
+   "emne": "dim",
+   "front": "Hvornår må nullederen være mindre end faselederne?",
+   "bag": "I **1-fasede** kredse skal nullederen have samme tværsnit som faselederen.\nI **3-fasede** kredse må den kun være mindre, når faselederne er over 16 mm² Cu, nullederens forventede strøm (inkl. **harmoniske**) er lavere end dens strømværdi, og den er beskyttet mod overstrøm.\nMed mange ikke-lineære belastninger kan nullederen tværtimod skulle være større.",
+   "tags": [
+    "60364",
+    "nulleder",
+    "harmoniske"
+   ],
+   "kilde": {
+    "dok": "DS/HD 60364-5-52",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "dim-023",
+   "type": "regel",
+   "emne": "dim",
+   "front": "Hvordan opnår du selektivitet mellem to RCD'er i serie?",
+   "bag": "Den foransiddende RCD skal være **forsinket (type S)** og have en større mærkeudløsestrøm, typisk mindst **3 gange** den efterfølgende, fx 300 mA S foran 30 mA.\nTo almindelige RCD'er med samme følsomhed giver ingen selektivitet: begge kan udløse.",
+   "tags": [
+    "60364",
+    "RCD",
+    "selektivitet",
+    "usikker"
+   ],
+   "kilde": {
+    "dok": "DS/HD 60364-5-53",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "dim-024",
+   "type": "fakta",
+   "emne": "dim",
+   "front": "Hvilke RCD-typer findes, og hvad kan de registrere?",
+   "bag": "- **Type AC:** kun sinusformede vekselstrømsfejl (ikke tilladt i boliger, BEK 1082 § 53)\n- **Type A:** som AC + pulserende jævnstrøm\n- **Type F:** som A + fejlstrømme med blandede frekvenser, fx fra 1-fasede frekvensomformere\n- **Type B:** som F + glat jævnstrøm, fx fra 3-fasede frekvensomformere og visse ladere\nVælg efter, hvilken fejlstrøm materiellet kan give.",
+   "tags": [
+    "60364",
+    "RCD",
+    "typer"
+   ],
+   "kilde": {
+    "dok": "DS/HD 60364-5-53",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "dim-025",
+   "type": "formel",
+   "emne": "dim",
+   "front": "Hvordan bestemmer du beskyttelseslederens tværsnit?",
+   "bag": "**Med tabellen** (samme materiale som faselederen med tværsnit $S$):\n- $S \\leq 16$: beskyttelsesleder $S$\n- $16 < S \\leq 35$: $16\\ \\text{mm}^2$\n- $S > 35$: $S / 2$\n**Eller beregnet:**\n$$S_{PE} = \\dfrac{\\sqrt{I^2 \\cdot t}}{k}$$",
+   "tags": [
+    "60364",
+    "beskyttelsesleder",
+    "tværsnit"
+   ],
+   "kilde": {
+    "dok": "DS/HD 60364-5-54",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "dim-026",
+   "type": "regel",
+   "emne": "dim",
+   "front": "Hvor tynd må en beskyttelsesleder være, når den ikke er en del af et kabel?",
+   "bag": "Mindst **2,5 mm² Cu**, hvis den er **mekanisk beskyttet**, og mindst **4 mm² Cu**, hvis den ikke er.\nSamlinger af separat fremførte beskyttelsesledere på mindst 4 mm² må udføres uden kapsling (BEK 1082 § 37, stk. 3).",
+   "tags": [
+    "60364",
+    "beskyttelsesleder",
+    "tværsnit",
+    "BEK-1082"
+   ],
+   "kilde": {
+    "dok": "DS/HD 60364-5-54",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "dim-027",
+   "type": "regel",
+   "emne": "dim",
+   "front": "Hvad skal forbindes i hovedudligningen, og hvor store skal lederne være?",
+   "bag": "Til **hovedjordklemmen** forbindes jordingslederen, beskyttelseslederne og udligningsforbindelser til fremmede ledende dele, fx vand-, gas- og fjernvarmerør ved indføringen og bygningens metalkonstruktion.\nUdligningslederen skal mindst være halvdelen af installationens største beskyttelsesleder og mindst **6 mm² Cu**. Den behøver ikke være over 25 mm² Cu.",
+   "tags": [
+    "60364",
+    "udligning",
+    "hovedjordklemme",
+    "usikker"
+   ],
+   "kilde": {
+    "dok": "DS/HD 60364-5-54",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "dim-028",
+   "type": "regel",
+   "emne": "dim",
+   "front": "Hvordan skal en PEN-leder mærkes?",
+   "bag": "**Grøn/gul** i hele længden med **blå** mærkning i enderne, eller blå i hele længden med grøn/gul mærkning i enderne.\nPEN-lederen må aldrig afbrydes, og den må ikke bruges efter første tavle i en bygning (BEK 1082 § 28).",
+   "tags": [
+    "60364",
+    "PEN",
+    "mærkning",
+    "BEK-1082"
+   ],
+   "kilde": {
+    "dok": "DS/HD 60364-5-51",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "dim-029",
+   "type": "regel",
+   "emne": "dim",
+   "front": "I hvilken rækkefølge verificerer du en ny installation efter HD 60364-6?",
+   "bag": "1. **Eftersyn** (spændingsløs): materiel, mærkning, tværsnit, beskyttelse, tilgængelighed\n2. **Kontinuitet** af beskyttelses- og udligningsledere\n3. **Isolationsmodstand**\n4. Beskyttelse ved SELV, PELV og elektrisk adskillelse\n5. **Polaritet**\n6. **Automatisk afbrydelse**: sløjfeimpedans eller jordmodstand\n7. **RCD-afprøvning**\n8. Fasefølge, **funktionsprøve** og evt. spændingsfald\n9. **Rapport**",
+   "tags": [
+    "60364",
+    "verifikation",
+    "afprøvning"
+   ],
+   "kilde": {
+    "dok": "DS/HD 60364-6",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "dim-030",
+   "type": "regel",
+   "emne": "dim",
+   "front": "Hvilke mindsteværdier for isolationsmodstand gælder?",
+   "bag": "- **SELV og PELV:** prøvespænding 250 V DC, mindst **0,5 MΩ**\n- **Til og med 500 V** (fx 230/400 V): 500 V DC, mindst **1 MΩ**\n- **Over 500 V:** 1000 V DC, mindst **1 MΩ**\nAfbryd følsomt materiel (fx overspændingsafledere og elektronik), eller mål mellem forbundne faser og nul mod jord.",
+   "tags": [
+    "60364",
+    "verifikation",
+    "isolationsmodstand"
+   ],
+   "kilde": {
+    "dok": "DS/HD 60364-6",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "dim-031",
+   "type": "regel",
+   "emne": "dim",
+   "front": "Hvordan måler du kontinuitet af beskyttelseslederen?",
+   "bag": "Med et lavohm-instrument med prøvestrøm på mindst **200 mA** (DS/EN 61557-4), spændingsløst.\nMål fra hovedjordklemmen eller tavlens PE-skinne til hvert tilslutningssted og hver udsat ledende del. Nulstil (kompensér) målepindene først.",
+   "tags": [
+    "60364",
+    "verifikation",
+    "kontinuitet"
+   ],
+   "kilde": {
+    "dok": "DS/HD 60364-6",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "dim-032",
+   "type": "regel",
+   "emne": "dim",
+   "front": "Hvordan afprøver du en RCD, og hvilke udløsetider gælder for en almindelig RCD?",
+   "bag": "Med et RCD-prøveinstrument, ikke kun testknappen. Typiske grænser for en almindelig (ikke-forsinket) RCD:\n- ved $I_{\\Delta n}$: højst **300 ms**\n- ved $5 \\cdot I_{\\Delta n}$: højst **40 ms**\nVed $\\tfrac{1}{2} I_{\\Delta n}$ må den ikke udløse. Testknappen kontrollerer kun mekanikken.",
+   "tags": [
+    "60364",
+    "verifikation",
+    "RCD"
+   ],
+   "kilde": {
+    "dok": "DS/HD 60364-6; DS/EN 61008-1",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "dim-033",
+   "type": "regel",
+   "emne": "dim",
+   "front": "Hvorfor skal en målt sløjfeimpedans have margin i forhold til grænseværdien?",
+   "bag": "Du måler ved **stuetemperatur**, men under fejl er lederne **varme**, og modstanden er større. Derfor bruges en reduceret grænse, typisk ca. **80 %** af den beregnede største $Z_s$.\n**Eksempel:** B16 med $Z_s \\leq 2{,}88\\ \\Omega$ bør måles til højst ca. $2{,}3\\ \\Omega$.",
+   "tags": [
+    "60364",
+    "verifikation",
+    "sløjfeimpedans",
+    "usikker"
+   ],
+   "kilde": {
+    "dok": "DS/HD 60364-6",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "dim-034",
+   "type": "fakta",
+   "emne": "dim",
+   "front": "Hvad dækker DS/EN 60898-1?",
+   "bag": "**Automatsikringer (MCB)** til husholdning og lignende, som almindelige personer kan betjene: vekselspænding til og med 440 V, mærkestrøm til og med **125 A** og kortslutningsbrydeevne til og med **25 kA**.\nAutomatsikringer til industri og større strømme hører under DS/EN 60947-2.",
+   "tags": [
+    "60898-1",
+    "MCB",
+    "anvendelsesområde"
+   ],
+   "kilde": {
+    "dok": "DS/EN 60898-1",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "dim-035",
+   "type": "fakta",
+   "emne": "dim",
+   "front": "Hvornår udløser en automatsikring med karakteristik B, C og D momentant?",
+   "bag": "- **B:** mellem 3 og **5** × $I_n$ (lange kabler, ohmske belastninger)\n- **C:** mellem 5 og **10** × $I_n$ (almindelig belastning, motorer, lysstofrør)\n- **D:** mellem 10 og **20** × $I_n$ (stor indkoblingsstrøm, fx transformere)\nTil kontrol af udkobling bruges den **øvre** grænse: B16 kræver $5 \\cdot 16 = 80\\ \\text{A}$.",
+   "tags": [
+    "60898-1",
+    "MCB",
+    "karakteristik"
+   ],
+   "kilde": {
+    "dok": "DS/EN 60898-1",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "dim-036",
+   "type": "fakta",
+   "emne": "dim",
+   "front": "Hvad er de konventionelle strømme for en automatsikring efter DS/EN 60898-1?",
+   "bag": "- **Ikke-udløsestrøm** $I_{nt} = 1{,}13 \\cdot I_n$: må ikke udløse inden for den konventionelle tid.\n- **Udløsestrøm** $I_t = 1{,}45 \\cdot I_n$: skal udløse inden for den konventionelle tid.\nDen konventionelle tid er **1 time** for $I_n \\leq 63\\ \\text{A}$ og 2 timer derover. Referencetemperaturen er **30 °C**.",
+   "tags": [
+    "60898-1",
+    "MCB",
+    "udløsning"
+   ],
+   "kilde": {
+    "dok": "DS/EN 60898-1",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "dim-037",
+   "type": "fakta",
+   "emne": "dim",
+   "front": "Hvad er forskellen på $I_{cn}$ og $I_{cs}$ for en automatsikring?",
+   "bag": "**$I_{cn}$** (mærkekortslutningsbrydeevne): den største strøm, sikringen kan bryde, men den skal ikke kunne bruges igen bagefter.\n**$I_{cs}$** (driftskortslutningsbrydeevne): den strøm, den kan bryde og stadig fungere normalt. Op til 6 kA er $I_{cs} = I_{cn}$; over er den lavere.\nTypiske værdier for $I_{cn}$: 3, 4,5, 6 og 10 kA.",
+   "tags": [
+    "60898-1",
+    "MCB",
+    "brydeevne"
+   ],
+   "kilde": {
+    "dok": "DS/EN 60898-1",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "dim-038",
+   "type": "fakta",
+   "emne": "dim",
+   "front": "Hvordan læser du mærkningen på en automatsikring, fx \"C16\" med \"6000\" i en ramme og \"3\" i en firkant?",
+   "bag": "- **C16:** karakteristik C, mærkestrøm 16 A\n- **6000** i en rektangel: $I_{cn} = 6000\\ \\text{A}$\n- **3** i en firkant: **energibegrænsningsklasse 3**\nDesuden mærkespænding og evt. referencetemperatur, hvis den ikke er 30 °C.",
+   "tags": [
+    "60898-1",
+    "MCB",
+    "mærkning"
+   ],
+   "kilde": {
+    "dok": "DS/EN 60898-1",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "dim-039",
+   "type": "fakta",
+   "emne": "dim",
+   "front": "Hvad betyder energibegrænsningsklassen på en automatsikring?",
+   "bag": "Hvor meget af kortslutningsenergien ($I^2 t$), sikringen lukker igennem, før den bryder. Klasse **3** begrænser mest, klasse 1 mindst.\nEn høj klasse skåner kablet og efterfølgende materiel og letter selektiviteten mod forsikringer.",
+   "tags": [
+    "60898-1",
+    "MCB",
+    "energiklasse"
+   ],
+   "kilde": {
+    "dok": "DS/EN 60898-1",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "dim-040",
+   "type": "regel",
+   "emne": "dim",
+   "front": "Hvorfor kan en automatsikring udløse for tidligt i en varm tavle?",
+   "bag": "Den termiske udløser er indstillet ved **30 °C**. Ved højere temperatur, fx mange belastede sikringer tæt sammen i en lukket tavle, udløser den ved en lavere strøm.\nFølg fabrikantens **reduktionsfaktorer** for temperatur og sammenbygning, og sørg for ventilation.",
+   "tags": [
+    "60898-1",
+    "MCB",
+    "temperatur"
+   ],
+   "kilde": {
+    "dok": "DS/EN 60898-1",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "dim-041",
+   "type": "formel",
+   "emne": "dim",
+   "front": "Hvad er den største sløjfeimpedans for en C16 i et TN-system (230 V)?",
+   "bag": "C-karakteristik: momentan udløsning senest ved $10 \\cdot I_n = 160\\ \\text{A}$.\n$$Z_s \\leq \\dfrac{U_0}{I_a} = \\dfrac{230}{160} \\approx 1{,}44\\ \\Omega$$\nTil sammenligning tillader B16 $2{,}88\\ \\Omega$. C-karakteristik kræver altså en lavere impedans og dermed ofte et kortere kabel eller større tværsnit.",
+   "tags": [
+    "60898-1",
+    "MCB",
+    "sløjfeimpedans",
+    "regn-selv"
+   ],
+   "kilde": {
+    "dok": "DS/EN 60898-1; DS/HD 60364-4-41",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "dim-042",
+   "type": "fakta",
+   "emne": "dim",
+   "front": "Hvad dækker DS/EN 60947-2, og hvordan adskiller den sig fra DS/EN 60898-1?",
+   "bag": "**Effektafbrydere** (kompaktafbrydere/MCCB og luftafbrydere/ACB) op til **1000 V AC** og 1500 V DC, typisk i industri og fordelingstavler, betjent af sagkyndige eller instruerede.\nForskelle: større strømme og brydeevner, **justerbare** udløsere, andre konventionelle strømme og angivelse af $I_{cu}$, $I_{cs}$ og evt. $I_{cw}$.",
+   "tags": [
+    "60947-2",
+    "MCCB",
+    "anvendelsesområde"
+   ],
+   "kilde": {
+    "dok": "DS/EN 60947-2",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "dim-043",
+   "type": "fakta",
+   "emne": "dim",
+   "front": "Hvad er forskellen på $I_{cu}$ og $I_{cs}$ for en effektafbryder?",
+   "bag": "**$I_{cu}$** (grænsekortslutningsbrydeevne): den største strøm, afbryderen kan bryde. Den skal ikke nødvendigvis kunne bruges bagefter.\n**$I_{cs}$** (driftskortslutningsbrydeevne): den strøm, den kan bryde og fortsat fungere. Angives som **25, 50, 75 eller 100 %** af $I_{cu}$.\nVælg $I_{cs}$ højt, hvor driften er vigtig.",
+   "tags": [
+    "60947-2",
+    "MCCB",
+    "brydeevne"
+   ],
+   "kilde": {
+    "dok": "DS/EN 60947-2",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "dim-044",
+   "type": "fakta",
+   "emne": "dim",
+   "front": "Hvad betyder brugskategori A og B og $I_{cw}$ for en effektafbryder?",
+   "bag": "**Kategori A:** ingen bevidst korttidsforsinkelse ved kortslutning.\n**Kategori B:** kan forsinkes ved kortslutning for at give **selektivitet**. Den har en mærkekorttidsstrømtålighed **$I_{cw}$**: den strøm, den kan føre i en angivet tid (fx 1 s) uden at tage skade.\nLuftafbrydere i hovedtavler er typisk kategori B.",
+   "tags": [
+    "60947-2",
+    "MCCB",
+    "selektivitet",
+    "Icw"
+   ],
+   "kilde": {
+    "dok": "DS/EN 60947-2",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "dim-045",
+   "type": "fakta",
+   "emne": "dim",
+   "front": "Hvad betyder indstillingerne $I_r$, $I_{sd}$, $t_{sd}$ og $I_i$ på en elektronisk udløser?",
+   "bag": "- **$I_r$** (L, langtid): overbelastning, indstilles efter belastning og kabel ($I_B \\leq I_r \\leq I_Z$)\n- **$I_{sd}$** og **$t_{sd}$** (S, korttid): kortslutning med forsinkelse, giver selektivitet\n- **$I_i$** (I, momentan): kortslutning uden forsinkelse\nNogle har også **G** (jordfejl). Kaldes LSI eller LSIG.",
+   "tags": [
+    "60947-2",
+    "MCCB",
+    "indstilling",
+    "selektivitet"
+   ],
+   "kilde": {
+    "dok": "DS/EN 60947-2",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "dim-046",
+   "type": "fakta",
+   "emne": "dim",
+   "front": "Hvad er de konventionelle strømme for en effektafbryder efter DS/EN 60947-2?",
+   "bag": "- Ikke-udløsestrøm: **1,05** × $I_r$\n- Udløsestrøm: **1,30** × $I_r$\ninden for den konventionelle tid (1 time til og med 63 A, 2 timer derover).\nDa $1{,}30 < 1{,}45$, opfylder en korrekt indstillet effektafbryder betingelsen $I_2 \\leq 1{,}45 \\cdot I_Z$, når $I_r \\leq I_Z$.",
+   "tags": [
+    "60947-2",
+    "MCCB",
+    "udløsning"
+   ],
+   "kilde": {
+    "dok": "DS/EN 60947-2",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "dim-047",
+   "type": "fakta",
+   "emne": "dim",
+   "front": "Hvad betyder $U_e$, $U_i$ og $U_{imp}$ på en effektafbryder?",
+   "bag": "- **$U_e$:** mærkedriftsspænding, den spænding afbryderen bruges ved\n- **$U_i$:** mærkeisolationsspænding, grundlag for isolations- og krybestrækninger\n- **$U_{imp}$:** mærkestødspændingstålighed, den transiente overspænding den tåler (fx 8 kV)\nAfbrydere, der er egnet til **adskillelse**, er mærket med et særligt symbol.",
+   "tags": [
+    "60947-2",
+    "MCCB",
+    "mærkning"
+   ],
+   "kilde": {
+    "dok": "DS/EN 60947-2",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  }
+ ]
+}
