@@ -1,6 +1,6 @@
 {
   "name": "elskole",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "private": true,
   "description": "Elskolen: træning til elektrikerfaget. Hele appen er index.html.",
   "scripts": { "test": "python3 tests/smoke.py" },

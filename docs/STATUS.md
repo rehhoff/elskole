@@ -8,7 +8,7 @@ Sidst opdateret: 2026-11-23.
 
 Elskolen er en dansk webapp, der skal gøre ejeren til en meget dygtig elektriker: matematik og fysik, dimensionering (DS/HD 60364), særlige installationer, love og myndigheder, erhverv og arbejdsmiljø. Den afløser og udvider Anki med opgaver, cases og fejlfinding. Samlet plan: `docs/plan.md`.
 
-- Live: https://rehhoff.github.io/elskole/ (GitHub Pages fra `main` i `rehhoff/elskole`). Udgivet version: **0.4.1** (skema 3, resultatarten `proeve`). Enheder med 0.3.0 eller ældre kan ikke synke, før de opdateres.
+- Live: https://rehhoff.github.io/elskole/ (GitHub Pages fra `main` i `rehhoff/elskole`). Udgivet version: **0.4.2** (skema 3, resultatarten `proeve`). Enheder med 0.3.0 eller ældre kan ikke synke, før de opdateres.
 - Lokal mappe på ejerens PC: `Desktop\GROUND\elskole`.
 - Søsterapp: El-oversigtsappen (`rehhoff/rehhoff.github.io`, lokalt `Desktop\GROUND\rehhoff.github.io`). Separat repo og separat app, men samme origin. Se "Samme origin" nedenfor.
 
@@ -24,7 +24,7 @@ Elskolen er en dansk webapp, der skal gøre ejeren til en meget dygtig elektrike
 | 5 | Fejlfinding (7 fejltyper, 10 målinger, 5 sikkerhedsregler) | Udgivet i 0.2.0 |
 | 3 | Kompetencetræ og log over typiske fejl (fanen Kompetence, tast 7) | Udgivet i 0.3.0 |
 | 6 | Kobling til El-oversigtsappen (kun læsning), prøvesimulering (fanen Prøve, tast 8) | Udgivet i 0.3.0. Standardniveau `aut` fra 0.4.1 |
-| – | Startkort: dimensionering (47), love (70), erhverv og industri (49), arbejdsmiljø (45) | På grenen `startkort-love-erhv-arb`, ikke merget |
+| – | Startkort: dimensionering (47), love (70), erhverv og industri (49), arbejdsmiljø (45) | Udgivet i 0.4.2 |
 | 7 | AI-retning af forklaringer | Kræver ejerens beslutning om API-nøgle eller backend |
 
 Erfaring fra merge: `css/tailwind.css` løses ved at tage én side og bygge igen med `python tools/byg_css.py`. Når to faser tilføjer blokke samme sted i `index.html`, så tjek, at hver blok har sin egen `</section></template>`. Ved merge af fase 3 og 6 manglede den, og appen startede ikke.
@@ -44,11 +44,10 @@ Erfaring fra merge: `css/tailwind.css` løses ved at tage én side og bygge igen
    - Netselskabet: hvornår ladere og små solcelleanlæg skal meldes, plombering af hovedsikringer
    - Autorisationsloven: hvad kvalitetsledelsessystemet kræver af dokumentation til kunden
    - Selektivitet: henvist til DS/HD 60364-5-53 uden afsnit
-2. **Faglig kontrol af de nye startkort.** BEK 1082 og elsikkerhedsloven er skrevet direkte efter teksten på retsinformation.dk (med §). Standardkortene er skrevet uden adgang til standarderne. Kort med mærket `usikker` skal tjekkes, især: lægmandsarbejde, LER, solceller og netselskab, overslag (10–15 %), momsgrænsen, faldsikring fra 2 m, asbest før 1986, PSS, jording i lavspænding, spændingsfald i anneks G, hovedudligningens tværsnit, 80 %-reglen for Zs, RCD-selektivitet, lederfarver og undtagne kredse i 60204-1, DBO-tavler, L-AUS, NH-sikringer og nødbelysning.
+2. **Faglig kontrol af de nye startkort.** BEK 1082 og elsikkerhedsloven er skrevet direkte efter teksten på retsinformation.dk (med §). Standardkortene er skrevet uden adgang til standarderne. Kort med mærket `usikker` skal tjekkes. Rettede kort når kun enheder, der ikke har hentet pakken før (faste id'er, eksisterende kort overskrives ikke), især: lægmandsarbejde, LER, solceller og netselskab, overslag (10–15 %), momsgrænsen, faldsikring fra 2 m, asbest før 1986, PSS, jording i lavspænding, spændingsfald i anneks G, hovedudligningens tværsnit, 80 %-reglen for Zs, RCD-selektivitet, lederfarver og undtagne kredse i 60204-1, DBO-tavler, L-AUS, NH-sikringer og nødbelysning.
    Reglen `r-elinstallationsbek` i `indhold/regler.json` er rettet efter BEK 1082 og kan sættes til `verificeret:true`. Røgtesten kræver i dag, at alle regler er `false`, så testen skal rettes samtidig.
-3. **Merge af grenen `startkort-love-erhv-arb`** til `main` som 0.4.2: afventer ejerens ja.
-4. **Del 7 (særlige installationer)** har endnu ingen startkort. Venter på den faglige kontrol af fase 4 (punkt 1).
-5. **Fase 7:** API-nøgle i browseren eller lille backend? Ikke besluttet.
+3. **Del 7 (særlige installationer)** har endnu ingen startkort. Venter på den faglige kontrol af fase 4 (punkt 1).
+4. **Fase 7:** API-nøgle i browseren eller lille backend? Ikke besluttet.
 
 ## Beslutninger og ønsker fra ejeren
 
@@ -74,5 +73,5 @@ Erfaring fra merge: `css/tailwind.css` løses ved at tage én side og bygge igen
 ## Historik i korte træk
 
 - 2026-11-22: Plan lagt. Fase 0–1 bygget og udgivet som 0.1.0. El-oversigtsappen 10.26.1 udgivet med rettelse af service workeren. Forberedelse til parallelle faser committet. Fase 2, 4 og 5 bygget i tre sessioner og udgivet som 0.2.0.
-- 2026-11-23: Startkort på grenen `startkort-love-erhv-arb`: først 75 kort (love, erhv, arb), derefter 136 mere efter ejerens ønske, bl.a. en ny pakke til dimensionering. Startpakkerne caches nu af service workeren.
+- 2026-11-23: Startkort på grenen `startkort-love-erhv-arb`: først 75 kort (love, erhv, arb), derefter 136 mere efter ejerens ønske, bl.a. en ny pakke til dimensionering. Startpakkerne caches nu af service workeren. Udgivet som 0.4.2.
 - 2026-11-23: Fase 3 (Sonnet) og fase 6 (planlagt af Opus, kodet af Sonnet) udgivet som 0.3.0. Skema 3 med resultatarten `proeve` udgivet som 0.4.0 (kodet af Sonnet, gennemgået af Opus). Ejeren valgte niveauet autoriseret elinstallatør, udgivet som 0.4.1.

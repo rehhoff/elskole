@@ -1,5 +1,5 @@
 /* Elskolen: konstanter, lagernøgler, emner, datamodel (norm*) og små hjælpere. Indlæses før de andre scripts. */
-const APP_VERSION = '0.4.1';
+const APP_VERSION = '0.4.2';
 const SCHEMA = 3;  // 2: tabellen resultater (opgaver, cases, fejlfinding). 3: resultatarten 'proeve' (prøvesimulering)
 
 /* Lagernøgler. Appen ligger på samme origin som El-oversigtsappen (rehhoff.github.io), så ALLE nøgler skal starte med "elskole.".

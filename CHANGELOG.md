@@ -1,5 +1,11 @@
 # Ændringer
 
+## 0.4.2 · 2026-11-23 · Claude Opus 5.5
+- Fire nye pakker med startkort, i alt 211 kort: dimensionering og standarder (47: DS/HD 60364, DS/EN 60898-1 og 60947-2), love og myndigheder (70: BEK 1082 og elsikkerhedsloven med paragraffer fra retsinformation.dk), erhverv og industri (49: bl.a. DS/EN 60204-1 og 61439) og arbejdsmiljø (45: bl.a. DS/EN 50110-1 og 12464-1). Usikre kort har mærket `usikker`.
+- Kortene bruger Erhvervsstyrelsen, fordi Sikkerhedsstyrelsen blev en del af den i januar 2026.
+- Startpakkerne caches nu af service workeren og kan hentes uden net.
+- Reglen om elinstallationsbekendtgørelsen har fået den rigtige titel (BEK nr. 1082), § 3 og link.
+
 ## 0.4.1 · 2026-11-23 · Claude Opus 5.5
 - Prøve: autoriseret elinstallatør er nu standardniveau, fordi ejeren har valgt det. Et niveau, der allerede er valgt på en enhed, bevares, og de andre niveauer kan stadig vælges.
 
