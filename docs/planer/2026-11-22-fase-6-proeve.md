@@ -9,7 +9,7 @@ Dato: 2026-11-22. Branch: `claude/fase6-proeve-3a2109`. Modul: `js/proeve.js` (`
 
 ## Niveau (åbent punkt 2 i STATUS.md)
 
-Ejeren har ikke afgjort, om Elskolen sigter mod svendeprøven, autorisation som elinstallatør eller generel faglig dygtighed. Derfor er niveauet et valg i fanen, og hvert niveau er blot et sæt standardværdier i `PROEVE_NIVEAUER` øverst i `js/proeve.js`:
+Ejeren har siden valgt autorisation som elinstallatør (2026-11-23), så `aut` er standard. Niveauet er stadig et valg i fanen, og hvert niveau er blot et sæt standardværdier i `PROEVE_NIVEAUER` øverst i `js/proeve.js`:
 
 | id | Navn | Minutter | Kort | Regler | Opgaver | Cases | Højeste opgaveniveau | Emner |
 |---|---|---|---|---|---|---|---|---|

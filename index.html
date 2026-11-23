@@ -578,7 +578,7 @@
                 <template x-for="n in proeveNiveauer" :key="n.id"><option :value="n.id" :selected="n.id===proeveNiv" x-text="n.navn"></option></template>
               </select>
             </label>
-            <p class="text-xs text-muted">Niveauet er ikke afgjort endnu (svendeprøve, autorisation eller generel dygtighed). Ret selv tid og antal her.</p>
+            <p class="text-xs text-muted">Standard er autoriseret elinstallatør. Ret selv tid og antal her.</p>
             <div class="grid grid-cols-2 sm:grid-cols-5 gap-3">
               <label class="f">Minutter (0 = uden tid)<input id="proeve-min" type="number" min="0" max="300" class="inp num" x-model.number="proeveInd.min" @change="proeveGem()"></label>
               <label class="f">Kort<input id="proeve-n-kort" type="number" min="0" max="50" class="inp num" x-model.number="proeveInd.kort" @change="proeveGem()"></label>
