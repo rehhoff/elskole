@@ -7,7 +7,8 @@ function app() {
     view: 'oev',
     /* Faner. En fane med "kraever" vises kun, når modulets startmetode findes (fase 2, 4 og 5 bygges hver i sin fil). */
     views: [ { id:'oev', l:'Øv', k:'1' }, { id:'opgaver', l:'Opgaver', k:'2', kraever:'opgStart' }, { id:'cases', l:'Cases', k:'3', kraever:'caseStart' },
-      { id:'fejlfinding', l:'Fejlfinding', k:'4', kraever:'ffStart' }, { id:'kort', l:'Kort', k:'5' }, { id:'data', l:'Data og indstillinger', k:'6' } ],
+      { id:'fejlfinding', l:'Fejlfinding', k:'4', kraever:'ffStart' }, { id:'kort', l:'Kort', k:'5' }, { id:'data', l:'Data og indstillinger', k:'6' },
+      { id:'proeve', l:'Prøve', k:'7', kraever:'proeveStart' } ],
     emner: EMNER, korttyper: KORTTYPER, appVersion: APP_VERSION,
     kort: [], tilst: {}, log: [], resultater: [], indst: normIndst(), dataRev: 0, klar: false,
     storageOk: true, tema: 'auto', toasts: [], confirm: null, modal: null, sidstBackup: '',
@@ -73,5 +74,5 @@ function app() {
       if (v) { this.gaaTil(v.id); e.preventDefault(); }
     },
     lukModal() { this.modal = null; }
-  }, APP_LAGER(), APP_SYNK(), APP_OEV(), APP_KORT(), APP_IMPORT(), APP_OPGAVER(), APP_CASES(), APP_FEJLFINDING());
+  }, APP_LAGER(), APP_SYNK(), APP_OEV(), APP_KORT(), APP_IMPORT(), APP_OPGAVER(), APP_CASES(), APP_FEJLFINDING(), APP_PROEVE());
 }

@@ -643,6 +643,86 @@ async def main():
         tjek('fejlfinding: mobil 375 px uden vandret rulning', all(x <= 375 for x in bredder), bredder)
         await ctx.close()
 
+        # ===== FASE 6: PRØVE OG KOBLING TIL EL-OVERSIGTEN (js/proeve.js) =====
+        ctx, pg = await ny_side(b)
+        E = lambda js: pg.evaluate(js.replace('@A', A))
+        r = await E("[proeveKarakter(95), proeveKarakter(80), proeveKarakter(79.9), proeveKarakter(40), proeveKarakter(39), proeveKarakter(5), PROEVE_NIVEAUER.length]")
+        tjek('prøve: karakterskalaen omregner procent til 7-trinsskalaen', r == ['12', '10', '7', '02', '00', '-3', 4], r)
+        SNAP = "(()=>{const o={}; for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i); if(k.startsWith('tavleoversigt.')) o[k]=localStorage.getItem(k);} return JSON.stringify(o)})()"
+        EL = {'projekt': {'navn': 'Villa$1'}, 'grupper': [{'id': 'g1', 'nr': 1, 'navn': 'Lys', 'kar': 'B', 'In': 10, 'faser': 1, 'fase': 'L1'},
+              {'id': 'g2', 'nr': 2, 'navn': 'Kraft', 'kar': 'C', 'In': 16, 'faser': 3, 'fase': 'L1'}],
+              'enheder': [{'id': 'e1', 'gruppeId': 'g1', 'navn': 'Spots', 'effekt': 500, 'kabel': 'PVC', 'tv': 1.5, 'laengde': 20},
+              {'id': 'e2', 'gruppeId': 'g2', 'navn': 'Ovn', 'effekt': 7200, 'kabel': 'XLPE', 'tv': 2.5, 'laengde': 15, 'fase': ''},
+              {'id': 'e3', 'gruppeId': 'g1', 'navn': 'Stik', 'effekt': 0, 'kabel': 'PVC', 'tv': 1.5, 'laengde': 9}]}
+        await pg.evaluate("([i, p]) => { localStorage.setItem('tavleoversigt.projekter', i); localStorage.setItem('tavleoversigt.p.p1', p); localStorage.setItem('tavleoversigt.tema', 'auto'); }",
+                          [json.dumps({'aktiv': 'p1', 'liste': [{'id': 'p1', 'navn': 'Villa'}]}), json.dumps(EL)])
+        for n in range(3): await E(f"@A.gemKort(nytKort({{front:'Prøvekort {n}', bag:'Svar $x^2$', emne:'mat'}}))")
+        snap0 = await pg.evaluate(SNAP)
+        await pg.click('#tab-proeve'); await pg.wait_for_selector('#proeve-start'); await pg.wait_for_function(f"{A}.proeveEl.fundet")
+        r = await E("(()=>{const a=@A; return [a.proeveEl.projekter, a.proeveEl.zs.length, a.proeveEl.du.length, JSON.stringify(a.proeveEl).includes('$'), a.caseRegler.length > 0]})()")
+        tjek('prøve: El-oversigtens projekt læses (2 sikringer, 2 kabler, kabel med effekt 0 springes over)', r == [1, 2, 2, False, True], r)
+        r = await E("""(()=>{const a=@A, t=(g,s)=>opgLavOpgave(g,s), z=a.proeveEl.zs.map(c=>t(proeveProjZs(c),1)), d=a.proeveEl.du.map(c=>t(proeveProjDu(c),1));
+          const fe = opgTjekSvar(d[0], { i:d[0].svar[0].vaerdi, pct:d[0].svar[1].vaerdi / 2 });
+          return [z.map(o=>o.svar.map(s=>s.vaerdi)), d.map(o=>o.svar.map(s=>s.vaerdi)), fe.fejltype, d[1].tekst.includes('3-faset'), d[0].tekst.includes('Villa1')]})()""")
+        s3 = math.sqrt(3); i1 = 500 / 230; i3 = 7200 / (s3 * 400)
+        fa = [[[50, 2 / 3 * 230 / 50], [160, 2 / 3 * 230 / 160]], [[i1, 2 * 0.0225 * 20 * i1 / 1.5 / 230 * 100], [i3, s3 * 0.0225 * 15 * i3 / 2.5 / 400 * 100]]]
+        ok = r[2] == 'glemt-faktor2' and r[3] and r[4] and all(abs(x - y) / y < 1e-9 for lst, ex in zip(r[0] + r[1], fa[0] + fa[1]) for x, y in zip(lst, ex))
+        tjek('prøve: projektopgaverne regner som Python (Zs, strøm og spændingsfald, 1- og 3-faset) og kender typisk fejl', ok, (r, fa))
+
+        # En hel prøve gennem brugerfladen
+        await pg.select_option('#proeve-niveau', 'gen')
+        await pg.fill('#proeve-min', '10'); await pg.fill('#proeve-n-kort', '2'); await pg.fill('#proeve-n-regler', '1'); await pg.fill('#proeve-n-opg', '3'); await pg.fill('#proeve-n-cases', '1')
+        await pg.click('#proeve-begynd'); await pg.wait_for_selector('#proeve-koer')
+        r = await E("(()=>{const a=@A, p=a.proeveAkt; return [p.items.map(x=>x.art).join(','), p.items.filter(x=>x.art==='opgave' && x.ref.startsWith('proj-')).length, p.min, JSON.parse(localStorage.getItem('elskole.proeve')).ind.opg]})()")
+        tjek('prøve: opbygningen følger indstillingerne og blander projektopgaver ind', r[0] == 'kort,kort,regel,opgave,opgave,opgave,case' and r[1] == 1 and r[2:] == [10, 3], r)
+        await pg.wait_for_selector('#proeve-tid')
+        await pg.click('#proeve-vis'); await pg.wait_for_selector('#proeve-bag .katex'); await pg.click('#proeve-v-1')
+        await pg.click('#proeve-nr-1'); await pg.click('#proeve-vis'); await pg.click('#proeve-v-0')
+        await pg.click('#proeve-naeste'); await pg.click('#proeve-vis'); await pg.wait_for_selector('#proeve-bag')
+        r = await E("[@A.proeveAkt.items[2].r.verificeret, document.querySelector('#proeve-sp .warn') && document.querySelector('#proeve-sp .warn').offsetParent !== null]")
+        tjek('prøve: en regel, der ikke er kontrolleret, vises som ikke kontrolleret', r == [False, True], r)
+        await pg.click('#proeve-v-05')
+        await pg.click('#proeve-nr-3'); await pg.wait_for_selector('#proeve-svar-' + (await E("@A.proeveAkt.items[3].opg.svar[0].id")))
+        await E("""(()=>{const p=@A.proeveAkt; for (const i of [3, 5]) { const it=p.items[i]; for (const s of it.opg.svar) it.ind[s.id] = String(s.vaerdi).replace('.', ','); } })()""")
+        await pg.click('#proeve-nr-6'); await pg.click('#proeve-case-start'); await pg.wait_for_selector('#proeve-case-tekst')
+        await pg.click('#proeve-nr-0'); await pg.wait_for_timeout(100)
+        r2 = await E("@A.proeveAkt.nu")
+        tjek('prøve: man kan ikke forlade en case midt i', r2 == 6, r2)
+        await E("""(()=>{const a=@A, it=a.proeveAkt.items[6]; for (let n = 0; n < 60 && it.state === 'igang'; n++) { const c=a.caseAktiv, t=a.caseTrin();
+          if (t.type === 'tal') c.tal = String(t.facit).replace('.', ','); else if (t.type === 'flere') c.flere = t.muligheder.map(m => !!m.rigtig);
+          a.proeveCaseSvar(it, 0); } })()""")
+        await pg.wait_for_selector('#proeve-case-faerdig')
+        await pg.click('#proeve-aflever'); await pg.wait_for_selector('[role=alertdialog]')
+        tekst = await pg.inner_text('[role=alertdialog]')
+        await E("@A.bekraeft()"); await pg.wait_for_selector('#proeve-slut'); await pg.wait_for_timeout(150)
+        r = await E("""(()=>{const a=@A, p=a.proeveAkt, c=p.items[6], ventet = 1 + 0 + 0.5 + 2 + 0 + 2 + c.score * 3, pr = a.resultater.filter(x => x.ref === 'proeve');
+          return [Math.abs(p.res.point - ventet) < 0.02, p.res.maks, pr.length, pr.length && pr[0].data.del.length, pr.length && pr[0].data.karakter === p.res.karakter,
+            a.resultater.filter(x => x.art === 'opgave' && x.data.proeve === p.id).length, c.state, document.querySelector('#proeve-karakter').textContent === p.res.karakter, document.querySelectorAll('.proeve-gennemgang').length]})()""")
+        tjek('prøve: afleveret prøve giver point, karakter og gennemgang, og resultaterne gemmes', r[0] and r[1] == 12 and r[2] == 1 and r[3] == 7 and r[4] and r[5] == 2 and r[6] == 'faerdig' and r[7] and r[8] == 7 and 'ubesvarede' in tekst, (r, tekst))
+        r = await E("(()=>{const a=@A, h=a.proeveHistorik(); return [h.length, h[0].karakter === a.proeveAkt.res.karakter, a.resultater.some(x => x.art === 'case' && x.ref === a.proeveAkt.items[6].ref)]})()")
+        tjek('prøve: historikken viser prøven, og casen gemmes som almindelig case', r == [1, True, True], r)
+        snap1 = await pg.evaluate(SNAP)
+        tjek('prøve: El-oversigtens nøgler er uændrede efter hele prøven (kun læsning)', snap0 == snap1 and len(json.loads(snap1)) == 3, (len(snap0), len(snap1)))
+        await pg.click('#proeve-ny'); await pg.wait_for_selector('#proeve-hist')
+
+        # Tiden løber ud: prøven afleveres af sig selv, ubesvaret giver 0 point
+        await pg.fill('#proeve-min', '1'); await pg.fill('#proeve-n-cases', '0')
+        await pg.click('#proeve-begynd'); await pg.wait_for_selector('#proeve-koer')
+        await E("@A.proeveAkt.slutTid = Date.now() + 300")
+        await pg.wait_for_selector('#proeve-slut')
+        r = await E("(()=>{const a=@A, p=a.proeveAkt; return [p.tidUd, p.res.point, p.res.karakter, a.resultater.filter(x => x.ref === 'proeve').length, a.resultater.filter(x => x.art === 'opgave').length]})()")
+        tjek('prøve: når tiden løber ud, afleveres automatisk med 0 point og ingen opgaveforsøg for ubesvarede', r == [True, 0, '-3', 2, 2], r)
+        await pg.reload(); await pg.wait_for_function(f"window.__alpineOk && {A}.klar")
+        r = await E("@A.resultater.filter(x => x.ref === 'proeve').length")
+        tjek('prøve: resultaterne er gemt efter genindlæsning', r == 2, r)
+        await ctx.close()
+
+        ctx, pg = await ny_side(b, 375, 812, is_mobile=True, has_touch=True)
+        await pg.evaluate(f"{A}.gaaTil('proeve')"); await pg.wait_for_selector('#proeve-start'); bredder = [await pg.evaluate("document.documentElement.scrollWidth")]
+        await pg.click('#proeve-begynd'); await pg.wait_for_selector('#proeve-koer'); bredder.append(await pg.evaluate("document.documentElement.scrollWidth"))
+        tjek('prøve: mobil 375 px uden vandret rulning', all(x <= 375 for x in bredder), bredder)
+        await ctx.close()
+
         # 7. Mobil: ingen vandret rulning, dialog passer
         ctx, pg = await ny_side(b, 375, 812, is_mobile=True, has_touch=True)
         await pg.evaluate(f"{A}.gemKort(nytKort({{front:'Et langt spørgsmål om korrektionsfaktorer for kabler i jord og luft', bag:'$$I_z = I_t \\\\cdot k_{{temp}} \\\\cdot k_{{samlet}}$$'}}))")

@@ -481,6 +481,198 @@
     </section>
   </template>
 
+  <!-- ===== PRØVE (fase 6, js/proeve.js) ===== -->
+  <template x-if="klar && view==='proeve'">
+    <section class="flex flex-col gap-4" id="v-proeve" x-data="{ get p() { return proeveAkt || PROEVE_TOM } }" x-init="proeveStart()">
+      <p class="text-xs text-muted">Prøvesimulering. Sammensætning og karakter er vejledende og er ikke den officielle prøveform. Regler, der ikke er kontrolleret mod kilden, er markeret.</p>
+
+      <!-- Start -->
+      <template x-if="!proeveAkt">
+        <div class="flex flex-col gap-4" id="proeve-start">
+          <div class="panel p-4 flex flex-col gap-3">
+            <h2 class="hd text-lg">Ny prøve</h2>
+            <label class="f">Niveau
+              <select id="proeve-niveau" class="inp" :value="proeveNiv" @change="proeveVaelgNiveau($event.target.value)">
+                <template x-for="n in proeveNiveauer" :key="n.id"><option :value="n.id" :selected="n.id===proeveNiv" x-text="n.navn"></option></template>
+              </select>
+            </label>
+            <p class="text-xs text-muted">Niveauet er ikke afgjort endnu (svendeprøve, autorisation eller generel dygtighed). Ret selv tid og antal her.</p>
+            <div class="grid grid-cols-2 sm:grid-cols-5 gap-3">
+              <label class="f">Minutter (0 = uden tid)<input id="proeve-min" type="number" min="0" max="300" class="inp num" x-model.number="proeveInd.min" @change="proeveGem()"></label>
+              <label class="f">Kort<input id="proeve-n-kort" type="number" min="0" max="50" class="inp num" x-model.number="proeveInd.kort" @change="proeveGem()"></label>
+              <label class="f">Regler<input id="proeve-n-regler" type="number" min="0" max="50" class="inp num" x-model.number="proeveInd.regler" @change="proeveGem()"></label>
+              <label class="f">Opgaver<input id="proeve-n-opg" type="number" min="0" max="30" class="inp num" x-model.number="proeveInd.opg" @change="proeveGem()"></label>
+              <label class="f">Cases<input id="proeve-n-cases" type="number" min="0" max="10" class="inp num" x-model.number="proeveInd.cases" @change="proeveGem()"></label>
+            </div>
+            <p class="text-xs text-muted">Point: kort og regler 1, opgaver 2, cases 3. Kort og regler vurderer du selv, når du har set svaret.</p>
+            <div class="panel p-3 flex flex-col gap-2 text-sm" id="proeve-el">
+              <p id="proeve-el-info" x-text="proeveElTxt()"></p>
+              <label class="flex items-center gap-2" x-show="proeveEl.fundet"><input id="proeve-brug-el" type="checkbox" x-model="proeveBrugEl"> Lav opgaver ud fra mine projekter</label>
+              <a id="proeve-el-link" class="underline self-start" href="../" target="_blank" rel="noopener">Åbn El-oversigten</a>
+            </div>
+            <button id="proeve-begynd" class="btn btn-primary self-start" @click="proeveBegynd()">Start prøven</button>
+          </div>
+
+          <div class="panel p-4 flex flex-col gap-2" id="proeve-hist">
+            <h2 class="hd text-lg">Tidligere prøver</h2>
+            <p class="text-sm text-muted" x-show="!proeveHistorik().length">Ingen prøver endnu.</p>
+            <template x-for="h in proeveHistorik()" :key="h.id">
+              <p class="text-sm flex flex-wrap gap-x-3"><span class="num text-muted" x-text="datoTxt(h.tid)"></span><span x-text="h.navn"></span>
+                <span class="num" x-text="'Karakter ' + h.karakter + ' (' + h.pct + ' %)'"></span><span class="text-muted" x-show="h.tidUd">Tiden løb ud</span></p>
+            </template>
+          </div>
+        </div>
+      </template>
+
+      <!-- Under prøven -->
+      <template x-if="proeveAkt && !p.faerdig">
+        <div class="flex flex-col gap-3" id="proeve-koer">
+          <div class="flex flex-wrap items-center gap-2">
+            <h2 class="hd text-xl" x-text="p.navn"></h2>
+            <span class="num text-lg" id="proeve-tid" x-show="p.slutTid" x-text="proeveTid()" :style="proeveRest < 300 && 'color:var(--crit)'"></span>
+            <button class="btn btn-ghost ml-auto" id="proeve-afbryd" @click="proeveAfbryd()">Afbryd</button>
+          </div>
+          <div class="flex flex-wrap gap-1" id="proeve-nav">
+            <template x-for="(it, i) in p.items" :key="i">
+              <button class="btn !px-2 num" :id="'proeve-nr-' + i" :class="p.nu===i && 'sel'" :style="proeveSvaret(it) && p.nu!==i ? 'border-color:var(--ok)' : ''" @click="proeveGaa(i)" x-text="i + 1"></button>
+            </template>
+          </div>
+
+          <template x-if="proeveCur()">
+            <article class="kortflade p-5 flex flex-col gap-4" id="proeve-sp" x-data="{ get it() { return proeveCur() || PROEVE_TOM_SP } }">
+              <div class="flex flex-wrap items-center gap-2 text-xs text-muted">
+                <span class="tag" x-text="{ kort:'Kort', regel:'Regel', opgave:'Opgave', case:'Case' }[it.art]"></span><span class="tag" x-text="emneKort(it.emne)"></span>
+                <span class="num ml-auto" x-text="(p.nu + 1) + ' af ' + p.items.length + ' · ' + proeveVaegt[it.art] + ' point'"></span>
+              </div>
+
+              <template x-if="it.art==='kort'">
+                <div class="flex flex-col gap-3">
+                  <div class="kt-tekst" id="proeve-front" x-html="vis(it.k.front)"></div>
+                  <button class="btn self-start" id="proeve-vis" x-show="!it.vist" @click="it.vist=true">Vis svar</button>
+                  <div class="flex flex-col gap-3 border-t border-line pt-3" x-show="it.vist"><div class="kt-tekst" id="proeve-bag" x-html="vis(it.k.bag)"></div></div>
+                </div>
+              </template>
+              <template x-if="it.art==='regel'">
+                <div class="flex flex-col gap-3">
+                  <div class="kt-tekst" id="proeve-front" x-html="vis('Hvad er reglen om: **' + it.r.titel + '**?')"></div>
+                  <p class="text-xs text-muted" x-text="it.r.kilde"></p>
+                  <button class="btn self-start" id="proeve-vis" x-show="!it.vist" @click="it.vist=true">Vis svar</button>
+                  <div class="flex flex-col gap-2 border-t border-line pt-3" x-show="it.vist">
+                    <div class="kt-tekst" id="proeve-bag" x-html="vis(it.r.resume)"></div>
+                    <p class="warn text-xs" x-show="!it.r.verificeret">Ikke kontrolleret mod kilden. Slå op i den gældende udgave.</p>
+                  </div>
+                </div>
+              </template>
+              <template x-if="(it.art==='kort' || it.art==='regel') && it.vist">
+                <div class="flex flex-wrap items-center gap-2" id="proeve-vurder">
+                  <span class="text-sm text-muted">Hvordan gik det?</span>
+                  <button class="btn" id="proeve-v-1" :class="it.vurd===1 && 'sel'" @click="proeveVurder(it, 1)">Rigtigt</button>
+                  <button class="btn" id="proeve-v-05" :class="it.vurd===0.5 && 'sel'" @click="proeveVurder(it, 0.5)">Delvist</button>
+                  <button class="btn" id="proeve-v-0" :class="it.vurd===0 && 'sel'" @click="proeveVurder(it, 0)">Forkert</button>
+                </div>
+              </template>
+
+              <template x-if="it.art==='opgave'">
+                <div class="flex flex-col gap-3">
+                  <div class="kt-tekst" id="proeve-tekst" x-html="vis(it.opg.tekst)"></div>
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <template x-for="s in (it.art==='opgave' ? it.opg.svar : [])" :key="s.id">
+                      <label class="f"><span x-html="vis(s.navn)"></span>
+                        <span class="flex items-center gap-2"><input class="inp num flex-1 min-w-0" inputmode="decimal" autocomplete="off" :id="'proeve-svar-' + s.id" x-model="it.ind[s.id]" placeholder="fx 4,7"><span class="text-sm text-muted" x-text="s.enhed"></span></span>
+                      </label>
+                    </template>
+                  </div>
+                  <p class="text-xs text-muted">Facit vises først, når prøven er afleveret.</p>
+                </div>
+              </template>
+
+              <template x-if="it.art==='case'">
+                <div class="flex flex-col gap-3" id="proeve-case">
+                  <h3 class="font-semibold" x-text="(it.c || {}).titel"></h3>
+                  <template x-if="it.state==='ny'">
+                    <div class="flex flex-col gap-2"><div class="text-sm" x-html="vis(it.c.intro)"></div>
+                      <button class="btn btn-primary self-start" id="proeve-case-start" @click="proeveCaseStart(it)">Start casen</button>
+                      <p class="text-xs text-muted">Du får ingen feedback undervejs, og du kan ikke forlade casen, før den er slut.</p></div>
+                  </template>
+                  <template x-if="it.state==='igang'">
+                    <div class="flex flex-col gap-3">
+                      <details class="panel p-3 text-sm"><summary class="cursor-pointer text-muted">Situationen</summary><div class="mt-2" x-html="vis(it.c.intro)"></div></details>
+                      <div class="kt-tekst" id="proeve-case-tekst" x-html="vis(proeveCaseT().tekst)"></div>
+                      <template x-if="proeveCaseT().type==='valg'">
+                        <div class="flex flex-col gap-2">
+                          <template x-for="(s, i) in (proeveCaseT().type==='valg' ? proeveCaseT().svar : [])" :key="i"><button class="btn !justify-start !whitespace-normal text-left !py-2 !text-sm" :id="'proeve-case-svar-' + i" @click="proeveCaseSvar(it, i)"><span x-html="vis(s.tekst)"></span></button></template>
+                        </div>
+                      </template>
+                      <template x-if="proeveCaseT().type==='tal'">
+                        <div class="flex flex-wrap items-end gap-2">
+                          <label class="f">Dit svar<input id="proeve-case-tal" class="inp num !w-40" inputmode="decimal" autocomplete="off" x-model="proeveCaseA().tal" @keydown.enter.prevent="proeveCaseSvar(it)"></label>
+                          <span class="pb-2" x-text="proeveCaseT().enhed"></span><button class="btn btn-primary" id="proeve-case-tjek" @click="proeveCaseSvar(it)">Svar</button>
+                        </div>
+                      </template>
+                      <template x-if="proeveCaseT().type==='flere'">
+                        <div class="flex flex-col gap-2">
+                          <template x-for="(m, i) in (proeveCaseT().type==='flere' ? proeveCaseT().muligheder : [])" :key="i"><label class="panel p-2 flex gap-2 items-start text-sm cursor-pointer"><input type="checkbox" class="mt-1" :id="'proeve-case-flere-' + i" x-model="proeveCaseA().flere[i]"><span x-html="vis(m.tekst)"></span></label></template>
+                          <button class="btn btn-primary self-start" id="proeve-case-tjek" @click="proeveCaseSvar(it)">Svar</button>
+                        </div>
+                      </template>
+                    </div>
+                  </template>
+                  <p class="text-sm" id="proeve-case-faerdig" x-show="it.state==='faerdig'">Casen er afsluttet. Resultatet ses, når prøven er afleveret.</p>
+                </div>
+              </template>
+            </article>
+          </template>
+
+          <div class="flex flex-wrap gap-2">
+            <button class="btn" id="proeve-forrige" :disabled="p.nu===0" @click="proeveGaa(p.nu - 1)">Forrige</button>
+            <button class="btn" id="proeve-naeste" :disabled="p.nu===p.items.length - 1" @click="proeveGaa(p.nu + 1)">Næste</button>
+            <button class="btn btn-primary ml-auto" id="proeve-aflever" @click="proeveAflever()">Aflever prøven</button>
+          </div>
+        </div>
+      </template>
+
+      <!-- Resultat og gennemgang -->
+      <template x-if="proeveAkt && p.faerdig && p.res">
+        <div class="flex flex-col gap-3" id="proeve-slut">
+          <div class="panel p-4 flex flex-col gap-3">
+            <div class="flex flex-wrap items-baseline gap-4">
+              <span class="text-sm text-muted">Karakter</span><span class="num text-4xl" id="proeve-karakter" x-text="p.res.karakter"></span>
+              <span class="num text-xl" id="proeve-pct" x-text="proeveFmt(p.res.pct) + ' %'"></span>
+              <span class="num text-sm text-muted" x-text="proeveFmt(p.res.point) + ' af ' + p.res.maks + ' point'"></span>
+              <span class="font-semibold" id="proeve-bestaaet" :style="'color:var(' + (p.res.bestaaet ? '--ok' : '--crit') + ')'" x-text="p.res.bestaaet ? 'Bestået' : 'Ikke bestået'"></span>
+            </div>
+            <p class="warn text-sm" x-show="p.tidUd">Tiden løb ud. Ubesvarede spørgsmål giver 0 point.</p>
+            <p class="text-xs text-muted">Karakteren er en vejledende omregning af procenten til 7-trinsskalaen.</p>
+            <template x-for="e in p.res.emner" :key="e.id">
+              <div class="grid grid-cols-[minmax(0,1fr)_auto] gap-x-3 text-sm"><span x-text="e.navn"></span><span class="num text-muted" x-text="e.pct + ' % (' + proeveFmt(e.point) + '/' + e.maks + ')'"></span>
+                <div class="meter col-span-2"><i :style="'width:' + e.pct + '%'"></i></div></div>
+            </template>
+          </div>
+
+          <h2 class="hd text-lg">Gennemgang</h2>
+          <template x-for="(it, i) in p.items" :key="i">
+            <div class="panel p-3 flex flex-col gap-2 text-sm proeve-gennemgang">
+              <div class="flex flex-wrap items-center gap-2 text-xs text-muted"><span class="num" x-text="(i + 1) + '.'"></span><span class="tag" x-text="{ kort:'Kort', regel:'Regel', opgave:'Opgave', case:'Case' }[it.art]"></span><span class="tag" x-text="emneKort(it.emne)"></span>
+                <span class="num ml-auto" x-text="proeveFmt(it.point) + '/' + it.maks"></span></div>
+              <template x-if="it.art==='kort'"><div class="flex flex-col gap-1"><div x-html="vis(it.k.front)"></div><div class="text-muted" x-html="vis(it.k.bag)"></div>
+                <p class="text-xs" x-text="'Din vurdering: ' + (it.vurd === 1 ? 'rigtigt' : it.vurd === 0.5 ? 'delvist' : it.vurd === 0 ? 'forkert' : 'ikke besvaret')"></p></div></template>
+              <template x-if="it.art==='regel'"><div class="flex flex-col gap-1"><div x-html="vis('**' + it.r.titel + '**')"></div><p class="text-xs text-muted" x-text="it.r.kilde"></p><div class="text-muted" x-html="vis(it.r.resume)"></div>
+                <p class="warn text-xs" x-show="!it.r.verificeret">Ikke kontrolleret mod kilden.</p>
+                <p class="text-xs" x-text="'Din vurdering: ' + (it.vurd === 1 ? 'rigtigt' : it.vurd === 0.5 ? 'delvist' : it.vurd === 0 ? 'forkert' : 'ikke besvaret')"></p></div></template>
+              <template x-if="it.art==='opgave'"><div class="flex flex-col gap-2"><div x-html="vis(it.opg.tekst)"></div>
+                <template x-for="s in (it.art==='opgave' ? it.opg.svar : [])" :key="s.id"><p><span x-html="vis(s.navn)"></span>: <span class="num" x-text="proeveDel(it, s.id).gyldig ? 'dit svar ' + opgFmt(proeveDel(it, s.id).ind) : 'intet svar'"></span>, <span class="num" :style="'color:var(' + (proeveDel(it, s.id).ok ? '--ok' : '--crit') + ')'" x-text="'facit ' + opgFmt(s.vaerdi) + ' ' + s.enhed"></span></p></template>
+                <p x-show="(it.res || {}).fejltype" x-text="'Typisk fejl: ' + opgFejlNavn((it.res || {}).fejltype)"></p><div class="text-muted" x-show="(it.res || {}).forklaring" x-html="vis((it.res || {}).forklaring)"></div>
+                <ol class="list-decimal pl-5 text-muted"><template x-for="(t, j) in (it.art==='opgave' ? it.opg.trin : [])" :key="j"><li x-html="vis(t)"></li></template></ol></div></template>
+              <template x-if="it.art==='case'"><div class="flex flex-col gap-1"><p class="font-semibold" x-text="(it.c || {}).titel"></p>
+                <p x-text="it.state==='faerdig' ? 'Score: ' + Math.round(it.score * 100) + ' %. Gennemgå forklaringerne under Cases.' : 'Casen blev ikke afsluttet.'"></p></div></template>
+            </div>
+          </template>
+          <button class="btn btn-primary self-start" id="proeve-ny" @click="proeveLuk()">Tilbage til start</button>
+        </div>
+      </template>
+    </section>
+  </template>
+
   <!-- ===== KORT ===== -->
   <template x-if="klar && view==='kort'">
     <section class="flex flex-col gap-3" id="v-kort">
@@ -727,6 +919,7 @@
 <script src="js/opgaver.js?v=0.2.0"></script>
 <script src="js/cases.js?v=0.2.0"></script>
 <script src="js/fejlfinding.js?v=0.2.0"></script>
+<script src="js/proeve.js?v=0.2.0"></script>
 <script src="js/app.js?v=0.2.0"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.14.1/cdn.min.js" onerror="document.getElementById('fail').hidden=false"></script>
 <script>setTimeout(() => { if (!window.__alpineOk || typeof FSRS === 'undefined') document.getElementById('fail').hidden = false; }, 6000);</script>
