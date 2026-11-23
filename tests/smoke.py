@@ -14,6 +14,7 @@ LIB = {'alpinejs': ROD / 'node_modules/alpinejs/dist/cdn.min.js', 'ts-fsrs': ROD
        'katex.min.js': ROD / 'node_modules/katex/katex.min.js', 'katex.min.css': ROD / 'node_modules/katex/katex.min.css'}
 URL = 'http://app.test/'
 TRIN_MS = int(os.environ.get('SMOKE_TRIN_MS', '15000'))
+SKEMA = 3   # skal følge SCHEMA i js/data.js
 SAMLET_S = int(os.environ.get('SMOKE_SAMLET_S', '300'))
 A = "Alpine.$data(document.querySelector('[x-data]'))"
 fejl, kontrol = [], []
@@ -228,7 +229,24 @@ async def main():
             tx.oncomplete = () => { r.result.close(); localStorage.setItem('elskole.meta', JSON.stringify({ schema:1 })); ok(); }; }; })""")
         await pg.goto(URL); await pg.wait_for_function(f"window.__alpineOk && {A}.klar")
         r = await pg.evaluate(f"(async()=>{{const a={A}; await a.tilfoejResultat({{art:'case', ref:'x'}}); return [a.kort.map(k=>k.front), a.resultater.length, !!localStorage.getItem('elskole.backup'), JSON.parse(localStorage.getItem('elskole.meta')).schema]}})()")
-        tjek('opgradering fra skema 1 bevarer kortene, tilføjer resultater og tager backup', r == [['Gammelt kort'], 1, True, 2], r)
+        tjek('opgradering fra skema 1 bevarer kortene, tilføjer resultater og tager backup', r == [['Gammelt kort'], 1, True, SKEMA], r)
+        await ctx.close()
+
+        # 6c. Opgradering fra skema 2: en gammel prøverække (art 'case', ref 'proeve') bliver art 'proeve', resten er uændret, og der tages backup
+        ctx = await b.new_context(viewport={'width': 1200, 'height': 900}, service_workers='block'); ctx.set_default_timeout(TRIN_MS)
+        await ctx.route('**/*', route)
+        pg = await ctx.new_page(); pg.on('pageerror', lambda e: fejl.append(str(e)))
+        await pg.goto(URL + 'findes-ikke')
+        await pg.evaluate("""new Promise(ok => { const r = indexedDB.open('elskole', 2);
+          r.onupgradeneeded = () => { for (const s of ['kort', 'tilstand', 'log', 'resultater']) r.result.createObjectStore(s, { keyPath:'id' }); };
+          r.onsuccess = () => { const tx = r.result.transaction(['kort', 'resultater'], 'readwrite');
+            tx.objectStore('kort').put({ id:'gl2', type:'fakta', emne:'mat', front:'Kort fra skema 2', bag:'b', tags:[], kilde:{}, oprettet:'2026-11-01T00:00:00Z', rettet:'2026-11-01T00:00:00Z' });
+            tx.objectStore('resultater').put({ id:'p1', art:'case', ref:'proeve', emne:'andet', tid:'2026-11-20T10:00:00Z', korrekt:true, score:0.8, fejltype:'', varighedMs:5000, data:{ karakter:'10' } });
+            tx.objectStore('resultater').put({ id:'c1', art:'case', ref:'case-x', emne:'mat', tid:'2026-11-20T11:00:00Z', korrekt:false, score:0, fejltype:'', varighedMs:1, data:{} });
+            tx.oncomplete = () => { r.result.close(); localStorage.setItem('elskole.meta', JSON.stringify({ schema:2 })); ok(); }; }; })""")
+        await pg.goto(URL); await pg.wait_for_function(f"window.__alpineOk && {A}.klar")
+        r = await pg.evaluate(f"(async()=>{{const a={A}; const p=a.resultater.find(x=>x.id==='p1'), c=a.resultater.find(x=>x.id==='c1'); const rå = await new Promise(ok => {{ const q = indexedDB.open('elskole'); q.onsuccess = () => {{ const g = q.result.transaction('resultater').objectStore('resultater').get('p1'); g.onsuccess = () => {{ q.result.close(); ok(g.result); }}; }}; }}); return [p.art, p.ref, p.score, p.data.karakter, c.art, rå.art, !!localStorage.getItem('elskole.backup'), JSON.parse(localStorage.getItem('elskole.meta')).schema]}})()")
+        tjek('opgradering fra skema 2 omskriver prøverækker til art proeve og tager backup', r == ['proeve', 'proeve', 0.8, '10', 'case', 'proeve', True, SKEMA], r)
         await ctx.close()
 
         # ===== FASE 2: OPGAVER (js/opgaver.js) =====

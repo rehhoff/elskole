@@ -25,7 +25,7 @@
 
 `oev` (Øv, 1), `opgaver` (2), `cases` (3), `fejlfinding` (4), `proeve` (7), `kort` (Kort, 5), `data` (Data og indstillinger, 6). En fane med `kraever` i `views` (`js/app.js`) vises kun, når modulets startmetode (`opgStart`, `caseStart`, `ffStart`) findes. Hvert modul har sin egen markerede blok i `index.html` (fane og dialoger) og i `tests/smoke.py`. Under en øvelse: mellemrum eller Enter viser svaret, 1–4 giver karakter, Z fortryder.
 
-## Datamodel (SCHEMA 2)
+## Datamodel (SCHEMA 3)
 
 **Kort** (IndexedDB `kort`): `{ id, type: fakta|regel|formel, emne, front, bag, tags[], kilde{dok, afsnit, udgave, gyldigFra}, oprindelse, oprettet, rettet, slettet }`. `oprindelse` er fx `anki:<guid>` eller `start:<fil>`.
 
@@ -33,7 +33,7 @@
 
 **Log** (IndexedDB `log`): `{ id, kortId, tid, karakter 1–4, ny, foer (state før), varighedMs }`.
 
-**Resultater** (IndexedDB `resultater`, fra skema 2): `{ id, art: opgave|case|fejlfinding, ref, emne, tid, korrekt, score 0–1, fejltype, varighedMs, data{} }`. Kun tilføjes, med `tilfoejResultat()`. `fejltype` er en kort kode (fx `glemt-ktemp`) til fase 3's log over typiske fejl.
+**Resultater** (IndexedDB `resultater`, fra skema 2): `{ id, art: opgave|case|fejlfinding|proeve, ref, emne, tid, korrekt, score 0–1, fejltype, varighedMs, data{} }`. Kun tilføjes, med `tilfoejResultat()`. Skema 3 tilføjede `proeve`: `normResultat()` omskriver gamle rækker med `art:'case', ref:'proeve'` til `art:'proeve'` ved hver indlæsning og hver synk, og `lagerStart()` gemmer de omskrevne rækker tilbage i IndexedDB. `fejltype` er en kort kode (fx `glemt-ktemp`) til fase 3's log over typiske fejl.
 
 **Indstillinger** (`elskole.indstillinger`): `nyePrDag`, `retention`, `maksInterval`.
 

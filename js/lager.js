@@ -32,6 +32,9 @@ function APP_LAGER() {
         const [k, t, l, r] = await Promise.all([idbAlle('kort'), idbAlle('tilstand'), idbAlle('log'), idbAlle('resultater')]);
         this.kort = k.map(normKort); this.log = l.map(normLog).sort((a, b) => a.tid < b.tid ? -1 : 1);
         this.resultater = r.map(normResultat).sort((a, b) => a.tid < b.tid ? -1 : 1);
+        /* Skema 3: gem gamle prøverækker ('case'/'proeve') tilbage med den nye art; resten af rækken er uændret */
+        const gamle = r.filter(x => x && x.art === 'case' && x.ref === 'proeve').map(x => x.id);
+        if (gamle.length) { const gamleId = new Set(gamle); await idbPut('resultater', JSON.parse(JSON.stringify(this.resultater.filter(x => gamleId.has(x.id))))); }
         const tm = {}; for (const x of t) { const n = normTilstand(x); if (n.id) tm[n.id] = n; } this.tilst = tm;
       } catch (e) { IDB = null; this.storageOk = false; this.kort = []; this.tilst = {}; this.log = []; this.resultater = []; }
       /* Første start efter en hævning af SCHEMA: tag en backup, før noget ændres (CLAUDE.md afsnit 1) */

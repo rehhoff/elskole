@@ -1,6 +1,6 @@
 /* Elskolen: konstanter, lagernøgler, emner, datamodel (norm*) og små hjælpere. Indlæses før de andre scripts. */
 const APP_VERSION = '0.3.0';
-const SCHEMA = 2;  // 2: tabellen resultater (opgaver, cases, fejlfinding)
+const SCHEMA = 3;  // 2: tabellen resultater (opgaver, cases, fejlfinding). 3: resultatarten 'proeve' (prøvesimulering)
 
 /* Lagernøgler. Appen ligger på samme origin som El-oversigtsappen (rehhoff.github.io), så ALLE nøgler skal starte med "elskole.".
    Omdøb eller fjern dem aldrig (se CLAUDE.md afsnit 1). */
@@ -76,12 +76,14 @@ function normLog(l) {
 }
 
 /* Resultat: ét forsøg på en opgave, en case eller en fejlfinding. Kun tilføjes, aldrig rettes (som log).
-   art: 'opgave' | 'case' | 'fejlfinding'. ref: generatorens, casens eller scenariets id. emne: et af EMNER.
+   art: 'opgave' | 'case' | 'fejlfinding' | 'proeve' (skema 3). ref: generatorens, casens eller scenariets id. emne: et af EMNER.
    korrekt: om forsøget lykkedes. score: 0–1. fejltype: kort kode for den typiske fejl, fx 'glemt-ktemp' (tom, når korrekt).
    data: frit objekt til modulets egne detaljer (opgavens tal, valgte trin …). Holdes lille. */
-const RESULTAT_ARTER = ['opgave', 'case', 'fejlfinding'];
+const RESULTAT_ARTER = ['opgave', 'case', 'fejlfinding', 'proeve'];
 function normResultat(r) {
   r = r && typeof r === 'object' ? r : {};
+  /* Skema 2 gemte prøver som art 'case' med ref 'proeve'; fra skema 3 er arten 'proeve' (kører ved hver indlæsning og hver synk) */
+  if (r.art === 'case' && r.ref === 'proeve') r = Object.assign({}, r, { art:'proeve' });
   return { id:str(r.id) || uid(), art:RESULTAT_ARTER.includes(r.art) ? r.art : 'opgave', ref:str(r.ref), emne:EMNE_IDS.includes(r.emne) ? r.emne : 'andet',
     tid:str(r.tid) || nu(), korrekt:!!r.korrekt, score:Math.min(1, Math.max(0, Number(r.score) || (r.korrekt ? 1 : 0))), fejltype:str(r.fejltype),
     varighedMs:Math.max(0, Number(r.varighedMs) || 0), data:r.data && typeof r.data === 'object' ? r.data : {} };
