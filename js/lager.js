@@ -27,17 +27,21 @@ function APP_LAGER() {
     async lagerStart() {
       let meta = null;
       try { meta = JSON.parse(localStorage.getItem(K_META)); this.indst = normIndst(JSON.parse(localStorage.getItem(K_INDST))); } catch (e) { this.indst = normIndst(); }
+      let gamleProever = [];
       try {
         IDB = await idbAaben();
         const [k, t, l, r] = await Promise.all([idbAlle('kort'), idbAlle('tilstand'), idbAlle('log'), idbAlle('resultater')]);
         this.kort = k.map(normKort); this.log = l.map(normLog).sort((a, b) => a.tid < b.tid ? -1 : 1);
         this.resultater = r.map(normResultat).sort((a, b) => a.tid < b.tid ? -1 : 1);
+        gamleProever = r.filter(x => x && x.art === 'case' && x.ref === 'proeve').map(x => x.id);
         const tm = {}; for (const x of t) { const n = normTilstand(x); if (n.id) tm[n.id] = n; } this.tilst = tm;
       } catch (e) { IDB = null; this.storageOk = false; this.kort = []; this.tilst = {}; this.log = []; this.resultater = []; }
       /* Første start efter en hævning af SCHEMA: tag en backup, før noget ændres (CLAUDE.md afsnit 1) */
       const gl = meta ? Number(meta.schema) || 0 : 0;
       if (meta && gl < SCHEMA && this.kort.length) this.autoBackup('Automatisk før opdatering fra skema ' + gl + ' til ' + SCHEMA);
       if (meta && meta.sidstBackup) this.sidstBackup = meta.sidstBackup;
+      /* Skema 3: efter backuppen gemmes gamle prøverækker ('case'/'proeve') tilbage med den nye art; resten af rækken er uændret */
+      if (gamleProever.length) { const ids = new Set(gamleProever); await this.skriv('resultater', this.resultater.filter(x => ids.has(x.id))); }
       this.gemMeta(); this.dataRev++;
     },
     gemMeta() { try { localStorage.setItem(K_META, JSON.stringify({ schema:SCHEMA, sidstBackup:this.sidstBackup || '' })); } catch (e) {} },
