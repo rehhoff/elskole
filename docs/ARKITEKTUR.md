@@ -16,13 +16,14 @@
 | `js/opgaver.js` | `APP_OPGAVER()`: fase 2, opgavegeneratorer. Præfiks `opg` |
 | `js/cases.js` | `APP_CASES()`: fase 4, cases og regelbibliotek. Præfiks `case` |
 | `js/fejlfinding.js` | `APP_FEJLFINDING()`: fase 5, fejlfinding med diagrammer. Præfiks `ff` |
+| `js/proeve.js` | `APP_PROEVE()`: fase 6, prøvesimulering og læsning af El-oversigtens projekter. Præfiks `proeve`. Se `docs/planer/2026-11-22-fase-6-proeve.md` |
 | `js/app.js` | `app()`, `init()`, tema, beskeder, `vis()` (tekst og KaTeX), tastatur |
 | `indhold/*.json` | Startpakker: `{ navn, kort:[…] }` med faste id'er |
 | `tests/smoke.py` | Røgtest med Playwright |
 
 ## Faner
 
-`oev` (Øv, 1), `opgaver` (2), `cases` (3), `fejlfinding` (4), `kort` (Kort, 5), `data` (Data og indstillinger, 6). En fane med `kraever` i `views` (`js/app.js`) vises kun, når modulets startmetode (`opgStart`, `caseStart`, `ffStart`) findes. Hvert modul har sin egen markerede blok i `index.html` (fane og dialoger) og i `tests/smoke.py`. Under en øvelse: mellemrum eller Enter viser svaret, 1–4 giver karakter, Z fortryder.
+`oev` (Øv, 1), `opgaver` (2), `cases` (3), `fejlfinding` (4), `proeve` (7), `kort` (Kort, 5), `data` (Data og indstillinger, 6). En fane med `kraever` i `views` (`js/app.js`) vises kun, når modulets startmetode (`opgStart`, `caseStart`, `ffStart`) findes. Hvert modul har sin egen markerede blok i `index.html` (fane og dialoger) og i `tests/smoke.py`. Under en øvelse: mellemrum eller Enter viser svaret, 1–4 giver karakter, Z fortryder.
 
 ## Datamodel (SCHEMA 2)
 

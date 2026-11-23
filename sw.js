@@ -7,7 +7,7 @@ const V = '?v=' + VERSION;
 const SKAL = ['./', 'index.html', 'manifest.webmanifest', 'ikoner/ikon-192.png', 'ikoner/ikon-512.png', 'ikoner/ikon.svg', 'ikoner/apple-touch-icon.png',
   'css/app.css' + V, 'css/tailwind.css' + V,
   'js/data.js' + V, 'js/lager.js' + V, 'js/synk.js' + V, 'js/oev.js' + V, 'js/kort.js' + V, 'js/import.js' + V,
-  'js/opgaver.js' + V, 'js/cases.js' + V, 'js/fejlfinding.js' + V, 'js/kompetence.js' + V, 'js/app.js' + V,
+  'js/opgaver.js' + V, 'js/cases.js' + V, 'js/fejlfinding.js' + V, 'js/kompetence.js' + V, 'js/proeve.js' + V, 'js/app.js' + V,
   'indhold/regler.json' + V, ...['elbil-11kw', 'badevaerelse', 'ny-gruppe-aeldre', 'byggeplads', 'solceller'].map(n => 'indhold/cases/' + n + '.json' + V),
   'https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.14.1/cdn.min.js',
   'https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js',
