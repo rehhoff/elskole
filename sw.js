@@ -1,7 +1,7 @@
 /* Service worker til Elskolen: appen virker uden net, når den har været åbnet én gang.
    Scope er appens egen mappe (/elskole/ på GitHub Pages), så den aldrig rører El-oversigtsappen på samme origin.
    VERSION skal være lig APP_VERSION i js/data.js og ?v= i index.html. Røgtesten kontrollerer det. */
-const VERSION = '0.4.0';
+const VERSION = '0.4.1';
 const CACHE = 'elskole-' + VERSION, EKSTERN = 'elskole-ekstern';
 const V = '?v=' + VERSION;
 const SKAL = ['./', 'index.html', 'manifest.webmanifest', 'ikoner/ikon-192.png', 'ikoner/ikon-512.png', 'ikoner/ikon.svg', 'ikoner/apple-touch-icon.png',

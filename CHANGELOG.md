@@ -1,5 +1,8 @@
 # Ændringer
 
+## 0.4.1 · 2026-11-23 · Claude Opus 5.5
+- Prøve: autoriseret elinstallatør er nu standardniveau, fordi ejeren har valgt det. Et niveau, der allerede er valgt på en enhed, bevares, og de andre niveauer kan stadig vælges.
+
 ## 0.4.0 · 2026-11-23 · Claude Opus 5.5 og Claude Sonnet 5.5
 - Skema 3: resultater fra prøvesimuleringen får deres egen art, `proeve`. Prøver, der er gemt med skema 2 (`art:'case'`, `ref:'proeve'`), flyttes ved første start efter en backup i `elskole.backup`, og igen ved synk. Prøver tæller derfor ikke længere med som cases i kompetencetræet.
 - En app med skema 2 kan ikke længere synkronisere med en Gist, der er skrevet af 0.4.0. Opdatér alle enheder.
