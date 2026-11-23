@@ -8,7 +8,7 @@ Sidst opdateret: 2026-11-22.
 
 Elskolen er en dansk webapp, der skal gøre ejeren til en meget dygtig elektriker: matematik og fysik, dimensionering (DS/HD 60364), særlige installationer, love og myndigheder, erhverv og arbejdsmiljø. Den afløser og udvider Anki med opgaver, cases og fejlfinding. Samlet plan: `docs/plan.md`.
 
-- Live: https://rehhoff.github.io/elskole/ (GitHub Pages fra `main` i `rehhoff/elskole`). Udgivet version: **0.2.0**.
+- Live: https://rehhoff.github.io/elskole/ (GitHub Pages fra `main` i `rehhoff/elskole`). Udgivet version: **0.2.0**. Version **0.3.0** er merget på `main`, men ikke pushet.
 - Lokal mappe på ejerens PC: `Desktop\GROUND\elskole`.
 - Søsterapp: El-oversigtsappen (`rehhoff/rehhoff.github.io`, lokalt `Desktop\GROUND\rehhoff.github.io`). Separat repo og separat app, men samme origin. Se "Samme origin" nedenfor.
 
@@ -22,11 +22,13 @@ Elskolen er en dansk webapp, der skal gøre ejeren til en meget dygtig elektrike
 | 2 | Opgavegeneratorer (10 stk., 25 fejlkoder) | Udgivet i 0.2.0 |
 | 4 | Cases (5) og regelbibliotek (28 regler, alle `verificeret:false`) | Udgivet i 0.2.0 |
 | 5 | Fejlfinding (7 fejltyper, 10 målinger, 5 sikkerhedsregler) | Udgivet i 0.2.0 |
-| 3 | Kompetencetræ og log over typiske fejl | Klar til start (fase 2 er på `main`) |
-| 6 | Kobling til El-oversigtsappen, prøvesimulering | Klar til start. Prøvesimuleringen afhænger af åbent punkt 2 (niveau) |
+| 3 | Kompetencetræ og log over typiske fejl (fanen Kompetence, tast 7) | Merget på `main` i 0.3.0 |
+| 6 | Kobling til El-oversigtsappen (kun læsning), prøvesimulering (fanen Prøve, tast 8) | Merget på `main` i 0.3.0. Niveauet kan vælges i fanen, indtil åbent punkt 2 er afgjort |
 | 7 | AI-retning af forklaringer | Kræver ejerens beslutning om API-nøgle eller backend |
 
-Erfaring fra merge af fase 2, 4 og 5: kun `css/tailwind.css` gav konflikt. Den løses ved at tage én side og bygge CSS igen med `python tools/byg_css.py`. Røgtesten sluttede med `OK`.
+Erfaring fra merge: `css/tailwind.css` løses ved at tage én side og bygge igen med `python tools/byg_css.py`. Når to faser tilføjer blokke samme sted i `index.html`, så tjek, at hver blok har sin egen `</section></template>`. Ved merge af fase 3 og 6 manglede den, og appen startede ikke.
+
+**Næste opgave for hovedsessionen:** tilføj `'proeve'` til `RESULTAT_ARTER` i `js/data.js`. Det kræver skema 3, backup og et røgtjek med gamle data, fordi en ældre app ellers ville lave `'proeve'` om til `'opgave'`. Indtil da gemmer fase 6 prøver som `art:'case'`, `ref:'proeve'`, `emne:'andet'`, og de tælles derfor med i kompetencetræets case-tal for `andet`.
 
 ## Åbne punkter for ejeren
 
@@ -63,4 +65,5 @@ Erfaring fra merge af fase 2, 4 og 5: kun `css/tailwind.css` gav konflikt. Den l
 
 ## Historik i korte træk
 
-- 2026-11-22: Plan lagt. Fase 0–1 bygget og udgivet som 0.1.0. El-oversigtsappen 10.26.1 udgivet med rettelse af service workeren. Forberedelse til parallelle faser committet. Fase 2, 4 og 5 bygget i tre sessioner og udgivet som 0.2.0. Fase 3 og 6 startet i hver sin session.
+- 2026-11-22: Plan lagt. Fase 0–1 bygget og udgivet som 0.1.0. El-oversigtsappen 10.26.1 udgivet med rettelse af service workeren. Forberedelse til parallelle faser committet. Fase 2, 4 og 5 bygget i tre sessioner og udgivet som 0.2.0.
+- 2026-11-23: Fase 3 (Sonnet) og fase 6 (planlagt af Opus, kodet af Sonnet) merget som 0.3.0.
