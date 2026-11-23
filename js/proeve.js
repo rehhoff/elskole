@@ -1,7 +1,7 @@
 /* Fase 6: prøvesimulering og kobling til El-oversigtsappen. Fanen "Prøve" vises, når proeveStart() findes.
    Metoder og felter starter med "proeve", globale navne med PROEVE_ eller proeve. Plan: docs/planer/2026-11-22-fase-6-proeve.md.
    Prøven blander kort, regler (regelbiblioteket), regneopgaver (fase 2) og cases (fase 4) og giver en vejledende karakter.
-   Niveauet er ikke afgjort af ejeren: ret PROEVE_NIVEAUER nedenfor.
+   Ejeren sigter mod autorisation som elinstallatør (2026-11-23), så 'aut' er standard. De andre niveauer kan stadig vælges.
    El-oversigtsappen (samme origin) læses kun med localStorage.getItem. Der skrives, slettes eller åbnes aldrig noget hos den. */
 
 const K_PROEVE = 'elskole.proeve';   // { niv, ind }: kun valg på denne enhed, synkroniseres ikke
@@ -92,7 +92,7 @@ function proeveProjDu(c) {
 function APP_PROEVE() {
   return {
     proeveNiveauer: PROEVE_NIVEAUER, proeveSkala: PROEVE_SKALA, proeveVaegt: PROEVE_VAEGT,
-    proeveNiv: 'svend', proeveInd: { min:60, kort:8, regler:2, opg:5, cases:1 },
+    proeveNiv: 'aut', proeveInd: { min:90, kort:6, regler:5, opg:4, cases:2 },
     proeveEl: { fundet:false, projekter:0, zs:[], du:[] }, proeveBrugEl: true,
     proeveKlar: false, proeveHenter: false,
     proeveAkt: null,     // { id, niv, navn, min, items, nu, start, slutTid, faerdig, tidUd, res }
@@ -102,7 +102,7 @@ function APP_PROEVE() {
     async proeveStart() {
       if (!this.proeveKlar) {
         this.proeveKlar = true;
-        try { const g = JSON.parse(localStorage.getItem(K_PROEVE)); if (g && PROEVE_NIVEAUER.some(n => n.id === g.niv)) { this.proeveNiv = g.niv; Object.assign(this.proeveInd, g.ind || {}); } else this.proeveVaelgNiveau('svend', true); } catch (e) {}
+        try { const g = JSON.parse(localStorage.getItem(K_PROEVE)); if (g && PROEVE_NIVEAUER.some(n => n.id === g.niv)) { this.proeveNiv = g.niv; Object.assign(this.proeveInd, g.ind || {}); } else this.proeveVaelgNiveau('aut', true); } catch (e) {}
       }
       this.proeveEl = proeveElProjekter();
       await this.proeveIndlaes();

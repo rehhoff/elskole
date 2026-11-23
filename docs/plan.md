@@ -35,4 +35,4 @@ Beherskelse pr. emne frem for point, stribe med én tilladt fridag, dine hyppigs
 
 ## Åbne spørgsmål
 
-- Niveau: svendeprøve, autoriseret elinstallatør eller generel faglig dygtighed?
+- Niveau: afgjort 2026-11-23, autoriseret elinstallatør.

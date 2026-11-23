@@ -2,7 +2,7 @@
 
 **Læs denne fil først i hver ny session.** Den siger, hvor projektet står, hvad der venter, og hvilke beslutninger og ønsker ejeren allerede har givet, så de ikke skal forklares igen. Opdatér den, før en opgave afsluttes (se `CLAUDE.md`, "Hukommelse").
 
-Sidst opdateret: 2026-11-22.
+Sidst opdateret: 2026-11-23.
 
 ## Kort fortalt
 
@@ -23,7 +23,7 @@ Elskolen er en dansk webapp, der skal gøre ejeren til en meget dygtig elektrike
 | 4 | Cases (5) og regelbibliotek (28 regler, alle `verificeret:false`) | Udgivet i 0.2.0 |
 | 5 | Fejlfinding (7 fejltyper, 10 målinger, 5 sikkerhedsregler) | Udgivet i 0.2.0 |
 | 3 | Kompetencetræ og log over typiske fejl (fanen Kompetence, tast 7) | Udgivet i 0.3.0 |
-| 6 | Kobling til El-oversigtsappen (kun læsning), prøvesimulering (fanen Prøve, tast 8) | Udgivet i 0.3.0. Niveauet kan vælges i fanen, indtil åbent punkt 2 er afgjort |
+| 6 | Kobling til El-oversigtsappen (kun læsning), prøvesimulering (fanen Prøve, tast 8) | Udgivet i 0.3.0. Standardniveau `aut` på branchen `niveau-autorisation` (ikke merget) |
 | 7 | AI-retning af forklaringer | Kræver ejerens beslutning om API-nøgle eller backend |
 
 Erfaring fra merge: `css/tailwind.css` løses ved at tage én side og bygge igen med `python tools/byg_css.py`. Når to faser tilføjer blokke samme sted i `index.html`, så tjek, at hver blok har sin egen `</section></template>`. Ved merge af fase 3 og 6 manglede den, og appen startede ikke.
@@ -43,8 +43,7 @@ Erfaring fra merge: `css/tailwind.css` løses ved at tage én side og bygge igen
    - Netselskabet: hvornår ladere og små solcelleanlæg skal meldes, plombering af hovedsikringer
    - Autorisationsloven: hvad kvalitetsledelsessystemet kræver af dokumentation til kunden
    - Selektivitet: henvist til DS/HD 60364-5-53 uden afsnit
-2. **Niveau:** svendeprøve, autoriseret elinstallatør eller generel faglig dygtighed? Ikke besvaret. Det afgør prioriteringen af emner og prøvesimuleringen (fase 6).
-3. **Fase 7:** API-nøgle i browseren eller lille backend? Ikke besluttet.
+2. **Fase 7:** API-nøgle i browseren eller lille backend? Ikke besluttet.
 
 ## Beslutninger og ønsker fra ejeren
 
@@ -54,6 +53,7 @@ Erfaring fra merge: `css/tailwind.css` løses ved at tage én side og bygge igen
 - **Undersessioner og modeller (2026-11-22):** Opus kun til planlægning, Sonnet til kodning. Afvig kun, hvis det er nødvendigt. Brug parallelle sessioner, hvor opgaver kan køre uafhængigt. Vær så token-effektiv som muligt, men korrekt udførelse går forud.
 - **Hvis en undersession ikke kan starte** (mappen ikke godkendt med "Trust repository" i Claude Desktop), så sig det til ejeren og lav opgaven med Sonnet-subagenter i stedet.
 - **Merge og push:** spørg ejeren, før faser merges til `main` og før push. Ejeren har sagt ja til hver udgivelse indtil nu.
+- **Niveau (2026-11-23):** autoriseret elinstallatør. Prioritér dybere DS/HD 60364, love og myndigheder, kvalitetsledelse, erhverv og ansvar. Prøven har `aut` som standard; de andre niveauer kan stadig vælges.
 - **Faglig ærlighed:** opfind aldrig paragraf- eller afsnitsnumre; markér usikkert indhold og vis det i appen.
 
 ## Kendte forhold i miljøet
@@ -65,4 +65,4 @@ Erfaring fra merge: `css/tailwind.css` løses ved at tage én side og bygge igen
 ## Historik i korte træk
 
 - 2026-11-22: Plan lagt. Fase 0–1 bygget og udgivet som 0.1.0. El-oversigtsappen 10.26.1 udgivet med rettelse af service workeren. Forberedelse til parallelle faser committet. Fase 2, 4 og 5 bygget i tre sessioner og udgivet som 0.2.0.
-- 2026-11-23: Fase 3 (Sonnet) og fase 6 (planlagt af Opus, kodet af Sonnet) udgivet som 0.3.0. Skema 3 med resultatarten `proeve` udgivet som 0.4.0 (kodet af Sonnet, gennemgået af Opus).
+- 2026-11-23: Fase 3 (Sonnet) og fase 6 (planlagt af Opus, kodet af Sonnet) udgivet som 0.3.0. Skema 3 med resultatarten `proeve` udgivet som 0.4.0 (kodet af Sonnet, gennemgået af Opus). Ejeren valgte niveauet autoriseret elinstallatør.
