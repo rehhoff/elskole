@@ -643,6 +643,63 @@ async def main():
         tjek('fejlfinding: mobil 375 px uden vandret rulning', all(x <= 375 for x in bredder), bredder)
         await ctx.close()
 
+        # ===== FASE 3: KOMPETENCE (js/kompetence.js) =====
+        ctx, pg = await ny_side(b)
+        r = await pg.evaluate("""(()=>{const nu = Date.now(), dag = 86400000, iso = d => new Date(nu - d * dag).toISOString();
+          return [Math.round(kompHuskSandsynlighed({ state:2, stability:10, last_review:iso(10) }, nu) * 1000) / 1000,
+            kompHuskSandsynlighed({ state:0, stability:10, last_review:iso(1) }, nu), kompHuskSandsynlighed(undefined, nu),
+            kompForsoegVaerdi([{ score:0 }, { score:1 }]) > 0.5, kompForsoegVaerdi([]), kompNiveau(0.9).navn, kompNiveau(0.5).navn, kompNiveau(0.1).navn, kompNiveau(null)]})()""")
+        tjek('kompetence: hukommelse 90 % ved stabilitet, nye kort 0, nyeste forsøg vægter mest, niveauer', r == [0.9, 0, 0, True, None, 'Stærk', 'Under opbygning', 'Svag', None], r)
+        r = await pg.evaluate(f"{A}.kompTrae().map(e => [e.id, e.beh, e.delemner.length]).join('|')")
+        tjek('kompetence: uden data har alle emner "ingen data"', r == 'mat,,6|dim,,6|saer,,4|love,,0|erhv,,0|arb,,0|andet,,0', r)
+
+        # Syntetiske data: to matematikkort (ét set, ét nyt) og tre rigtige Ohm-opgaver
+        await pg.evaluate("""(async()=>{const a = Alpine.$data(document.querySelector('[x-data]')), nu = Date.now(), dag = 86400000, iso = d => new Date(nu - d * dag).toISOString();
+          await a.gemKort([nytKort({ id:'k-a', emne:'mat', tags:['ohm'], front:'a', bag:'a' }), nytKort({ id:'k-b', emne:'mat', tags:['ohm'], front:'b', bag:'b' }), nytKort({ id:'k-c', emne:'mat', tags:['ukendt'], front:'c', bag:'c' })]);
+          await a.gemTilst(normTilstand({ id:'k-a', state:2, stability:10, reps:3, last_review:iso(0) }));
+          const r = (art, ref, emne, score, fejltype, dage) => ({ art, ref, emne, korrekt:!fejltype, score, fejltype, tid:iso(dage) });
+          await a.tilfoejResultat([r('opgave', 'ohm', 'mat', 1, '', 3), r('opgave', 'ohm', 'mat', 1, '', 2), r('opgave', 'ohm', 'mat', 1, '', 1),
+            r('opgave', 'effekt3', 'mat', 0, 'glemt-sqrt3', 5), r('opgave', 'effekt3', 'mat', 0, 'glemt-sqrt3', 4), r('opgave', 'effekt3', 'mat', 0, 'glemt-sqrt3', 3), r('opgave', 'effekt3', 'mat', 0, 'glemt-sqrt3', 40),
+            r('case', 'case-badevaerelse', 'saer', 0.4, 'rcd-type-ac', 2), r('fejlfinding', 'afbrudt-pe', 'dim', 0, 'ff-type:afbrudt-pe>afbrudt-n', 1)]);})()""")
+        r = await pg.evaluate("""(()=>{const a = Alpine.$data(document.querySelector('[x-data]')), t = a.kompTrae(), mat = t.find(e => e.id === 'mat'), ohm = mat.delemner.find(d => d.id === 'ohm'), saer = t.find(e => e.id === 'saer');
+          const r2 = x => Math.round(x * 100) / 100;
+          return [r2(mat.kilder.kort.v), mat.kilder.kort.sete, mat.kilder.kort.n, mat.kilder.opgave.n, r2(ohm.kilder.kort.v), ohm.kilder.kort.n, r2(ohm.kilder.opgave.v), ohm.kilder.opgave.n,
+            r2(ohm.beh), ohm.niveau.navn, mat.delemner.some(d => d.id === 'oevrigt' && d.kilder.kort.n === 1), saer.delemner.find(d => d.id === 'bad').kilder.case.n, saer.beh != null]})()""")
+        tjek('kompetence: beherskelse samler kort og opgaver pr. emne og delemne (også øvrige kort)', r == [0.33, 1, 3, 7, 0.5, 2, 1, 3, 0.86, 'Stærk', True, 1, True], r)
+        r = await pg.evaluate("""(()=>{const a = Alpine.$data(document.querySelector('[x-data]')), l = a.kompFejlLog(), s = l.find(x => x.kode === 'glemt-sqrt3');
+          a.kompPeriode = '30'; const l30 = a.kompFejlLog().find(x => x.kode === 'glemt-sqrt3'); a.kompPeriode = 'alt'; const lAlt = a.kompFejlLog().find(x => x.kode === 'glemt-sqrt3'); a.kompPeriode = '90';
+          a.kompArtFilter = 'case'; const kun = a.kompFejlLog().map(x => x.kode); a.kompArtFilter = '';
+          return [l.length, s.antal, l30.antal, l30.forrige, l30.tendens, lAlt.antal, s.gens.includes('effekt3'), s.navn, l.find(x => x.art === 'case').caseId, l.find(x => x.art === 'fejlfinding').navn.includes('Afbrudt PE'), kun.join(), l[0].kode, a.kompTotalFejl(), s.uger.length]})()""")
+        tjek('kompetence: fejllog grupperer, tæller pr. periode, viser tendens og finder opgavetype', r == [3, 4, 3, 1, 'op', 4, True, 'Glemt √3', 'case-badevaerelse', True, 'rcd-type-ac', 'glemt-sqrt3', 6, 8], r)
+        r = await pg.evaluate("""(()=>{const m = {}; for (const g of OPG_GENERATORER) for (const f of Alpine.$data(document.querySelector('[x-data]')).kompGenForKode('glemt-ktemp')) m[f] = 1;
+          const a = Alpine.$data(document.querySelector('[x-data]')); const alle = Object.keys(OPG_FEJLNAVNE).filter(k => !a.kompGenForKode(k).length);
+          return [Object.keys(m).join(), alle]})()""")
+        tjek('kompetence: alle 25 fejlkoder fra fase 2 kan føres tilbage til en generator', r == ['iz', []], r)
+
+        await pg.click('#tab-kompetence'); await pg.wait_for_selector('#v-kompetence #komp-trae')
+        r = await pg.evaluate("[document.querySelector('#komp-emne-mat .komp-pct').textContent, document.querySelectorAll('.komp-fejl-raekke').length, document.querySelector('#komp-svageste') != null]")
+        tjek('kompetence: fanen viser træ og fejllog', r[0] != '–' and r[1] == 3 and r[2], r)
+        await pg.click('#komp-vis-mat'); await pg.wait_for_selector('#komp-del-mat-ohm', state='visible')
+        await pg.select_option('#komp-art', 'opgave'); await pg.wait_for_timeout(100)
+        r = await pg.evaluate("document.querySelectorAll('.komp-fejl-raekke').length")
+        tjek('kompetence: filter på art virker', r == 1, r)
+        await pg.click('.komp-fejl-raekke button:has-text("Træn:")'); await pg.wait_for_selector('#v-opgaver #opg-kort')
+        r = await pg.evaluate(f"[{A}.view, {A}.opgAkt.gen]")
+        tjek('kompetence: "Træn" åbner den opgavetype, der træner fejlen', r == ['opgaver', 'effekt3'] or (r[0] == 'opgaver' and r[1] in ('effekt3', 'effekt1')), r)
+        await pg.click('#tab-kompetence'); await pg.select_option('#komp-art', 'fejlfinding'); await pg.click('.komp-fejl-raekke button:has-text("Træn fejlfinding")')
+        await pg.wait_for_selector('#v-fejlfinding #ff-diagram svg')
+        r = await pg.evaluate(f"[{A}.view, {A}.ffScen.fejl.type]")
+        tjek('kompetence: fejl i fejlfinding træner den rigtige fejltype', r == ['fejlfinding', 'afbrudt-pe'], r)
+        await ctx.close()
+
+        ctx, pg = await ny_side(b, 375, 812, is_mobile=True, has_touch=True)
+        await pg.evaluate(f"{A}.tilfoejResultat({{ art:'opgave', ref:'effekt3', emne:'mat', score:0, fejltype:'glemt-sqrt3' }})")
+        await pg.evaluate(f"{A}.gaaTil('kompetence')"); await pg.wait_for_selector('#komp-fejl .komp-fejl-raekke'); await pg.click('#komp-vis-dim'); await pg.wait_for_timeout(100)
+        r = await pg.evaluate("document.documentElement.scrollWidth")
+        tjek('kompetence: mobil 375 px uden vandret rulning', r <= 375, r)
+        await ctx.close()
+
+
         # 7. Mobil: ingen vandret rulning, dialog passer
         ctx, pg = await ny_side(b, 375, 812, is_mobile=True, has_touch=True)
         await pg.evaluate(f"{A}.gemKort(nytKort({{front:'Et langt spørgsmål om korrektionsfaktorer for kabler i jord og luft', bag:'$$I_z = I_t \\\\cdot k_{{temp}} \\\\cdot k_{{samlet}}$$'}}))")
