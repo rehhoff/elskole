@@ -1,0 +1,451 @@
+{
+ "navn": "Love og myndigheder (startkort)",
+ "kort": [
+  {
+   "id": "love-001",
+   "type": "fakta",
+   "emne": "love",
+   "front": "Hvilken myndighed fører tilsyn med elsikkerhed og autoriserede elinstallatører?",
+   "bag": "**Sikkerhedsstyrelsen.** Den fører tilsyn med autoriserede virksomheder, med elsikkerheden i installationer og anlæg og med markedet for elektrisk udstyr.\n**Arbejdstilsynet** fører tilsyn med arbejdsmiljøet, fx hvordan arbejdet udføres sikkert for de ansatte.",
+   "tags": [
+    "myndighed",
+    "Sikkerhedsstyrelsen"
+   ],
+   "kilde": {
+    "dok": "Elsikkerhedsloven (lov om elektriske anlæg, elektriske installationer og elektrisk udstyr)",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "love-002",
+   "type": "fakta",
+   "emne": "love",
+   "front": "Hvad er forskellen på elsikkerhedsloven og autorisationsloven?",
+   "bag": "**Elsikkerhedsloven** handler om *hvad*: at anlæg, installationer og udstyr er sikre.\n**Autorisationsloven** handler om *hvem*: hvilke virksomheder der må udføre arbejdet, og hvilke krav de skal opfylde (fagligt ansvarlig, kvalitetsledelsessystem).",
+   "tags": [
+    "lov",
+    "autorisation"
+   ],
+   "kilde": {
+    "dok": "Elsikkerhedsloven (lov om elektriske anlæg, elektriske installationer og elektrisk udstyr); Autorisationsloven (lov om autorisation af virksomheder på el-, vvs- og kloakinstallationsområdet)",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "love-003",
+   "type": "regel",
+   "emne": "love",
+   "front": "Hvem får autorisationen som elinstallatør: personen eller virksomheden?",
+   "bag": "**Virksomheden.** Autorisationen gives til en virksomhed, som skal have en **fagligt ansvarlig** person, der er godkendt af Sikkerhedsstyrelsen (uddannelse og prøve).\nHolder den fagligt ansvarlige op, skal virksomheden have en ny godkendt fagligt ansvarlig for at fortsætte med autorisationskrævende arbejde.",
+   "tags": [
+    "autorisation",
+    "fagligt-ansvarlig"
+   ],
+   "kilde": {
+    "dok": "Autorisationsloven (lov om autorisation af virksomheder på el-, vvs- og kloakinstallationsområdet)",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "love-004",
+   "type": "regel",
+   "emne": "love",
+   "front": "Hvad har den fagligt ansvarlige ansvaret for?",
+   "bag": "At virksomhedens arbejde udføres efter reglerne, og at **kvalitetsledelsessystemet** bliver brugt i praksis: instruktion af medarbejderne, kontrol af arbejdet og dokumentation.\nDen fagligt ansvarlige skal have en reel tilknytning til virksomheden og kunne føre tilsyn med arbejdet.",
+   "tags": [
+    "autorisation",
+    "fagligt-ansvarlig",
+    "kvalitetsledelse"
+   ],
+   "kilde": {
+    "dok": "Autorisationsloven (lov om autorisation af virksomheder på el-, vvs- og kloakinstallationsområdet)",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "love-005",
+   "type": "regel",
+   "emne": "love",
+   "front": "Hvad er formålet med et kvalitetsledelsessystem (KLS) i en autoriseret elvirksomhed?",
+   "bag": "KLS beskriver, hvordan virksomheden sikrer, at arbejdet **planlægges, udføres, kontrolleres og dokumenteres** efter reglerne. Typisk indhold:\n- ansvarsfordeling og den fagligt ansvarliges rolle\n- instruktion og uddannelse af medarbejdere\n- eftersyn og afprøvning med dokumentation\n- kontrol og kalibrering af måleinstrumenter\n- håndtering af fejl, afvigelser og klager\nKontrollér de præcise krav hos Sikkerhedsstyrelsen.",
+   "tags": [
+    "kvalitetsledelse",
+    "autorisation",
+    "usikker"
+   ],
+   "kilde": {
+    "dok": "Autorisationsloven (lov om autorisation af virksomheder på el-, vvs- og kloakinstallationsområdet)",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "love-006",
+   "type": "regel",
+   "emne": "love",
+   "front": "Hvilket regelsæt gælder, når du udfører en ny elinstallation?",
+   "bag": "**Elinstallationsbekendtgørelsen**, som henviser til standarderne i **DS/HD 60364-serien** (inkl. del 7 om særlige installationer).\nHvilke udgaver der gælder, og om der er overgangsperioder, oplyser Sikkerhedsstyrelsen. Tjek altid den gældende bekendtgørelse på retsinformation.dk.",
+   "tags": [
+    "bekendtgørelse",
+    "standarder"
+   ],
+   "kilde": {
+    "dok": "Elinstallationsbekendtgørelsen",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "love-007",
+   "type": "regel",
+   "emne": "love",
+   "front": "Hvilke regler gælder for en ældre installation, som du skal ændre?",
+   "bag": "Den eksisterende del skal som udgangspunkt overholde de regler, der gjaldt, **da den blev udført** (fx Stærkstrømsbekendtgørelsen afsnit 6), så længe den ikke er farlig.\nDet, du **tilføjer eller ændrer**, skal følge de regler, der gælder **nu**. Ændringen må ikke gøre den eksisterende installation farlig, fx ved at overbelaste en gammel gruppe.",
+   "tags": [
+    "eksisterende-installation",
+    "bekendtgørelse"
+   ],
+   "kilde": {
+    "dok": "Elinstallationsbekendtgørelsen",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "love-008",
+   "type": "fakta",
+   "emne": "love",
+   "front": "Hvad var Stærkstrømsbekendtgørelsen afsnit 6?",
+   "bag": "Det tidligere danske regelsæt for elinstallationer. Det er afløst af elinstallationsbekendtgørelsen med henvisning til DS/HD 60364.\nMange eksisterende installationer er udført efter afsnit 6, så du møder stadig dets løsninger og begreber, fx **HPFI-afbrydere** og installationer uden fejlstrømsafbryder.",
+   "tags": [
+    "eksisterende-installation",
+    "historik"
+   ],
+   "kilde": {
+    "dok": "Stærkstrømsbekendtgørelsen afsnit 6",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "love-009",
+   "type": "regel",
+   "emne": "love",
+   "front": "Hvilket elarbejde må en ikke-autoriseret person (lægmand) udføre?",
+   "bag": "Kun enkle, afgrænsede arbejder, som reglerne udtrykkeligt tillader, fx udskiftning af stikkontakter og afbrydere i en eksisterende installation og tilslutning af lamper.\nArbejde i tavlen, nye grupper og nye faste installationer kræver en autoriseret virksomhed. Se Sikkerhedsstyrelsens aktuelle liste, før du rådgiver en kunde.",
+   "tags": [
+    "autorisation",
+    "lægmand",
+    "usikker"
+   ],
+   "kilde": {
+    "dok": "Autorisationsloven (lov om autorisation af virksomheder på el-, vvs- og kloakinstallationsområdet)",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "love-010",
+   "type": "regel",
+   "emne": "love",
+   "front": "Hvad kan konsekvensen være, hvis autorisationskrævende arbejde udføres uden autorisation?",
+   "bag": "Det er strafbart og kan straffes med **bøde**. Ved en skade kan det også give problemer med forsikringsdækningen, og den, der har udført arbejdet, kan blive erstatningsansvarlig.",
+   "tags": [
+    "autorisation",
+    "ansvar",
+    "usikker"
+   ],
+   "kilde": {
+    "dok": "Autorisationsloven (lov om autorisation af virksomheder på el-, vvs- og kloakinstallationsområdet)",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "love-011",
+   "type": "fakta",
+   "emne": "love",
+   "front": "Hvad betyder CE-mærkning på elektrisk udstyr?",
+   "bag": "Det er **producentens (eller importørens) egen erklæring** om, at produktet opfylder de EU-regler, der gælder for det. Det er **ikke** et godkendelsesmærke fra en myndighed.\nFor elektrisk udstyr er det typisk lavspændingsdirektivet, EMC-direktivet og RoHS-direktivet.",
+   "tags": [
+    "CE",
+    "udstyr",
+    "EU"
+   ],
+   "kilde": {
+    "dok": "Lavspændingsdirektivet 2014/35/EU",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "love-012",
+   "type": "fakta",
+   "emne": "love",
+   "front": "Hvilket spændingsområde dækker lavspændingsdirektivet?",
+   "bag": "Elektrisk udstyr til **50–1000 V AC** og **75–1500 V DC**.\nUdstyr under disse grænser er ikke omfattet af lavspændingsdirektivet, men skal stadig være sikkert efter de generelle regler om produktsikkerhed.",
+   "tags": [
+    "CE",
+    "udstyr",
+    "EU"
+   ],
+   "kilde": {
+    "dok": "Lavspændingsdirektivet 2014/35/EU",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "love-013",
+   "type": "regel",
+   "emne": "love",
+   "front": "Hvad gør du, hvis en kunde vil have dig til at installere udstyr, der ser ud til ikke at overholde reglerne (fx uden CE-mærke)?",
+   "bag": "Lad være med at installere det. Som installatør er du ansvarlig for, at det materiel, du installerer, er egnet og sikkert til formålet.\nSikkerhedsstyrelsen fører markedsovervågning og kan kræve farligt udstyr trukket tilbage. Henvis kunden til et lovligt produkt.",
+   "tags": [
+    "CE",
+    "udstyr",
+    "ansvar"
+   ],
+   "kilde": {
+    "dok": "Elsikkerhedsloven (lov om elektriske anlæg, elektriske installationer og elektrisk udstyr)",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "love-014",
+   "type": "regel",
+   "emne": "love",
+   "front": "Hvem har ansvaret for, at en elinstallation holdes i forsvarlig stand efter afleveringen?",
+   "bag": "**Ejeren** (eller brugeren) af installationen. Den virksomhed, der udførte arbejdet, har ansvaret for, at *arbejdet* blev udført korrekt.\nFinder du en farlig fejl, skal du gøre ejeren opmærksom på den, helst skriftligt.",
+   "tags": [
+    "ansvar",
+    "ejer"
+   ],
+   "kilde": {
+    "dok": "Elsikkerhedsloven (lov om elektriske anlæg, elektriske installationer og elektrisk udstyr)",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "love-015",
+   "type": "regel",
+   "emne": "love",
+   "front": "Du finder en farlig fejl i en kundes installation. Hvad gør du?",
+   "bag": "1. Sørg for, at ingen kommer til skade: afbryd den del af installationen, hvis faren er akut.\n2. Forklar ejeren fejlen og faren, og giv besked **skriftligt**.\n3. Tilbyd udbedring. Du må ikke uden aftale lave arbejde, kunden ikke har bestilt, men du må heller ikke lade en akut fare stå.\n4. Dokumentér, hvad du har fundet og gjort.",
+   "tags": [
+    "ansvar",
+    "ejer",
+    "dokumentation"
+   ],
+   "kilde": {
+    "dok": "",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "love-016",
+   "type": "regel",
+   "emne": "love",
+   "front": "Hvem skal have besked, når der sker en elulykke?",
+   "bag": "Elulykker med personskade og alvorlige elhændelser (fx brand forårsaget af el) skal anmeldes til **Sikkerhedsstyrelsen**.\nEr det en arbejdsulykke, skal den også anmeldes til **Arbejdstilsynet** via EASY. Søg altid læge efter stød.",
+   "tags": [
+    "ulykke",
+    "anmeldelse",
+    "Sikkerhedsstyrelsen",
+    "usikker"
+   ],
+   "kilde": {
+    "dok": "Elsikkerhedsloven (lov om elektriske anlæg, elektriske installationer og elektrisk udstyr)",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "love-017",
+   "type": "fakta",
+   "emne": "love",
+   "front": "Hvad er forskellen på netselskabet, elhandelsselskabet og Energinet?",
+   "bag": "**Netselskabet** ejer og driver det lokale distributionsnet og elmåleren og modtager installatørens anmeldelser.\n**Elhandelsselskabet** sælger strømmen til kunden. Kunden kan frit vælge det.\n**Energinet** driver transmissionsnettet og har systemansvaret for hele elsystemet.",
+   "tags": [
+    "netselskab",
+    "elmarked"
+   ],
+   "kilde": {
+    "dok": "",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "love-018",
+   "type": "regel",
+   "emne": "love",
+   "front": "Hvad skal en elinstallatør melde til netselskabet?",
+   "bag": "Bl.a. nye installationer, ændringer af tilslutningen (fx større hovedsikringer) og **produktionsanlæg** som solceller og batterier. Det sker typisk gennem **Installatørportalen**.\nHovedsikringerne er plomberet af netselskabet og må ikke ændres uden aftale. Hvornår fx en elbillader skal meldes, afhænger af netselskabets regler.",
+   "tags": [
+    "netselskab",
+    "anmeldelse",
+    "Installatørportalen",
+    "usikker"
+   ],
+   "kilde": {
+    "dok": "Netselskabets tilslutningsbestemmelser",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "love-019",
+   "type": "regel",
+   "emne": "love",
+   "front": "Hvad skal være på plads, før et solcelleanlæg eller batteri må kobles til nettet?",
+   "bag": "Anlægget skal **anmeldes til netselskabet** og godkendes, før det sættes i drift. Inverteren skal opfylde de tekniske krav til nettilslutning (Energinets krav), og netselskabet kræver dokumentation for det.\nAnlægget skal også opfylde DS/HD 60364-7-712.",
+   "tags": [
+    "solceller",
+    "netselskab",
+    "anmeldelse",
+    "usikker"
+   ],
+   "kilde": {
+    "dok": "Netselskabets tilslutningsbestemmelser",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "love-020",
+   "type": "regel",
+   "emne": "love",
+   "front": "Hvad skal du gøre, før du graver et kabel ned?",
+   "bag": "Lav en **graveforespørgsel i Ledningsejerregistret (LER)**, så du får oplyst, hvilke ledninger der ligger i jorden, og hvem der ejer dem. Grav forsigtigt i nærheden af de oplyste ledninger.\nDet gælder også ved private grunde, når arbejdet udføres erhvervsmæssigt.",
+   "tags": [
+    "LER",
+    "gravearbejde",
+    "usikker"
+   ],
+   "kilde": {
+    "dok": "Ledningsejerloven (lov om registrering af ledningsejere)",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "love-021",
+   "type": "fakta",
+   "emne": "love",
+   "front": "Hvad er en elinstallationsrapport ved hushandel?",
+   "bag": "En rapport om elinstallationens tilstand, som sælgeren kan få lavet af en **autoriseret elinstallatør** under huseftersynsordningen.\nSammen med tilstandsrapport og tilbud om ejerskifteforsikring kan den fritage sælger for ansvar for skjulte fejl. Rapporten er en beskrivelse, ikke en garanti.",
+   "tags": [
+    "huseftersyn",
+    "dokumentation"
+   ],
+   "kilde": {
+    "dok": "Lov om forbrugerbeskyttelse ved erhvervelse af fast ejendom",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "love-022",
+   "type": "regel",
+   "emne": "love",
+   "front": "Hvilke krav fra bygningsreglementet (BR18) møder elektrikeren typisk?",
+   "bag": "- **Brand:** kabelgennemføringer i brandadskillende vægge og dæk skal lukkes, så bygningsdelen bevarer sin brandmodstand.\n- **Røgalarmer** i nye boliger.\n- Krav til fx installationer i flugtveje og nødbelysning i visse bygninger.\nBR18 gælder ved siden af elreglerne, ikke i stedet for dem.",
+   "tags": [
+    "BR18",
+    "brand",
+    "byggeri"
+   ],
+   "kilde": {
+    "dok": "Bygningsreglementet (BR18)",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "love-023",
+   "type": "fakta",
+   "emne": "love",
+   "front": "Hvad er forskellen på en lov, en bekendtgørelse og en standard?",
+   "bag": "**Lov:** vedtaget af Folketinget.\n**Bekendtgørelse:** detaljerede regler, udstedt af en minister eller myndighed med hjemmel i en lov.\n**Standard:** teknisk dokument fra fx DS, CENELEC eller IEC. Den bliver bindende, når en bekendtgørelse henviser til den; ellers er den god praksis.\nLove og bekendtgørelser er gratis på retsinformation.dk. Standarder købes hos Dansk Standard.",
+   "tags": [
+    "lov",
+    "bekendtgørelse",
+    "standarder"
+   ],
+   "kilde": {
+    "dok": "",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "love-024",
+   "type": "regel",
+   "emne": "love",
+   "front": "Hvilken dokumentation bør kunden have, når du afleverer en ny eller ændret installation?",
+   "bag": "- Resultatet af **eftersyn og afprøvning** (verifikation efter DS/HD 60364-6)\n- Opdateret **tavleoversigt**: hvilke grupper der forsyner hvad, og hvilke der er beskyttet af fejlstrømsafbryder\n- Brugsanvisninger og vejledning til fx afprøvning af fejlstrømsafbryderen\nKvalitetsledelsessystemet fastlægger virksomhedens egne krav.",
+   "tags": [
+    "dokumentation",
+    "aflevering",
+    "kvalitetsledelse",
+    "usikker"
+   ],
+   "kilde": {
+    "dok": "DS/HD 60364-6",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "love-025",
+   "type": "regel",
+   "emne": "love",
+   "front": "Hvad kan Sikkerhedsstyrelsen gøre ved en autoriseret virksomhed, der laver fejl?",
+   "bag": "Sikkerhedsstyrelsen kontrollerer bl.a. udførte installationer og virksomhedens kvalitetsledelsessystem ved stikprøver. Ved fejl kan den give **påbud** om udbedring, give **bøde** eller i alvorlige tilfælde **tilbagekalde autorisationen**.",
+   "tags": [
+    "Sikkerhedsstyrelsen",
+    "tilsyn",
+    "autorisation",
+    "usikker"
+   ],
+   "kilde": {
+    "dok": "Autorisationsloven (lov om autorisation af virksomheder på el-, vvs- og kloakinstallationsområdet)",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  }
+ ]
+}

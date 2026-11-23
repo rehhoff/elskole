@@ -24,6 +24,7 @@ Elskolen er en dansk webapp, der skal gøre ejeren til en meget dygtig elektrike
 | 5 | Fejlfinding (7 fejltyper, 10 målinger, 5 sikkerhedsregler) | Udgivet i 0.2.0 |
 | 3 | Kompetencetræ og log over typiske fejl (fanen Kompetence, tast 7) | Udgivet i 0.3.0 |
 | 6 | Kobling til El-oversigtsappen (kun læsning), prøvesimulering (fanen Prøve, tast 8) | Udgivet i 0.3.0. Standardniveau `aut` fra 0.4.1 |
+| – | Startkort: love (25), erhverv og industri (25), arbejdsmiljø (25) | På grenen `startkort-love-erhv-arb`, ikke merget |
 | 7 | AI-retning af forklaringer | Kræver ejerens beslutning om API-nøgle eller backend |
 
 Erfaring fra merge: `css/tailwind.css` løses ved at tage én side og bygge igen med `python tools/byg_css.py`. Når to faser tilføjer blokke samme sted i `index.html`, så tjek, at hver blok har sin egen `</section></template>`. Ved merge af fase 3 og 6 manglede den, og appen startede ikke.
@@ -43,7 +44,9 @@ Erfaring fra merge: `css/tailwind.css` løses ved at tage én side og bygge igen
    - Netselskabet: hvornår ladere og små solcelleanlæg skal meldes, plombering af hovedsikringer
    - Autorisationsloven: hvad kvalitetsledelsessystemet kræver af dokumentation til kunden
    - Selektivitet: henvist til DS/HD 60364-5-53 uden afsnit
-2. **Fase 7:** API-nøgle i browseren eller lille backend? Ikke besluttet.
+2. **Faglig kontrol af de nye startkort.** Kort med mærket `usikker` (love, erhv, arb) skal tjekkes mod kilden: især lægmandsarbejde, anmeldelse af elulykker, LER, solceller og netselskab, overslag (10–15 %), momsgrænsen, faldsikring fra 2 m, asbest før 1986, PSS og jording i lavspænding.
+3. **Merge af grenen `startkort-love-erhv-arb`** til `main` som 0.4.2: afventer ejerens ja.
+4. **Fase 7:** API-nøgle i browseren eller lille backend? Ikke besluttet.
 
 ## Beslutninger og ønsker fra ejeren
 
@@ -65,4 +68,5 @@ Erfaring fra merge: `css/tailwind.css` løses ved at tage én side og bygge igen
 ## Historik i korte træk
 
 - 2026-11-22: Plan lagt. Fase 0–1 bygget og udgivet som 0.1.0. El-oversigtsappen 10.26.1 udgivet med rettelse af service workeren. Forberedelse til parallelle faser committet. Fase 2, 4 og 5 bygget i tre sessioner og udgivet som 0.2.0.
+- 2026-11-23: 75 startkort til love, erhverv og arbejdsmiljø lavet på grenen `startkort-love-erhv-arb`. Startpakkerne caches nu af service workeren.
 - 2026-11-23: Fase 3 (Sonnet) og fase 6 (planlagt af Opus, kodet af Sonnet) udgivet som 0.3.0. Skema 3 med resultatarten `proeve` udgivet som 0.4.0 (kodet af Sonnet, gennemgået af Opus). Ejeren valgte niveauet autoriseret elinstallatør, udgivet som 0.4.1.

@@ -1,0 +1,447 @@
+{
+ "navn": "Arbejdsmiljø (startkort)",
+ "kort": [
+  {
+   "id": "arb-001",
+   "type": "regel",
+   "emne": "arb",
+   "front": "Hvad er de fem sikkerhedsregler for spændingsløst arbejde, i rækkefølge?",
+   "bag": "1. **Frakobl** fuldstændigt (adskil alle forsyninger).\n2. **Sikr mod genindkobling** (lås og skilt).\n3. **Kontrollér**, at anlægget er spændingsløst.\n4. **Jord og kortslut**, hvor det er nødvendigt.\n5. **Afskærm** nærliggende dele, der er spændingsførende.\nReglerne ophæves i omvendt rækkefølge.",
+   "tags": [
+    "5-regler",
+    "spændingsløst",
+    "sikkerhed"
+   ],
+   "kilde": {
+    "dok": "DS/EN 50110-1 (drift af elektriske anlæg)",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "arb-002",
+   "type": "regel",
+   "emne": "arb",
+   "front": "Hvordan kontrollerer du korrekt, at en installation er spændingsløs?",
+   "bag": "Brug en **topolet spændingstester** (DS/EN 61243-3), ikke en polsøger.\n1. Test testeren på en kendt spændingskilde.\n2. Mål mellem alle faser og mellem faser, nul og jord.\n3. Test testeren igen på den kendte kilde.\nSå ved du, at testeren ikke er gået i stykker undervejs.",
+   "tags": [
+    "spændingsløst",
+    "måling",
+    "sikkerhed"
+   ],
+   "kilde": {
+    "dok": "DS/EN 50110-1 (drift af elektriske anlæg)",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "arb-003",
+   "type": "regel",
+   "emne": "arb",
+   "front": "Hvordan sikrer du mod genindkobling?",
+   "bag": "- Afbryderen låses i **fra** med din **egen hængelås**, og du har selv nøglen.\n- **Skilt**: \"Arbejde i gang. Må ikke indkobles\", med navn og dato.\n- Sikringer tages ud og tages med.\nEr I flere, sætter hver person sin egen lås på (låsebøjle).",
+   "tags": [
+    "spændingsløst",
+    "lås",
+    "sikkerhed"
+   ],
+   "kilde": {
+    "dok": "DS/EN 50110-1 (drift af elektriske anlæg)",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "arb-004",
+   "type": "regel",
+   "emne": "arb",
+   "front": "Hvornår skal et anlæg jordes og kortsluttes, inden der arbejdes?",
+   "bag": "Når der er risiko for, at det kan blive spændingssat, fx højspænding, luftledninger, lange kabler med induceret spænding eller anlæg med flere forsyninger.\nI lavspændingsinstallationer kan det udelades, hvis der ikke er en sådan risiko. Vurder det for hver opgave.",
+   "tags": [
+    "5-regler",
+    "jording",
+    "usikker"
+   ],
+   "kilde": {
+    "dok": "DS/EN 50110-1 (drift af elektriske anlæg)",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "arb-005",
+   "type": "fakta",
+   "emne": "arb",
+   "front": "Hvad er forskellen på den anlægsansvarlige og den arbejdsansvarlige?",
+   "bag": "**Anlægsansvarlig:** har ansvaret for anlæggets sikre drift og giver tilladelse til at arbejde på det.\n**Arbejdsansvarlig:** har ansvaret for selve arbejdet og sikkerheden på arbejdsstedet.\nDet kan være samme person. Ansvaret skal være aftalt **før** arbejdet begynder.",
+   "tags": [
+    "roller",
+    "ansvar",
+    "drift"
+   ],
+   "kilde": {
+    "dok": "DS/EN 50110-1 (drift af elektriske anlæg)",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "arb-006",
+   "type": "fakta",
+   "emne": "arb",
+   "front": "Hvad er forskellen på en sagkyndig og en instrueret person?",
+   "bag": "**Sagkyndig:** har den faglige uddannelse og erfaring, der skal til for at undgå farerne ved elektricitet.\n**Instrueret:** er instrueret af en sagkyndig i den konkrete opgave og dens farer.\nPersoner uden nogen af delene (lægmænd) må kun arbejde under tilsyn.",
+   "tags": [
+    "roller",
+    "kompetence"
+   ],
+   "kilde": {
+    "dok": "DS/EN 50110-1 (drift af elektriske anlæg)",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "arb-007",
+   "type": "regel",
+   "emne": "arb",
+   "front": "Hvilke tre arbejdsmetoder findes ved elarbejde, og hvilken er udgangspunktet?",
+   "bag": "**Spændingsløst arbejde** (udgangspunktet), **arbejde nær spændingsførende dele** og **arbejde under spænding (AUS)**.\nAUS kræver særlig uddannelse, egnet værktøj og udstyr og en fastlagt fremgangsmåde. Det vælges kun, når spændingsløst arbejde ikke er muligt eller forsvarligt.",
+   "tags": [
+    "AUS",
+    "arbejdsmetode",
+    "sikkerhed"
+   ],
+   "kilde": {
+    "dok": "DS/EN 50110-1 (drift af elektriske anlæg)",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "arb-008",
+   "type": "regel",
+   "emne": "arb",
+   "front": "Hvad er farerne ved en lysbue, og hvordan beskytter du dig?",
+   "bag": "En kortslutning kan give en lysbue med meget høj temperatur, trykbølge, smeltet metal og kraftigt UV-lys: alvorlige forbrændinger og øjenskader.\nForebyg med spændingsløst arbejde. Ellers: **lysbuetestet ansigtsskærm**, **flammehæmmende tøj** (ikke syntetisk tøj, der smelter) og handsker. Faren er størst tæt på transformeren og hovedtavlen.",
+   "tags": [
+    "lysbue",
+    "værnemidler"
+   ],
+   "kilde": {
+    "dok": "",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "arb-009",
+   "type": "fakta",
+   "emne": "arb",
+   "front": "Hvordan genkender du værktøj, der er godkendt til arbejde nær spænding?",
+   "bag": "Det er mærket med **dobbelt trekant** og **1000 V** (DS/EN 60900).\nKontrollér isoleringen før brug. Værktøj med revner eller skader i isoleringen skal kasseres.",
+   "tags": [
+    "værktøj",
+    "værnemidler"
+   ],
+   "kilde": {
+    "dok": "DS/EN 60900",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "arb-010",
+   "type": "fakta",
+   "emne": "arb",
+   "front": "Hvad afgør, hvor farligt et elektrisk stød er?",
+   "bag": "**Strømstyrken** gennem kroppen, **strømvejen** (gennem brystet er farligst), **varigheden** og frekvensen.\nAllerede ved ca. 10 mA kan man have svært ved at give slip, og ved højere strøm er der risiko for hjerteflimmer. Derfor bruges fejlstrømsafbryder på højst 30 mA som supplerende beskyttelse.",
+   "tags": [
+    "stød",
+    "strømmens-virkning",
+    "RCD",
+    "usikker"
+   ],
+   "kilde": {
+    "dok": "",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "arb-011",
+   "type": "regel",
+   "emne": "arb",
+   "front": "Hvad gør du ved en elulykke?",
+   "bag": "1. **Afbryd strømmen**. Kan du ikke det, så skub personen fri med en isolerende genstand. Rør ikke personen direkte.\n2. Ring **112**.\n3. Giv **hjerte-lunge-redning** og brug hjertestarter, hvis personen ikke trækker vejret normalt.\n4. Alle, der har fået stød, bør undersøges af en læge, også selv om de har det godt (risiko for hjerterytmeforstyrrelser og indre forbrændinger).",
+   "tags": [
+    "ulykke",
+    "førstehjælp"
+   ],
+   "kilde": {
+    "dok": "",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "arb-012",
+   "type": "regel",
+   "emne": "arb",
+   "front": "Hvilke hovedpligter har arbejdsgiveren og de ansatte efter arbejdsmiljøloven?",
+   "bag": "**Arbejdsgiveren:** skal sørge for, at arbejdet er sikkert og sundt, give instruktion og føre effektivt tilsyn.\n**De ansatte:** skal medvirke til et sikkert arbejdsmiljø, følge instruktionerne, bruge værnemidler og sige til, når de ser fejl og farer.\n**Arbejdstilsynet** fører tilsyn med, at reglerne overholdes.",
+   "tags": [
+    "arbejdsmiljøloven",
+    "ansvar"
+   ],
+   "kilde": {
+    "dok": "Arbejdsmiljøloven",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "arb-013",
+   "type": "regel",
+   "emne": "arb",
+   "front": "Hvornår skal en virksomhed have en arbejdsmiljøorganisation (AMO)?",
+   "bag": "Når den har **10 eller flere ansatte**. Under 10 ansatte foregår samarbejdet om arbejdsmiljøet ved direkte kontakt mellem arbejdsgiver og ansatte.\nAMO består af arbejdsgiver eller arbejdsleder og en arbejdsmiljørepræsentant, der vælges af de ansatte. Medlemmerne skal have den obligatoriske arbejdsmiljøuddannelse.",
+   "tags": [
+    "AMO",
+    "organisation"
+   ],
+   "kilde": {
+    "dok": "Arbejdsmiljøloven",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "arb-014",
+   "type": "regel",
+   "emne": "arb",
+   "front": "Hvad er en APV, og hvor ofte skal den laves?",
+   "bag": "En **arbejdspladsvurdering**: skriftlig vurdering af virksomhedens arbejdsmiljø med en handlingsplan. Alle virksomheder med ansatte skal have den.\nDen skal revideres ved ændringer i arbejdet, der har betydning for arbejdsmiljøet, og **mindst hvert 3. år**.\nTrin: kortlæg, vurder, lav handlingsplan, følg op.",
+   "tags": [
+    "APV",
+    "arbejdsmiljøloven"
+   ],
+   "kilde": {
+    "dok": "Arbejdsmiljøloven",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "arb-015",
+   "type": "regel",
+   "emne": "arb",
+   "front": "Hvornår og hvordan skal en arbejdsulykke anmeldes?",
+   "bag": "Når ulykken giver **fravær i mindst én dag ud over tilskadekomstdagen**. Anmeld i **EASY** senest **9 dage** efter første fraværsdag.\nNærved-ulykker skal ikke anmeldes, men de bør registreres og bruges til at forebygge.",
+   "tags": [
+    "ulykke",
+    "anmeldelse",
+    "EASY"
+   ],
+   "kilde": {
+    "dok": "Bekendtgørelse om anmeldelse af arbejdsulykker",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "arb-016",
+   "type": "regel",
+   "emne": "arb",
+   "front": "Hvilke støjgrænser gælder på arbejdspladsen?",
+   "bag": "**80 dB(A):** høreværn skal stilles til rådighed.\n**85 dB(A):** høreværn skal bruges, og støjen skal nedbringes.\n**87 dB(A):** grænseværdi, som ikke må overskrides, målt med høreværnets dæmpning.\nVærdierne er gennemsnit over en arbejdsdag på 8 timer.",
+   "tags": [
+    "støj",
+    "høreværn"
+   ],
+   "kilde": {
+    "dok": "Bekendtgørelse om beskyttelse mod udsættelse for støj i forbindelse med arbejdet",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "arb-017",
+   "type": "regel",
+   "emne": "arb",
+   "front": "Hvornår må du bruge en stige, og hvornår skal der være faldsikring?",
+   "bag": "En stige må kun bruges til **kortvarigt, let arbejde**, hvor man kan stå sikkert. Ellers bruges stillads, rullestillads eller lift.\nVed risiko for fald fra **2 m** eller mere skal der som udgangspunkt være rækværk eller anden faldsikring.",
+   "tags": [
+    "højde",
+    "stige",
+    "fald",
+    "usikker"
+   ],
+   "kilde": {
+    "dok": "Arbejdsmiljøloven",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "arb-018",
+   "type": "regel",
+   "emne": "arb",
+   "front": "Hvad gør du, hvis du skal bore eller skære i materiale, der kan indeholde asbest?",
+   "bag": "Stop, og få materialet undersøgt. Asbest findes især i bygninger fra før **1986**, fx i eternitplader, gamle tavleplader, isolering og fliseklæb.\nArbejde med asbest kræver særlig uddannelse, værnemidler og anmeldelse til Arbejdstilsynet. Fibrene kan give lungekræft og lungehindekræft mange år senere.",
+   "tags": [
+    "asbest",
+    "støv",
+    "usikker"
+   ],
+   "kilde": {
+    "dok": "Asbestbekendtgørelsen",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "arb-019",
+   "type": "regel",
+   "emne": "arb",
+   "front": "Hvordan beskytter du dig mod kvartsstøv, når du borer og fræser i beton og tegl?",
+   "bag": "Brug værktøj med **udsugning** eller vand, og **åndedrætsværn** (P2 eller P3), når støvet ikke kan fjernes ved kilden. Fej ikke tørt; støvsug med egnet støvsuger.\nKvartsstøv kan give **silikose** og lungekræft.",
+   "tags": [
+    "støv",
+    "kvarts",
+    "værnemidler"
+   ],
+   "kilde": {
+    "dok": "",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "arb-020",
+   "type": "regel",
+   "emne": "arb",
+   "front": "Hvad skal være på plads, før du bruger epoxy eller PUR-skum (isocyanater)?",
+   "bag": "Du skal have gennemført den **særlige uddannelse** i arbejde med epoxy og isocyanater. Arbejdsgiveren skal have en **arbejdspladsbrugsanvisning** baseret på leverandørens sikkerhedsdatablad.\nBrug de foreskrevne handsker og evt. åndedrætsværn. Stofferne kan give allergi, der varer resten af livet.",
+   "tags": [
+    "kemi",
+    "epoxy",
+    "isocyanat"
+   ],
+   "kilde": {
+    "dok": "",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "arb-021",
+   "type": "regel",
+   "emne": "arb",
+   "front": "Hvilke regler gælder for hviletid?",
+   "bag": "Mindst **11 timers sammenhængende hvile** inden for hvert døgn og **ét fridøgn** inden for hver periode på 7 døgn.\nOverenskomster kan i visse tilfælde give afvigelser, fx ved vagtarbejde.",
+   "tags": [
+    "hviletid",
+    "arbejdstid"
+   ],
+   "kilde": {
+    "dok": "Bekendtgørelse om hvileperiode og fridøgn",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "arb-022",
+   "type": "regel",
+   "emne": "arb",
+   "front": "Hvad er en plan for sikkerhed og sundhed (PSS) på en byggeplads, og hvem laver den?",
+   "bag": "**Bygherren** skal sørge for en PSS, når flere arbejdsgivere arbejder på pladsen samtidig og der er mere end 10 personer beskæftiget, eller når der udføres særligt farligt arbejde. Bygherren udpeger også en **koordinator**.\nSom elektriker skal du kende planen og overholde fælles sikkerhedsforanstaltninger.",
+   "tags": [
+    "byggeplads",
+    "PSS",
+    "usikker"
+   ],
+   "kilde": {
+    "dok": "Bygherrebekendtgørelsen",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "arb-023",
+   "type": "regel",
+   "emne": "arb",
+   "front": "Hvem betaler og sørger for personlige værnemidler?",
+   "bag": "**Arbejdsgiveren** skal stille de nødvendige værnemidler gratis til rådighed og sørge for, at de passer og vedligeholdes. De **ansatte** skal bruge dem.\nVærnemidler er sidste udvej: fjern eller begræns faren ved kilden først.",
+   "tags": [
+    "værnemidler",
+    "arbejdsmiljøloven"
+   ],
+   "kilde": {
+    "dok": "Arbejdsmiljøloven",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "arb-024",
+   "type": "regel",
+   "emne": "arb",
+   "front": "Hvad gælder for lærlinge og nyansatte ved arbejde nær spænding?",
+   "bag": "De skal have **instruktion** i opgaven og dens farer og være under **tilsyn** af en sagkyndig, indtil de har erfaringen til at arbejde selvstændigt.\nDe må ikke sendes alene ud til arbejde nær eller under spænding.",
+   "tags": [
+    "lærling",
+    "instruktion",
+    "kompetence"
+   ],
+   "kilde": {
+    "dok": "DS/EN 50110-1 (drift af elektriske anlæg)",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "arb-025",
+   "type": "regel",
+   "emne": "arb",
+   "front": "Hvad er de særlige farer ved arbejde på et solcelleanlæg?",
+   "bag": "- Panelerne giver **spænding, så snart der er lys**. DC-siden kan ikke gøres spændingsløs ved at slukke for inverteren.\n- En **DC-lysbue** slukker ikke af sig selv som en AC-lysbue.\n- Arbejde på taget: risiko for fald.\nAfbryd med DC-adskilleren, tildæk evt. panelerne, og mål.",
+   "tags": [
+    "solceller",
+    "DC",
+    "lysbue"
+   ],
+   "kilde": {
+    "dok": "",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  }
+ ]
+}

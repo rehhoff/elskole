@@ -169,16 +169,24 @@ async def main():
         r = await pg.evaluate(f"{A}.kort.filter(k=>k.oprindelse==='anki').map(k=>k.front)")
         tjek('dubletter på forsiden springes over ved import uden guid', r == ['Forside', 'Spørgsmål A', 'x;y', 'Ny forside'] and tael.startswith('1 nye kort, 1 dubletter'), (r, tael))
 
-        # 4. Startkort (hvis pakken findes)
-        if (ROD / 'indhold/start-matematik.json').exists():
-            n = len(json.loads((ROD / 'indhold/start-matematik.json').read_text(encoding='utf-8'))['kort'])
+        # 4. Startkort: alle pakker i STARTPAKKER
+        pakker = re.findall(r"fil:'(indhold/start-[^']+\.json)'", (ROD / 'js/kort.js').read_text(encoding='utf-8'))
+        tjek('startpakkerne findes og står i SKAL i sw.js', pakker and all((ROD / f).exists() and Path(f).stem.replace('start-', '') in sw for f in pakker), pakker)
+        alle_id = []
+        for i, f in enumerate(pakker):
+            d = json.loads((ROD / f).read_text(encoding='utf-8'))['kort']
+            alle_id += [k['id'] for k in d]
+            ugyldige = [k.get('id') for k in d if k.get('emne') not in ('mat', 'dim', 'saer', 'love', 'erhv', 'arb', 'andet') or k.get('type') not in ('fakta', 'regel', 'formel') or not k.get('front') or not k.get('bag') or set(k.get('kilde', {})) != {'dok', 'afsnit', 'udgave', 'gyldigFra'}]
+            tjek('startkort i %s har gyldigt emne, type, tekst og kilde' % f, not ugyldige, ugyldige)
+            n = len(d)
             foer = await pg.evaluate(f"{A}.kort.length")
-            await pg.evaluate(f"{A}.indlaesStartpakke({A}.startpakker[0])"); await pg.wait_for_timeout(200)
-            await pg.evaluate(f"{A}.indlaesStartpakke({A}.startpakker[0])"); await pg.wait_for_timeout(200)
+            await pg.evaluate(f"{A}.indlaesStartpakke({A}.startpakker[{i}])"); await pg.wait_for_timeout(200)
+            await pg.evaluate(f"{A}.indlaesStartpakke({A}.startpakker[{i}])"); await pg.wait_for_timeout(200)
             r = await pg.evaluate(f"{A}.kort.length")
-            tjek('startkort indlæses én gang uden dubletter', r - foer == n, (r, foer, n))
-            ugyldig = await pg.evaluate(f"(()=>{{const a={A};return a.kort.filter(k=>k.oprindelse.startsWith('start:')).filter(k=>/katex-error/.test(a.vis(k.front)+a.vis(k.bag))).map(k=>k.id)}})()")
-            tjek('alle startkort har gyldige formler', not ugyldig, ugyldig)
+            tjek('startkort fra %s indlæses én gang uden dubletter' % f, r - foer == n, (r, foer, n))
+        tjek("startkortenes id'er er unikke på tværs af pakkerne", len(alle_id) == len(set(alle_id)), len(alle_id))
+        ugyldig = await pg.evaluate(f"(()=>{{const a={A};return a.kort.filter(k=>k.oprindelse.startsWith('start:')).filter(k=>/katex-error/.test(a.vis(k.front)+a.vis(k.bag))).map(k=>k.id)}})()")
+        tjek('alle startkort har gyldige formler', not ugyldig, ugyldig)
 
         # 5. Backup: hent data, ryd lager, indlæs igen
         bk = await pg.evaluate(f"JSON.stringify({A}.backupData())")

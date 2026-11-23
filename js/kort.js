@@ -1,6 +1,9 @@
 /* Kort: liste med søgning og filtre, redigering med kildefelt, sletning (gravsten), nulstilling af læring og startkort fra indhold/.
    Metoderne samles i app() i js/app.js. */
-const STARTPAKKER = [ { fil:'indhold/start-matematik.json', navn:'Matematik og fysik (startkort)' } ];
+const STARTPAKKER = [ { fil:'indhold/start-matematik.json', navn:'Matematik og fysik (startkort)' },
+  { fil:'indhold/start-love.json', navn:'Love og myndigheder (startkort)' },
+  { fil:'indhold/start-erhverv.json', navn:'Erhverv og industri (startkort)' },
+  { fil:'indhold/start-arbejdsmiljo.json', navn:'Arbejdsmiljø (startkort)' } ];
 
 function APP_KORT() {
   return {
