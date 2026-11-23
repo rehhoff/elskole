@@ -442,6 +442,374 @@
     "udgave": "",
     "gyldigFra": ""
    }
+  },
+  {
+   "id": "arb-026",
+   "type": "regel",
+   "emne": "arb",
+   "front": "Hvad skal være på plads, før du begynder et elarbejde?",
+   "bag": "- En **vurdering af den elektriske risiko** (BEK 1082 § 76)\n- **Planlægning:** arbejdsmetode, nødvendigt udstyr og værnemidler\n- Klar aftale mellem **anlægsansvarlig** og **arbejdsansvarlig**\n- Alle deltagere er **instrueret** i opgaven og farerne\nKomplekse opgaver skal planlægges skriftligt.",
+   "tags": [
+    "50110",
+    "planlægning",
+    "risikovurdering"
+   ],
+   "kilde": {
+    "dok": "DS/EN 50110-1",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "arb-027",
+   "type": "fakta",
+   "emne": "arb",
+   "front": "Hvad er arbejdszonen og nærhedszonen omkring spændingsførende dele?",
+   "bag": "**Zonen for arbejde under spænding:** området tæt om den spændingsførende del. Den, der trænger ind her, udfører **arbejde under spænding**.\n**Nærhedszonen:** området uden for, hvor der gælder regler for **arbejde nær spændingsførende dele**.\nAfstandene afhænger af spændingen og står i et anneks til DS/EN 50110-1.",
+   "tags": [
+    "50110",
+    "afstand",
+    "zoner"
+   ],
+   "kilde": {
+    "dok": "DS/EN 50110-1",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "arb-028",
+   "type": "regel",
+   "emne": "arb",
+   "front": "Hvordan beskytter du dig ved arbejde nær spændingsførende dele?",
+   "bag": "Gør først anlægget spændingsløst, hvis det er muligt. Ellers med en eller flere af:\n- **afskærmning**, barrierer eller isolerende afdækning\n- **sikkerhedsafstand** og tydelig afmærkning\n- **tilsyn** af en sagkyndig\nVærktøj og udstyr må ikke kunne komme ind i zonen for arbejde under spænding.",
+   "tags": [
+    "50110",
+    "nær-spænding",
+    "afskærmning"
+   ],
+   "kilde": {
+    "dok": "DS/EN 50110-1",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "arb-029",
+   "type": "regel",
+   "emne": "arb",
+   "front": "Hvilken målekategori (CAT) skal dit måleinstrument have?",
+   "bag": "- **CAT IV:** ved installationens oprindelse: stikledning, måler, hovedsikringer\n- **CAT III:** den faste installation: tavler, faste kabler, fast tilsluttet materiel\n- **CAT II:** materiel tilsluttet en stikkontakt\nVælg mindst den kategori og spænding (fx **CAT III 600 V** eller **CAT IV 600 V**), der svarer til målestedet. Prøveledninger skal have samme kategori.",
+   "tags": [
+    "50110",
+    "måling",
+    "instrument",
+    "CAT"
+   ],
+   "kilde": {
+    "dok": "DS/EN 61010-1; DS/EN 50110-1",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "arb-030",
+   "type": "regel",
+   "emne": "arb",
+   "front": "Hvor skal du kontrollere, at anlægget er spændingsløst?",
+   "bag": "På eller så tæt som muligt ved **arbejdsstedet**, på **alle poler** (alle faser og nulleder og mod jord).\nDet er ikke nok at måle i tavlen, hvis der er flere forsyninger, tilbageføding fra fx solceller eller fejl i mærkningen.",
+   "tags": [
+    "50110",
+    "spændingsløst",
+    "måling"
+   ],
+   "kilde": {
+    "dok": "DS/EN 50110-1",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "arb-031",
+   "type": "regel",
+   "emne": "arb",
+   "front": "Hvordan jorder og kortslutter du et anlæg korrekt?",
+   "bag": "Brug udstyr, der er **dimensioneret til kortslutningsstrømmen** på stedet.\n1. Forbind først til **jord**\n2. Derefter til de **ledere**, der skal kortsluttes\nFjern i **omvendt rækkefølge**. Jordingen skal helst være **synlig** fra arbejdsstedet.",
+   "tags": [
+    "50110",
+    "jording",
+    "5-regler"
+   ],
+   "kilde": {
+    "dok": "DS/EN 50110-1",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "arb-032",
+   "type": "regel",
+   "emne": "arb",
+   "front": "Hvad skal ske, før anlægget sættes under spænding igen efter arbejdet?",
+   "bag": "1. Arbejdet er afsluttet, **værktøj og materiel fjernet**\n2. **Alle personer** er informeret og uden for fareområdet\n3. **Jording og kortslutning** fjernes, derefter afskærmning\n4. **Låse og skilte** fjernes af den, der satte dem op\n5. Den anlægsansvarlige får besked og giver tilladelse til genindkobling\nGenindkobling må ikke ske efter et aftalt tidspunkt eller signal alene.",
+   "tags": [
+    "50110",
+    "genindkobling",
+    "procedure",
+    "usikker"
+   ],
+   "kilde": {
+    "dok": "DS/EN 50110-1",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "arb-033",
+   "type": "regel",
+   "emne": "arb",
+   "front": "Hvordan slukker du en brand i elektrisk materiel?",
+   "bag": "Afbryd strømmen, hvis det kan ske sikkert. Brug **kulsyre (CO₂)** eller **pulver**, ikke vand eller skum, så længe materiellet kan være spændingsførende.\nHold afstand til anlæg med høj spænding, og ring **112** ved større brande.",
+   "tags": [
+    "50110",
+    "brand",
+    "slukning"
+   ],
+   "kilde": {
+    "dok": "DS/EN 50110-1",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "arb-034",
+   "type": "regel",
+   "emne": "arb",
+   "front": "Hvilke krav gælder i Danmark for at udføre arbejde under spænding (AUS) på lavspænding?",
+   "bag": "BEK 1082 kræver, at arbejdet følger EN 50110-1, men **ikke** dens uddannelseskrav til arbejde under spænding (§ 76, stk. 2). Uddannelseskravene står i dansk regulering og vejledning (**L-AUS**).\nDen udførende skal være mindst 18 år, tilstrækkeligt kvalificeret og periodisk instrueret (§§ 77-79), og arbejdsgiveren skal have procedurer og egnet udstyr.",
+   "tags": [
+    "50110",
+    "AUS",
+    "L-AUS",
+    "BEK-1082",
+    "usikker"
+   ],
+   "kilde": {
+    "dok": "BEK nr. 1082 af 12/07/2016; DS/EN 50110-1",
+    "afsnit": "§ 76-79 (BEK 1082)",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "arb-035",
+   "type": "regel",
+   "emne": "arb",
+   "front": "Hvordan skifter du NH-sikringer sikkert?",
+   "bag": "Helst i **spændingsløs** tilstand. Skal det ske under spænding, så **uden belastning**, med **NH-sikringshåndtag med manchet**, ansigtsskærm og isolerende handsker, og kun af instruerede personer efter virksomhedens procedure.\nLysbue ved isætning mod en kortslutning er den største fare.",
+   "tags": [
+    "50110",
+    "sikringer",
+    "lysbue",
+    "værnemidler",
+    "usikker"
+   ],
+   "kilde": {
+    "dok": "DS/EN 50110-1",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "arb-036",
+   "type": "regel",
+   "emne": "arb",
+   "front": "Hvad gør du, hvis du er i tvivl om, at et arbejde kan udføres sikkert?",
+   "bag": "**Stop arbejdet** og tal med den arbejdsansvarlige. Arbejdet må først genoptages, når risikoen er vurderet og håndteret.\nDu har ret og pligt til at sige fra over for arbejde, der ikke kan udføres sikkert.",
+   "tags": [
+    "50110",
+    "sikkerhed",
+    "ansvar"
+   ],
+   "kilde": {
+    "dok": "DS/EN 50110-1",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "arb-037",
+   "type": "fakta",
+   "emne": "arb",
+   "front": "Hvilke krav stiller DS/EN 12464-1 til belysning af indendørs arbejdspladser?",
+   "bag": "For hver type opgave eller rum angives:\n- **$\\bar{E}_m$:** vedligeholdt belysningsstyrke (lux) på opgavefeltet\n- **$U_o$:** jævnhed (mindste/gennemsnit)\n- **$R_{UGL}$ (UGR):** grænse for ubehagsblænding\n- **$R_a$:** mindste farvegengivelsesindeks\nArbejdstilsynet henviser til standarden som god praksis for belysning.",
+   "tags": [
+    "12464-1",
+    "belysning",
+    "arbejdsplads"
+   ],
+   "kilde": {
+    "dok": "DS/EN 12464-1",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "arb-038",
+   "type": "fakta",
+   "emne": "arb",
+   "front": "Hvilke belysningskrav gælder typisk for kontorarbejde (skrivning, læsning, skærm)?",
+   "bag": "- $\\bar{E}_m$ = **500 lx**\n- UGR højst **19**\n- $R_a$ mindst **80**\n- $U_o$ mindst **0,60**\nOmrådet lige omkring opgavefeltet må have ét trin lavere, fx 300 lx.",
+   "tags": [
+    "12464-1",
+    "belysning",
+    "kontor"
+   ],
+   "kilde": {
+    "dok": "DS/EN 12464-1",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "arb-039",
+   "type": "fakta",
+   "emne": "arb",
+   "front": "Hvad betyder \"vedligeholdt belysningsstyrke\", og hvad er vedligeholdelsesfaktoren?",
+   "bag": "**Vedligeholdt belysningsstyrke** $\\bar{E}_m$ er den gennemsnitlige belysningsstyrke, der **aldrig må komme under**, også når lyskilderne er ældet og armaturerne snavsede.\nNyt anlæg skal derfor give mere:\n$$E_{ny} = \\dfrac{\\bar{E}_m}{MF}$$\n$MF$ vedligeholdelsesfaktor, fx 0,8. Den bygger på lysstrømsfald, levetid, snavs på armatur og rum.",
+   "tags": [
+    "12464-1",
+    "belysning",
+    "vedligehold"
+   ],
+   "kilde": {
+    "dok": "DS/EN 12464-1",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "arb-040",
+   "type": "formel",
+   "emne": "arb",
+   "front": "Hvordan beregner du antallet af armaturer med virkningsgradsmetoden?",
+   "bag": "$$N = \\dfrac{\\bar{E}_m \\cdot A}{\\Phi \\cdot UF \\cdot MF}$$\n$A$ areal (m²), $\\Phi$ lysstrøm pr. armatur (lm), $UF$ udnyttelsesfaktor, $MF$ vedligeholdelsesfaktor.\n**Eksempel:** $500\\ \\text{lx}$, $60\\ \\text{m}^2$, $\\Phi = 4000\\ \\text{lm}$, $UF = 0{,}6$, $MF = 0{,}8$: $N = 30000 / 1920 \\approx 15{,}6$, altså **16 armaturer**.",
+   "tags": [
+    "12464-1",
+    "belysning",
+    "beregning",
+    "regn-selv"
+   ],
+   "kilde": {
+    "dok": "DS/EN 12464-1",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "arb-041",
+   "type": "fakta",
+   "emne": "arb",
+   "front": "Hvad betyder UGR-værdien?",
+   "bag": "**Unified Glare Rating**: et mål for **ubehagsblænding** fra armaturerne i et rum. Jo **lavere** tal, jo mindre blænding.\nTypiske grænser: 16 for teknisk tegning, **19** for kontor og læsning, 22 for fint industriarbejde, 25 for groft arbejde og **28** for gange.",
+   "tags": [
+    "12464-1",
+    "belysning",
+    "blænding"
+   ],
+   "kilde": {
+    "dok": "DS/EN 12464-1",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "arb-042",
+   "type": "fakta",
+   "emne": "arb",
+   "front": "Hvad er $R_a$, og hvornår kræves en høj værdi?",
+   "bag": "**Farvegengivelsesindeks** (0–100): hvor naturligt farver ser ud i lyset. 100 svarer til dagslys.\nDe fleste indendørs arbejdspladser kræver mindst **80**. Hvor farver skal vurderes nøjagtigt (fx kontrol af ledningsfarver, trykkeri, farvesammenligning), kræves **90**.",
+   "tags": [
+    "12464-1",
+    "belysning",
+    "farvegengivelse"
+   ],
+   "kilde": {
+    "dok": "DS/EN 12464-1",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "arb-043",
+   "type": "regel",
+   "emne": "arb",
+   "front": "Hvorfor skal du undgå flimmer og stroboskopeffekt i belysningen ved maskiner?",
+   "bag": "Lys, der flimrer med netfrekvensen, kan få **roterende dele** til at se ud, som om de står stille eller kører langsomt. Det er en **ulykkesrisiko**.\nBrug lyskilder og drivere med lav flimmer, eller fordel armaturerne på flere faser.",
+   "tags": [
+    "12464-1",
+    "belysning",
+    "flimmer",
+    "maskine"
+   ],
+   "kilde": {
+    "dok": "DS/EN 12464-1",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "arb-044",
+   "type": "fakta",
+   "emne": "arb",
+   "front": "Hvilken belysningsstyrke kræves typisk i gange og trafikområder?",
+   "bag": "**100 lx** i gange og trafikarealer, med UGR højst 28 og $R_a$ mindst 40. Trapper og områder med køretøjer kan kræve mere.\nNødbelysning er ikke en del af DS/EN 12464-1, men af **DS/EN 1838**.",
+   "tags": [
+    "12464-1",
+    "belysning",
+    "gange"
+   ],
+   "kilde": {
+    "dok": "DS/EN 12464-1",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
+  },
+  {
+   "id": "arb-045",
+   "type": "fakta",
+   "emne": "arb",
+   "front": "Hvilke krav stiller DS/EN 1838 til nødbelysning af flugtveje?",
+   "bag": "- Flugtveje op til 2 m brede: mindst **1 lx** langs midterlinjen\n- Antipanikbelysning i åbne områder: mindst **0,5 lx**\n- Nødbelysningen skal nå sin værdi hurtigt efter et spændingssvigt og holde i den krævede tid, typisk **1 time**\nByggereglerne afgør, hvor der skal være nødbelysning.",
+   "tags": [
+    "nødbelysning",
+    "flugtvej",
+    "usikker"
+   ],
+   "kilde": {
+    "dok": "DS/EN 1838",
+    "afsnit": "",
+    "udgave": "",
+    "gyldigFra": ""
+   }
   }
  ]
 }

@@ -6,16 +6,17 @@
    "type": "fakta",
    "emne": "love",
    "front": "Hvilken myndighed fører tilsyn med elsikkerhed og autoriserede elinstallatører?",
-   "bag": "**Sikkerhedsstyrelsen.** Den fører tilsyn med autoriserede virksomheder, med elsikkerheden i installationer og anlæg og med markedet for elektrisk udstyr.\n**Arbejdstilsynet** fører tilsyn med arbejdsmiljøet, fx hvordan arbejdet udføres sikkert for de ansatte.",
+   "bag": "**Erhvervsstyrelsen.** Sikkerhedsstyrelsen blev en del af Erhvervsstyrelsen i januar 2026, og elsikkerhedsloven nævner nu Erhvervsstyrelsen. Mange vejledninger, blanketter og hjemmesiden sik.dk bruger stadig navnet Sikkerhedsstyrelsen.\nStyrelsen fører kontrol med elsikkerhedsloven og autorisationerne og fører markedsovervågning af produkter.\n**Arbejdstilsynet** fører tilsyn med arbejdsmiljøet.",
    "tags": [
     "myndighed",
+    "Erhvervsstyrelsen",
     "Sikkerhedsstyrelsen"
    ],
    "kilde": {
-    "dok": "Elsikkerhedsloven (lov om elektriske anlæg, elektriske installationer og elektrisk udstyr)",
-    "afsnit": "",
-    "udgave": "",
-    "gyldigFra": ""
+    "dok": "Elsikkerhedsloven, LBK nr. 57 af 19/01/2026",
+    "afsnit": "§ 13, stk. 1",
+    "udgave": "LBK nr. 57 af 19/01/2026",
+    "gyldigFra": "2016-01-01"
    }
   },
   {
@@ -23,13 +24,13 @@
    "type": "fakta",
    "emne": "love",
    "front": "Hvad er forskellen på elsikkerhedsloven og autorisationsloven?",
-   "bag": "**Elsikkerhedsloven** handler om *hvad*: at anlæg, installationer og udstyr er sikre.\n**Autorisationsloven** handler om *hvem*: hvilke virksomheder der må udføre arbejdet, og hvilke krav de skal opfylde (fagligt ansvarlig, kvalitetsledelsessystem).",
+   "bag": "**Elsikkerhedsloven** handler om *hvad*: at elektriske anlæg og installationer er udført og drives sikkert.\n**Autorisationsloven** handler om *hvem*: hvilke virksomheder der må udføre arbejdet, og hvilke krav de skal opfylde (fagligt ansvarlig, kvalitetsledelsessystem).\nKrav til **elektrisk materiel** (produkter) står i lov om produkter og markedsovervågning.",
    "tags": [
     "lov",
     "autorisation"
    ],
    "kilde": {
-    "dok": "Elsikkerhedsloven (lov om elektriske anlæg, elektriske installationer og elektrisk udstyr); Autorisationsloven (lov om autorisation af virksomheder på el-, vvs- og kloakinstallationsområdet)",
+    "dok": "Elsikkerhedsloven, LBK nr. 57 af 19/01/2026; Autorisationsloven (lov om autorisation af virksomheder på el-, vvs- og kloakinstallationsområdet)",
     "afsnit": "",
     "udgave": "",
     "gyldigFra": ""
@@ -40,7 +41,7 @@
    "type": "regel",
    "emne": "love",
    "front": "Hvem får autorisationen som elinstallatør: personen eller virksomheden?",
-   "bag": "**Virksomheden.** Autorisationen gives til en virksomhed, som skal have en **fagligt ansvarlig** person, der er godkendt af Sikkerhedsstyrelsen (uddannelse og prøve).\nHolder den fagligt ansvarlige op, skal virksomheden have en ny godkendt fagligt ansvarlig for at fortsætte med autorisationskrævende arbejde.",
+   "bag": "**Virksomheden.** Autorisationen gives af Erhvervsstyrelsen (Sikkerhedsstyrelsen indtil januar 2026) til en virksomhed, som skal have en **fagligt ansvarlig** person, der opfylder kravene til uddannelse og prøve.\nHolder den fagligt ansvarlige op, skal virksomheden have en ny godkendt fagligt ansvarlig for at fortsætte med autorisationskrævende arbejde.",
    "tags": [
     "autorisation",
     "fagligt-ansvarlig"
@@ -75,7 +76,7 @@
    "type": "regel",
    "emne": "love",
    "front": "Hvad er formålet med et kvalitetsledelsessystem (KLS) i en autoriseret elvirksomhed?",
-   "bag": "KLS beskriver, hvordan virksomheden sikrer, at arbejdet **planlægges, udføres, kontrolleres og dokumenteres** efter reglerne. Typisk indhold:\n- ansvarsfordeling og den fagligt ansvarliges rolle\n- instruktion og uddannelse af medarbejdere\n- eftersyn og afprøvning med dokumentation\n- kontrol og kalibrering af måleinstrumenter\n- håndtering af fejl, afvigelser og klager\nKontrollér de præcise krav hos Sikkerhedsstyrelsen.",
+   "bag": "KLS beskriver, hvordan virksomheden sikrer, at arbejdet **planlægges, udføres, kontrolleres og dokumenteres** efter reglerne. Typisk indhold:\n- ansvarsfordeling og den fagligt ansvarliges rolle\n- instruktion og uddannelse af medarbejdere\n- eftersyn og afprøvning med dokumentation\n- kontrol og kalibrering af måleinstrumenter\n- håndtering af fejl, afvigelser og klager\nRapporten fra verifikationen opbevares efter KLS-reglerne om slutkontrol (BEK 1082 § 75, stk. 4). Kontrollér de præcise krav hos Erhvervsstyrelsen.",
    "tags": [
     "kvalitetsledelse",
     "autorisation",
@@ -93,16 +94,17 @@
    "type": "regel",
    "emne": "love",
    "front": "Hvilket regelsæt gælder, når du udfører en ny elinstallation?",
-   "bag": "**Elinstallationsbekendtgørelsen**, som henviser til standarderne i **DS/HD 60364-serien** (inkl. del 7 om særlige installationer).\nHvilke udgaver der gælder, og om der er overgangsperioder, oplyser Sikkerhedsstyrelsen. Tjek altid den gældende bekendtgørelse på retsinformation.dk.",
+   "bag": "**BEK nr. 1082 (elinstallationsbekendtgørelsen).** Udføres installationen efter den i Danmark gældende udgave af **HD 60364**, anses sikkerhedskravet for opfyldt (§ 3, stk. 1).\nBekendtgørelsens §§ 17-83 skal **altid** overholdes, også når HD 60364 er fulgt (§ 3, stk. 3). De indeholder danske særkrav, fx om RCD, grupper og stikkontakter i boliger.",
    "tags": [
     "bekendtgørelse",
-    "standarder"
+    "standarder",
+    "BEK-1082"
    ],
    "kilde": {
-    "dok": "Elinstallationsbekendtgørelsen",
-    "afsnit": "",
-    "udgave": "",
-    "gyldigFra": ""
+    "dok": "BEK nr. 1082 af 12/07/2016 (elinstallationsbekendtgørelsen)",
+    "afsnit": "§ 3",
+    "udgave": "Ændret ved BEK nr. 639 af 02/06/2017",
+    "gyldigFra": "2017-07-01"
    }
   },
   {
@@ -110,48 +112,49 @@
    "type": "regel",
    "emne": "love",
    "front": "Hvilke regler gælder for en ældre installation, som du skal ændre?",
-   "bag": "Den eksisterende del skal som udgangspunkt overholde de regler, der gjaldt, **da den blev udført** (fx Stærkstrømsbekendtgørelsen afsnit 6), så længe den ikke er farlig.\nDet, du **tilføjer eller ændrer**, skal følge de regler, der gælder **nu**. Ændringen må ikke gøre den eksisterende installation farlig, fx ved at overbelaste en gammel gruppe.",
+   "bag": "En installation skal være udført efter de regler, der gjaldt **på udførelsestidspunktet** (§ 25, stk. 1).\nVed senere ændringer, også flytning af tavler, gælder reglerne **på ændringstidspunktet** for de dele, der ændres (§ 25, stk. 2).\nDer må ikke foretages ændringer, der **forringer sikkerheden** i den eksisterende installation (§ 67).",
    "tags": [
     "eksisterende-installation",
-    "bekendtgørelse"
+    "BEK-1082"
    ],
    "kilde": {
-    "dok": "Elinstallationsbekendtgørelsen",
-    "afsnit": "",
-    "udgave": "",
-    "gyldigFra": ""
+    "dok": "BEK nr. 1082 af 12/07/2016 (elinstallationsbekendtgørelsen)",
+    "afsnit": "§ 25, § 67",
+    "udgave": "Ændret ved BEK nr. 639 af 02/06/2017",
+    "gyldigFra": "2017-07-01"
    }
   },
   {
    "id": "love-008",
    "type": "fakta",
    "emne": "love",
-   "front": "Hvad var Stærkstrømsbekendtgørelsen afsnit 6?",
-   "bag": "Det tidligere danske regelsæt for elinstallationer. Det er afløst af elinstallationsbekendtgørelsen med henvisning til DS/HD 60364.\nMange eksisterende installationer er udført efter afsnit 6, så du møder stadig dets løsninger og begreber, fx **HPFI-afbrydere** og installationer uden fejlstrømsafbryder.",
+   "front": "Hvad var Stærkstrømsbekendtgørelsen afsnit 6, og hvornår holdt den op med at gælde?",
+   "bag": "Det tidligere danske regelsæt for elinstallationer. BEK 1082 trådte i kraft **1. juli 2017**, og installationer kunne udføres efter stærkstrømsbekendtgørelsen til og med **30. juni 2019** (§ 88, stk. 1). Arbejde, der var færdigprojekteret eller påbegyndt før 1. juli 2019, kunne færdiggøres til og med 30. juni 2020 (§ 88, stk. 2).\nDu møder stadig dens løsninger i eksisterende installationer, fx **HPFI-afbrydere**.",
    "tags": [
     "eksisterende-installation",
-    "historik"
+    "historik",
+    "BEK-1082"
    ],
    "kilde": {
-    "dok": "Stærkstrømsbekendtgørelsen afsnit 6",
-    "afsnit": "",
-    "udgave": "",
-    "gyldigFra": ""
+    "dok": "BEK nr. 1082 af 12/07/2016 (elinstallationsbekendtgørelsen)",
+    "afsnit": "§ 87, § 88",
+    "udgave": "Ændret ved BEK nr. 639 af 02/06/2017",
+    "gyldigFra": "2017-07-01"
    }
   },
   {
    "id": "love-009",
    "type": "regel",
    "emne": "love",
-   "front": "Hvilket elarbejde må en ikke-autoriseret person (lægmand) udføre?",
-   "bag": "Kun enkle, afgrænsede arbejder, som reglerne udtrykkeligt tillader, fx udskiftning af stikkontakter og afbrydere i en eksisterende installation og tilslutning af lamper.\nArbejde i tavlen, nye grupper og nye faste installationer kræver en autoriseret virksomhed. Se Sikkerhedsstyrelsens aktuelle liste, før du rådgiver en kunde.",
+   "front": "Hvilket elarbejde må en ikke-autoriseret person udføre?",
+   "bag": "Kun de **simple arbejder**, som reglerne tillader. Ifølge Sikkerhedsstyrelsens vejledning fx:\n- udskifte en eksisterende stikkontakt eller afbryder\n- montere lamper i eksisterende udtag\n- trække ledninger fra stikkontakter eller lampeudtag\n- tilslutte apparater med stikprop (køleskab, vaskemaskine, ovn og emhætte, hvis det kan gøres uden værktøj)\nArbejde i tavlen, nye grupper og nye faste installationer kræver en autoriseret virksomhed. Simple arbejder kræver ikke verifikation (BEK 1082 § 75).",
    "tags": [
     "autorisation",
     "lægmand",
-    "usikker"
+    "simple-arbejder"
    ],
    "kilde": {
-    "dok": "Autorisationsloven (lov om autorisation af virksomheder på el-, vvs- og kloakinstallationsområdet)",
+    "dok": "Bekendtgørelse om simple arbejder på el-, vvs- og kloakinstallationsområdet, som enhver må udføre",
     "afsnit": "",
     "udgave": "",
     "gyldigFra": ""
@@ -197,16 +200,17 @@
    "id": "love-012",
    "type": "fakta",
    "emne": "love",
-   "front": "Hvilket spændingsområde dækker lavspændingsdirektivet?",
-   "bag": "Elektrisk udstyr til **50–1000 V AC** og **75–1500 V DC**.\nUdstyr under disse grænser er ikke omfattet af lavspændingsdirektivet, men skal stadig være sikkert efter de generelle regler om produktsikkerhed.",
+   "front": "Hvilket spændingsområde dækker lavspændingsdirektivet, og hvilket dækker BEK 1082?",
+   "bag": "**Lavspændingsdirektivet** (produkter): elektrisk materiel til **50–1000 V AC** og **75–1500 V DC**.\n**BEK 1082** (installationer): udførelse og drift af installationer fra **0 V** til og med **1000 V AC** eller **1500 V DC** (§ 1). Bekendtgørelsen gælder altså også ekstra lav spænding.",
    "tags": [
     "CE",
     "udstyr",
-    "EU"
+    "EU",
+    "BEK-1082"
    ],
    "kilde": {
-    "dok": "Lavspændingsdirektivet 2014/35/EU",
-    "afsnit": "",
+    "dok": "Lavspændingsdirektivet 2014/35/EU; BEK nr. 1082 af 12/07/2016 (elinstallationsbekendtgørelsen)",
+    "afsnit": "§ 1 (BEK 1082)",
     "udgave": "",
     "gyldigFra": ""
    }
@@ -216,17 +220,18 @@
    "type": "regel",
    "emne": "love",
    "front": "Hvad gør du, hvis en kunde vil have dig til at installere udstyr, der ser ud til ikke at overholde reglerne (fx uden CE-mærke)?",
-   "bag": "Lad være med at installere det. Som installatør er du ansvarlig for, at det materiel, du installerer, er egnet og sikkert til formålet.\nSikkerhedsstyrelsen fører markedsovervågning og kan kræve farligt udstyr trukket tilbage. Henvis kunden til et lovligt produkt.",
+   "bag": "Lad være med at installere det. Der må kun anvendes **egnet materiel**, og det skal installeres efter fabrikantens instruktioner (BEK 1082 § 18, stk. 2).\nErhvervsstyrelsen fører markedsovervågning efter lov om produkter og markedsovervågning og kan kræve farlige produkter trukket tilbage. Henvis kunden til et lovligt produkt.",
    "tags": [
     "CE",
     "udstyr",
-    "ansvar"
+    "ansvar",
+    "BEK-1082"
    ],
    "kilde": {
-    "dok": "Elsikkerhedsloven (lov om elektriske anlæg, elektriske installationer og elektrisk udstyr)",
-    "afsnit": "",
-    "udgave": "",
-    "gyldigFra": ""
+    "dok": "BEK nr. 1082 af 12/07/2016 (elinstallationsbekendtgørelsen)",
+    "afsnit": "§ 18, stk. 2",
+    "udgave": "Ændret ved BEK nr. 639 af 02/06/2017",
+    "gyldigFra": "2017-07-01"
    }
   },
   {
@@ -234,16 +239,17 @@
    "type": "regel",
    "emne": "love",
    "front": "Hvem har ansvaret for, at en elinstallation holdes i forsvarlig stand efter afleveringen?",
-   "bag": "**Ejeren** (eller brugeren) af installationen. Den virksomhed, der udførte arbejdet, har ansvaret for, at *arbejdet* blev udført korrekt.\nFinder du en farlig fejl, skal du gøre ejeren opmærksom på den, helst skriftligt.",
+   "bag": "**Ejeren eller brugeren** af installationen. Ejeren eller brugeren skal sørge for, at installationen drives og vedligeholdes forsvarligt, lade fejl og mangler **afhjælpe snarest muligt** og hurtigst muligt hindre, at fejlene kan give fare (§ 10).\nDen virksomhed, der udførte arbejdet, har ansvaret for, at *arbejdet* blev udført korrekt.",
    "tags": [
     "ansvar",
-    "ejer"
+    "ejer",
+    "elsikkerhedsloven"
    ],
    "kilde": {
-    "dok": "Elsikkerhedsloven (lov om elektriske anlæg, elektriske installationer og elektrisk udstyr)",
-    "afsnit": "",
-    "udgave": "",
-    "gyldigFra": ""
+    "dok": "Elsikkerhedsloven, LBK nr. 57 af 19/01/2026",
+    "afsnit": "§ 10",
+    "udgave": "LBK nr. 57 af 19/01/2026",
+    "gyldigFra": "2016-01-01"
    }
   },
   {
@@ -268,16 +274,16 @@
    "id": "love-016",
    "type": "regel",
    "emne": "love",
-   "front": "Hvem skal have besked, når der sker en elulykke?",
-   "bag": "Elulykker med personskade og alvorlige elhændelser (fx brand forårsaget af el) skal anmeldes til **Sikkerhedsstyrelsen**.\nEr det en arbejdsulykke, skal den også anmeldes til **Arbejdstilsynet** via EASY. Søg altid læge efter stød.",
+   "front": "Hvem skal indberette en elulykke på et elektrisk anlæg (fx i forsyningsnettet)?",
+   "bag": "Den **driftsansvarlige virksomhed** skal indberette ulykken til Erhvervsstyrelsen (Sikkerhedsstyrelsen indtil januar 2026) **straks**, via blanketten på virk.dk.\nDet gælder, når strøm har skadet en person ved strømgennemgang eller lysbue (også fremmed personale), og ved elbrande og eksplosioner i materiel i forsyningsnettet.\nEr det en arbejdsulykke, skal den også anmeldes til **Arbejdstilsynet** via EASY.",
    "tags": [
     "ulykke",
     "anmeldelse",
-    "Sikkerhedsstyrelsen",
-    "usikker"
+    "Erhvervsstyrelsen",
+    "anlæg"
    ],
    "kilde": {
-    "dok": "Elsikkerhedsloven (lov om elektriske anlæg, elektriske installationer og elektrisk udstyr)",
+    "dok": "Sikkerhedsstyrelsens vejledning om indberetning af ulykker på elektriske anlæg",
     "afsnit": "",
     "udgave": "",
     "gyldigFra": ""
@@ -432,10 +438,10 @@
    "id": "love-025",
    "type": "regel",
    "emne": "love",
-   "front": "Hvad kan Sikkerhedsstyrelsen gøre ved en autoriseret virksomhed, der laver fejl?",
-   "bag": "Sikkerhedsstyrelsen kontrollerer bl.a. udførte installationer og virksomhedens kvalitetsledelsessystem ved stikprøver. Ved fejl kan den give **påbud** om udbedring, give **bøde** eller i alvorlige tilfælde **tilbagekalde autorisationen**.",
+   "front": "Hvad kan Erhvervsstyrelsen gøre ved en autoriseret virksomhed, der laver fejl?",
+   "bag": "Erhvervsstyrelsen (tidligere Sikkerhedsstyrelsen) kontrollerer bl.a. udførte installationer og virksomhedens kvalitetsledelsessystem ved stikprøver. Ved fejl kan den give **påbud** om udbedring, give **bøde** eller i alvorlige tilfælde **tilbagekalde autorisationen**.",
    "tags": [
-    "Sikkerhedsstyrelsen",
+    "Erhvervsstyrelsen",
     "tilsyn",
     "autorisation",
     "usikker"
@@ -445,6 +451,813 @@
     "afsnit": "",
     "udgave": "",
     "gyldigFra": ""
+   }
+  },
+  {
+   "id": "love-026",
+   "type": "regel",
+   "emne": "love",
+   "front": "Hvilket område dækker BEK nr. 1082 (elinstallationsbekendtgørelsen)?",
+   "bag": "**Udførelse og drift** af elektriske installationer fra **0 V** til og med **1000 V AC** eller **1500 V DC**.\nDen er udstedt efter elsikkerhedsloven og trådte i kraft **1. juli 2017**.",
+   "tags": [
+    "BEK-1082",
+    "anvendelsesområde"
+   ],
+   "kilde": {
+    "dok": "BEK nr. 1082 af 12/07/2016 (elinstallationsbekendtgørelsen)",
+    "afsnit": "§ 1, § 87",
+    "udgave": "Ændret ved BEK nr. 639 af 02/06/2017",
+    "gyldigFra": "2017-07-01"
+   }
+  },
+  {
+   "id": "love-027",
+   "type": "regel",
+   "emne": "love",
+   "front": "Hvad skal du gøre, hvis du udfører en installation helt eller delvist uden at følge HD 60364?",
+   "bag": "Du skal **dokumentere**, at sikkerhedskravet er opfyldt på anden måde (§ 3, stk. 2).\nElinstallatørvirksomheden skal **indberette** afvigelsen digitalt til styrelsen **senest 14 dage** efter arbejdets udførelse, ved nye installationer og udvidelser (§ 84). Indberetningen skal bl.a. have adresse, tidspunkt, beregninger, materialevalg, tegninger og dokumentation for kontrol.",
+   "tags": [
+    "BEK-1082",
+    "dokumentation",
+    "indberetning",
+    "afvigelse"
+   ],
+   "kilde": {
+    "dok": "BEK nr. 1082 af 12/07/2016 (elinstallationsbekendtgørelsen)",
+    "afsnit": "§ 3, stk. 2; § 84",
+    "udgave": "Ændret ved BEK nr. 639 af 02/06/2017",
+    "gyldigFra": "2017-07-01"
+   }
+  },
+  {
+   "id": "love-028",
+   "type": "regel",
+   "emne": "love",
+   "front": "Hvilken udgave af HD 60364 skal du bruge?",
+   "bag": "Den udgave, der gælder i Danmark **på udførelsestidspunktet** (§ 3, stk. 4).\nUdføres installationen **mindre end tre år** efter færdigprojekteringen, må du bruge den udgave, der gjaldt ved færdigprojekteringen.",
+   "tags": [
+    "BEK-1082",
+    "standarder",
+    "udgave"
+   ],
+   "kilde": {
+    "dok": "BEK nr. 1082 af 12/07/2016 (elinstallationsbekendtgørelsen)",
+    "afsnit": "§ 3, stk. 4",
+    "udgave": "Ændret ved BEK nr. 639 af 02/06/2017",
+    "gyldigFra": "2017-07-01"
+   }
+  },
+  {
+   "id": "love-029",
+   "type": "fakta",
+   "emne": "love",
+   "front": "Hvilke generelle sikkerhedskrav stiller BEK 1082 §§ 6-16?",
+   "bag": "Installationen skal have:\n- **grundbeskyttelse** (mod kontakt med spændingsførende dele) og **fejlbeskyttelse** (mod udsatte ledende dele under fejl)\n- beskyttelse mod **brand og forbrændinger**, mod **overstrøm** og mod farlige **fejlstrømme**\n- beskyttelse mod **overspænding** og **underspænding** med genindkobling\n- **immunitet** mod elektromagnetiske forstyrrelser\n- forholdsregler, hvor en **afbrydelse af forsyningen** kan give fare\nHD 60364 udfylder kravene i detaljer.",
+   "tags": [
+    "BEK-1082",
+    "sikkerhedskrav"
+   ],
+   "kilde": {
+    "dok": "BEK nr. 1082 af 12/07/2016 (elinstallationsbekendtgørelsen)",
+    "afsnit": "§§ 6-16",
+    "udgave": "Ændret ved BEK nr. 639 af 02/06/2017",
+    "gyldigFra": "2017-07-01"
+   }
+  },
+  {
+   "id": "love-030",
+   "type": "fakta",
+   "emne": "love",
+   "front": "Hvad er forskellen på grundbeskyttelse og fejlbeskyttelse?",
+   "bag": "**Grundbeskyttelse:** beskyttelse mod elektrisk stød under **fejlfrie forhold**, fx isolation, kapsling og afskærmning.\n**Fejlbeskyttelse:** beskyttelse mod elektrisk stød under **enkeltfejlforhold**, fx automatisk afbrydelse, beskyttelsesleder og udligning.\nRCD på højst 30 mA er **supplerende beskyttelse**, hvis begge svigter.",
+   "tags": [
+    "BEK-1082",
+    "definition",
+    "beskyttelse"
+   ],
+   "kilde": {
+    "dok": "BEK nr. 1082 af 12/07/2016 (elinstallationsbekendtgørelsen)",
+    "afsnit": "§ 2, nr. 6 og 9",
+    "udgave": "Ændret ved BEK nr. 639 af 02/06/2017",
+    "gyldigFra": "2017-07-01"
+   }
+  },
+  {
+   "id": "love-031",
+   "type": "regel",
+   "emne": "love",
+   "front": "Hvad skal du gøre, når et rum skifter anvendelse, fx et kælderrum bliver til badeværelse?",
+   "bag": "Installationen skal **tilpasses** den nye anvendelse (§ 26, stk. 1).\nSkifter rummet anvendelse i forbindelse med, at der tilsluttes materiel, må der ikke tilsluttes, før installationen **i hele området** er tilpasset (§ 26, stk. 2).",
+   "tags": [
+    "BEK-1082",
+    "eksisterende-installation"
+   ],
+   "kilde": {
+    "dok": "BEK nr. 1082 af 12/07/2016 (elinstallationsbekendtgørelsen)",
+    "afsnit": "§ 26",
+    "udgave": "Ændret ved BEK nr. 639 af 02/06/2017",
+    "gyldigFra": "2017-07-01"
+   }
+  },
+  {
+   "id": "love-032",
+   "type": "regel",
+   "emne": "love",
+   "front": "Hvornår må en installation, der forsynes fra lavspændingsnettet, udføres som TN-system?",
+   "bag": "Kun hvis det forsynende anlæg er TN-system, og (§ 27):\n1. installationen forsynes fra **egen transformerstation**, eller\n2. stikledningen udgår **direkte fra transformerstationen** og er udført med kabel, eller\n3. **TN-system allerede anvendes** i installationen (kræver ikke tilladelse), eller\n4. ejeren af anlægget (netselskabet) har givet **særlig tilladelse**.\nI tilfælde 1 og 2 kan netselskabet kun nægte ved større tekniske vanskeligheder.",
+   "tags": [
+    "BEK-1082",
+    "TN",
+    "jordingssystem",
+    "netselskab"
+   ],
+   "kilde": {
+    "dok": "BEK nr. 1082 af 12/07/2016 (elinstallationsbekendtgørelsen)",
+    "afsnit": "§ 27",
+    "udgave": "Ændret ved BEK nr. 639 af 02/06/2017",
+    "gyldigFra": "2017-07-01"
+   }
+  },
+  {
+   "id": "love-033",
+   "type": "regel",
+   "emne": "love",
+   "front": "Må du bruge TN-C (fælles PEN-leder) inde i en bygning?",
+   "bag": "**Nej**, ikke efter første tavle eller fordelingspunkt. Derefter skal der altid være **adskilte beskyttelsesledere og nulledere** (§ 28, stk. 1).\nKravet gælder ikke ved udvidelse eller ændring af en eksisterende installation og ikke i transformerstationer (§ 28, stk. 2).",
+   "tags": [
+    "BEK-1082",
+    "TN",
+    "PEN",
+    "jordingssystem"
+   ],
+   "kilde": {
+    "dok": "BEK nr. 1082 af 12/07/2016 (elinstallationsbekendtgørelsen)",
+    "afsnit": "§ 28",
+    "udgave": "Ændret ved BEK nr. 639 af 02/06/2017",
+    "gyldigFra": "2017-07-01"
+   }
+  },
+  {
+   "id": "love-034",
+   "type": "regel",
+   "emne": "love",
+   "front": "Hvor meget fri plads skal der være foran en tavle?",
+   "bag": "Er tavlen **over 1 m** bred eller høj, skal der være mindst **1 m fri plads** foran den i hele tavlens bredde og fra gulv til tavlens overkant, dog mindst **2 m** over gulv (§ 29, stk. 1).\nDe 1 m måles fra den del med det **længste fremspring**. Tavler med under 1 m imellem regnes som én tavle (§ 29, stk. 2). Kanalskinner er undtaget.",
+   "tags": [
+    "BEK-1082",
+    "tavle",
+    "placering"
+   ],
+   "kilde": {
+    "dok": "BEK nr. 1082 af 12/07/2016 (elinstallationsbekendtgørelsen)",
+    "afsnit": "§ 29",
+    "udgave": "Ændret ved BEK nr. 639 af 02/06/2017",
+    "gyldigFra": "2017-07-01"
+   }
+  },
+  {
+   "id": "love-035",
+   "type": "regel",
+   "emne": "love",
+   "front": "Hvordan skal overstrømsbeskyttelse og betjeningsudstyr mærkes?",
+   "bag": "- Koblings- og betjeningsudstyr skal **entydigt** mærkes med, hvilke dele af installationen det betjener, medmindre forveksling er udelukket (§ 30).\n- Ved enhver overstrømsbeskyttelse skal en holdbar mærkning angive den **største tilladte mærkestrøm** eller indstillingsstrøm. Tjener den flere formål, gælder den **mindste** værdi (§ 31).",
+   "tags": [
+    "BEK-1082",
+    "mærkning",
+    "tavle"
+   ],
+   "kilde": {
+    "dok": "BEK nr. 1082 af 12/07/2016 (elinstallationsbekendtgørelsen)",
+    "afsnit": "§ 30, § 31",
+    "udgave": "Ændret ved BEK nr. 639 af 02/06/2017",
+    "gyldigFra": "2017-07-01"
+   }
+  },
+  {
+   "id": "love-036",
+   "type": "regel",
+   "emne": "love",
+   "front": "Hvilke stikkontakter og tilslutningssteder skal have RCD i en ny installation?",
+   "bag": "**Stikkontakter** til husholdningsbrug og lignende med mærkestrøm til og med **20 A** og **andre tilslutningssteder** med overstrømsbeskyttelse til og med **32 A** skal beskyttes af en **RCD på højst 30 mA** (§ 35, stk. 1-2).\nUndtaget er bl.a. ren klasse II-installation uden tilslutningssteder, SELV, PELV og separat strømkreds, IT-system med isolationsovervågning samt hospitals- og EDB-stikkontakter med virksom beskyttelsesleder (§ 35, stk. 5).",
+   "tags": [
+    "BEK-1082",
+    "RCD",
+    "ny-installation"
+   ],
+   "kilde": {
+    "dok": "BEK nr. 1082 af 12/07/2016 (elinstallationsbekendtgørelsen)",
+    "afsnit": "§ 35",
+    "udgave": "Ændret ved BEK nr. 639 af 02/06/2017",
+    "gyldigFra": "2017-07-01"
+   }
+  },
+  {
+   "id": "love-037",
+   "type": "regel",
+   "emne": "love",
+   "front": "Hvad gælder for en stikkontakt, der af driftstekniske grunde ikke kan sidde bag 30 mA RCD (fx til en fryser)?",
+   "bag": "Den skal beskyttes ved automatisk afbrydelse med **andet beskyttelsesudstyr** (§ 35, stk. 3).\nDen skal anbringes eller **mærkes**, så den ikke bliver brugt til andre brugsgenstande (§ 35, stk. 4).",
+   "tags": [
+    "BEK-1082",
+    "RCD",
+    "undtagelse"
+   ],
+   "kilde": {
+    "dok": "BEK nr. 1082 af 12/07/2016 (elinstallationsbekendtgørelsen)",
+    "afsnit": "§ 35, stk. 3-4",
+    "udgave": "Ændret ved BEK nr. 639 af 02/06/2017",
+    "gyldigFra": "2017-07-01"
+   }
+  },
+  {
+   "id": "love-038",
+   "type": "regel",
+   "emne": "love",
+   "front": "Hvilke krav om RCD gælder for eksisterende installationer?",
+   "bag": "Stikkontakter til husholdningsbrug og lignende til og med **16 A** og andre tilslutningssteder med overstrømsbeskyttelse til og med **20 A** skal være beskyttet af en **RCD på højst 30 mA** (§ 61, stk. 1-2).\nSammenlign med nye installationer: **20 A og 32 A** (§ 35). Undtagelserne svarer til dem for nye installationer.",
+   "tags": [
+    "BEK-1082",
+    "RCD",
+    "eksisterende-installation"
+   ],
+   "kilde": {
+    "dok": "BEK nr. 1082 af 12/07/2016 (elinstallationsbekendtgørelsen)",
+    "afsnit": "§ 61",
+    "udgave": "Ændret ved BEK nr. 639 af 02/06/2017",
+    "gyldigFra": "2017-07-01"
+   }
+  },
+  {
+   "id": "love-039",
+   "type": "regel",
+   "emne": "love",
+   "front": "Hvilken RCD-type må ikke bruges som fejlbeskyttelse i boliger?",
+   "bag": "**Type AC** (§ 53). Den reagerer kun sikkert på sinusformede fejlstrømme, og moderne apparater giver ofte pulserende jævnstrømsfejl.\nBrug mindst **type A**, og type F eller B, hvor materiellet kræver det.",
+   "tags": [
+    "BEK-1082",
+    "RCD",
+    "bolig"
+   ],
+   "kilde": {
+    "dok": "BEK nr. 1082 af 12/07/2016 (elinstallationsbekendtgørelsen)",
+    "afsnit": "§ 53",
+    "udgave": "Ændret ved BEK nr. 639 af 02/06/2017",
+    "gyldigFra": "2017-07-01"
+   }
+  },
+  {
+   "id": "love-040",
+   "type": "regel",
+   "emne": "love",
+   "front": "Hvornår skal beskyttelseslederen føres frem til transportabelt klasse I-materiel i en bolig?",
+   "bag": "Som udgangspunkt altid, medmindre installationen er beskyttet af en **RCD på højst 30 mA** (§ 54, stk. 1).\nDer er **ingen undtagelse** for:\n- transportable **elektromedicinske** apparater af klasse I (stk. 2)\n- boliger **opført efter 1. juli 2017** (stk. 3)",
+   "tags": [
+    "BEK-1082",
+    "beskyttelsesleder",
+    "bolig"
+   ],
+   "kilde": {
+    "dok": "BEK nr. 1082 af 12/07/2016 (elinstallationsbekendtgørelsen)",
+    "afsnit": "§ 54",
+    "udgave": "Ændret ved BEK nr. 639 af 02/06/2017",
+    "gyldigFra": "2017-07-01"
+   }
+  },
+  {
+   "id": "love-041",
+   "type": "regel",
+   "emne": "love",
+   "front": "Hvor må beskyttelsesudstyret (tavlen) til en bolig sidde?",
+   "bag": "- **I boligen**, som det hører til (§ 55, stk. 1). Et rum, der hører til boligen uden direkte adgang, er tilladt, men ikke hvis adgangen kun er via fællesarealer (stk. 3).\n- Ikke højere end **2,2 m** over gulv. Sidder det under **1 m**, skal det være i et **aflåseligt skab** (stk. 2).\n- Døgnbemandede institutioner for ikke-selvhjulpne må placere det uden for boligen (stk. 4).",
+   "tags": [
+    "BEK-1082",
+    "tavle",
+    "bolig",
+    "placering"
+   ],
+   "kilde": {
+    "dok": "BEK nr. 1082 af 12/07/2016 (elinstallationsbekendtgørelsen)",
+    "afsnit": "§ 55",
+    "udgave": "Ændret ved BEK nr. 639 af 02/06/2017",
+    "gyldigFra": "2017-07-01"
+   }
+  },
+  {
+   "id": "love-042",
+   "type": "formel",
+   "emne": "love",
+   "front": "Hvor mange grupper til stikkontakter og belysning skal en bolig mindst have?",
+   "bag": "$$n \\geq \\dfrac{A}{50}, \\quad \\text{mindst } 2$$\n$A$ samlet boligareal i m² efter BBR (§ 56, stk. 1-2). En 2- eller 3-faset gruppe tæller som én (stk. 3).\nGrupper til store forbrugere (fx over 6 A i mere end 2 timer) tæller ikke med (stk. 4).\n**Eksempel:** $140\\ \\text{m}^2 / 50 = 2{,}8$, altså mindst 3 grupper.",
+   "tags": [
+    "BEK-1082",
+    "grupper",
+    "bolig"
+   ],
+   "kilde": {
+    "dok": "BEK nr. 1082 af 12/07/2016 (elinstallationsbekendtgørelsen)",
+    "afsnit": "§ 56",
+    "udgave": "Ændret ved BEK nr. 639 af 02/06/2017",
+    "gyldigFra": "2017-07-01"
+   }
+  },
+  {
+   "id": "love-043",
+   "type": "regel",
+   "emne": "love",
+   "front": "Hvor mange stikkontakter skal der være i en bolig?",
+   "bag": "- Mindst **én 250 V-stikkontakt pr. påbegyndt 4 m²** gulvareal i hvert rum, men højst 10 kræves (§ 57, stk. 1).\n- **Køkkenregionen:** mindst **3**, fordelt på mindst **2 grupper** (stk. 2). Kogeniche: mindst 1 (stk. 3).\n- **Wc og bad:** mindst 1, medmindre rummet er for lille af sikkerhedsgrunde (stk. 4).\n- Garager, carporte, loftsrum og depotrum er ikke omfattet (stk. 5).\n**Eksempel:** et værelse på $13\\ \\text{m}^2$ kræver 4 stikkontakter.",
+   "tags": [
+    "BEK-1082",
+    "stikkontakter",
+    "bolig"
+   ],
+   "kilde": {
+    "dok": "BEK nr. 1082 af 12/07/2016 (elinstallationsbekendtgørelsen)",
+    "afsnit": "§ 57",
+    "udgave": "Ændret ved BEK nr. 639 af 02/06/2017",
+    "gyldigFra": "2017-07-01"
+   }
+  },
+  {
+   "id": "love-044",
+   "type": "regel",
+   "emne": "love",
+   "front": "Hvor stor må sikringen foran en stikkontakt være?",
+   "bag": "- Stikkontakt **10 A eller 13 A**: kortslutningsbeskyttelse højst **13 A**.\n- Stikkontakt **16 A**: højst **16 A**.\nDet er den **nærmeste foransiddende** kortslutningsbeskyttelse, der gælder (§ 45).",
+   "tags": [
+    "BEK-1082",
+    "stikkontakter",
+    "overstrøm"
+   ],
+   "kilde": {
+    "dok": "BEK nr. 1082 af 12/07/2016 (elinstallationsbekendtgørelsen)",
+    "afsnit": "§ 45",
+    "udgave": "Ændret ved BEK nr. 639 af 02/06/2017",
+    "gyldigFra": "2017-07-01"
+   }
+  },
+  {
+   "id": "love-045",
+   "type": "regel",
+   "emne": "love",
+   "front": "Hvor dybt skal et kabel i jord ligge, og hvordan skal det beskyttes?",
+   "bag": "- Mindst **0,35 m** under færdigt terræn (§ 41, stk. 1).\n- Under **0,7 m**: beskyttet af rør, U-profiler eller dækplader (stk. 2).\n- Over **0,7 m**: må være uden mekanisk beskyttelse, hvis der ligger et **markeringsbånd ca. 0,2 m over** kablet (stk. 3).\n- Op fra jorden: beskyttet under og over jord af fx stålrør eller plastvandrør til mindst 0,6 MPa (stk. 4).",
+   "tags": [
+    "BEK-1082",
+    "kabler-i-jord"
+   ],
+   "kilde": {
+    "dok": "BEK nr. 1082 af 12/07/2016 (elinstallationsbekendtgørelsen)",
+    "afsnit": "§ 41",
+    "udgave": "Ændret ved BEK nr. 639 af 02/06/2017",
+    "gyldigFra": "2017-07-01"
+   }
+  },
+  {
+   "id": "love-046",
+   "type": "fakta",
+   "emne": "love",
+   "front": "Hvilke krav er der til dækplader og markeringsbånd for kabler i jord?",
+   "bag": "**Røde**, når de er af plast (§ 42, stk. 1), med teksten **ELKABEL**.\n- Dækplader: mindst **100 mm** brede.\n- Markeringsbånd: mindst **25 mm** brede og **0,3 mm** tykke.\n- Teksten: mindst **10 mm** høj, sort og gentaget med højst **200 mm** mellemrum.",
+   "tags": [
+    "BEK-1082",
+    "kabler-i-jord",
+    "mærkning"
+   ],
+   "kilde": {
+    "dok": "BEK nr. 1082 af 12/07/2016 (elinstallationsbekendtgørelsen)",
+    "afsnit": "§ 42",
+    "udgave": "Ændret ved BEK nr. 639 af 02/06/2017",
+    "gyldigFra": "2017-07-01"
+   }
+  },
+  {
+   "id": "love-047",
+   "type": "regel",
+   "emne": "love",
+   "front": "Hvad gælder for en midlertidig installation (fx byggeplads), der står længere end tre måneder?",
+   "bag": "Den skal **efterses hver tredje måned** af en **autoriseret elinstallatørvirksomhed** (§ 60, stk. 1).\n**Ejeren eller brugeren** er ansvarlig for, at eftersynet bliver lavet, og for at installationen fjernes efter brug (stk. 2).",
+   "tags": [
+    "BEK-1082",
+    "midlertidig",
+    "byggeplads"
+   ],
+   "kilde": {
+    "dok": "BEK nr. 1082 af 12/07/2016 (elinstallationsbekendtgørelsen)",
+    "afsnit": "§ 60",
+    "udgave": "Ændret ved BEK nr. 639 af 02/06/2017",
+    "gyldigFra": "2017-07-01"
+   }
+  },
+  {
+   "id": "love-048",
+   "type": "regel",
+   "emne": "love",
+   "front": "Du udvider en gammel installation uden beskyttelsesleder. Må du udelade beskyttelseslederen?",
+   "bag": "Ja, ved en udvidelse eller ændring med **højst to tilslutningssteder**, hvis udvidelsen bliver beskyttet af en **RCD på højst 30 mA** (§ 63).\nStikkontakter med beskyttelseskontakt i udvidelsen skal ellers tilsluttes en **virksom beskyttelsesleder** (§ 64). Og eksisterende materiel, der får ekstra belastning, skal kunne klare den (§ 62).",
+   "tags": [
+    "BEK-1082",
+    "eksisterende-installation",
+    "beskyttelsesleder",
+    "RCD"
+   ],
+   "kilde": {
+    "dok": "BEK nr. 1082 af 12/07/2016 (elinstallationsbekendtgørelsen)",
+    "afsnit": "§§ 62-64",
+    "udgave": "Ændret ved BEK nr. 639 af 02/06/2017",
+    "gyldigFra": "2017-07-01"
+   }
+  },
+  {
+   "id": "love-049",
+   "type": "regel",
+   "emne": "love",
+   "front": "Må du tilføje stikkontakter i et eksisterende køkken uden at fordele dem på to grupper?",
+   "bag": "Ja, en eksisterende køkkeninstallation i en bolig må udvides med **op til to nye stikkontakter** uden at fordele dem på to grupper (§ 66).\nI en ny installation skal køkkenregionens mindst 3 stikkontakter fordeles på mindst 2 grupper (§ 57, stk. 2).",
+   "tags": [
+    "BEK-1082",
+    "eksisterende-installation",
+    "køkken"
+   ],
+   "kilde": {
+    "dok": "BEK nr. 1082 af 12/07/2016 (elinstallationsbekendtgørelsen)",
+    "afsnit": "§ 66",
+    "udgave": "Ændret ved BEK nr. 639 af 02/06/2017",
+    "gyldigFra": "2017-07-01"
+   }
+  },
+  {
+   "id": "love-050",
+   "type": "regel",
+   "emne": "love",
+   "front": "Hvilke regler gælder, når du ændrer en eksisterende tavle?",
+   "bag": "- **Inden for** den eksisterende ydre kapsling: efter fabrikantens anvisninger og de regler, der gjaldt, da tavlen blev bygget (§ 68, stk. 1).\n- En udvidelse **uden for** kapslingen er en **ny tavle** med nugældende krav (stk. 2).\n- Flyttes tavlen, gælder reglerne på **flytningstidspunktet** (stk. 3).\n- Har tavlen fejlbeskyttelse, skal ændringen også have det (§ 69).",
+   "tags": [
+    "BEK-1082",
+    "tavle",
+    "eksisterende-installation"
+   ],
+   "kilde": {
+    "dok": "BEK nr. 1082 af 12/07/2016 (elinstallationsbekendtgørelsen)",
+    "afsnit": "§§ 68-70",
+    "udgave": "Ændret ved BEK nr. 639 af 02/06/2017",
+    "gyldigFra": "2017-07-01"
+   }
+  },
+  {
+   "id": "love-051",
+   "type": "regel",
+   "emne": "love",
+   "front": "Må klasse I-materiel tilsluttes en installation uden virksom beskyttelsesleder?",
+   "bag": "Ja, hvis installationen er beskyttet af en **RCD på højst 30 mA** (§ 73, stk. 1).\nDet gælder **ikke** for materiel, hvor beskyttelseslederen er nødvendig for sikkerheden, og **ikke** for elektromedicinsk udstyr (stk. 2).",
+   "tags": [
+    "BEK-1082",
+    "eksisterende-installation",
+    "beskyttelsesleder"
+   ],
+   "kilde": {
+    "dok": "BEK nr. 1082 af 12/07/2016 (elinstallationsbekendtgørelsen)",
+    "afsnit": "§ 73",
+    "udgave": "Ændret ved BEK nr. 639 af 02/06/2017",
+    "gyldigFra": "2017-07-01"
+   }
+  },
+  {
+   "id": "love-052",
+   "type": "regel",
+   "emne": "love",
+   "front": "Hvad kræver BEK 1082 om verifikation af en installation?",
+   "bag": "Installationen skal **verificeres, før den tages i drift** (§ 75, stk. 1). Verifikation er **eftersyn, afprøvning og rapportering** (stk. 2).\nEftersyn og afprøvning følger den gældende udgave af **HD 60364-6** (stk. 3). Rapporten opbevares efter reglerne om **slutkontrol** i KLS-bekendtgørelsen (stk. 4).\nSimple arbejder, som enhver må udføre, kræver ikke verifikation.",
+   "tags": [
+    "BEK-1082",
+    "verifikation",
+    "dokumentation",
+    "kvalitetsledelse"
+   ],
+   "kilde": {
+    "dok": "BEK nr. 1082 af 12/07/2016 (elinstallationsbekendtgørelsen)",
+    "afsnit": "§ 75",
+    "udgave": "Ændret ved BEK nr. 639 af 02/06/2017",
+    "gyldigFra": "2017-07-01"
+   }
+  },
+  {
+   "id": "love-053",
+   "type": "regel",
+   "emne": "love",
+   "front": "Hvilken standard skal følges ved arbejde på eller nær en elektrisk installation, og hvad skal du gøre først?",
+   "bag": "Den **elektriske risiko skal vurderes**, så arbejdet kan gennemføres sikkert (§ 76, stk. 1).\nArbejdet skal udføres efter **EN 50110-1**, bortset fra dens uddannelseskrav til arbejde under spænding (stk. 2). Personer, der arbejder under spænding, skal være tilstrækkeligt kvalificeret og instrueres periodisk (§ 77, § 79).",
+   "tags": [
+    "BEK-1082",
+    "drift",
+    "EN-50110",
+    "risikovurdering"
+   ],
+   "kilde": {
+    "dok": "BEK nr. 1082 af 12/07/2016 (elinstallationsbekendtgørelsen)",
+    "afsnit": "§§ 76-79",
+    "udgave": "Ændret ved BEK nr. 639 af 02/06/2017",
+    "gyldigFra": "2017-07-01"
+   }
+  },
+  {
+   "id": "love-054",
+   "type": "regel",
+   "emne": "love",
+   "front": "Hvor gammel skal man være for at arbejde under spænding?",
+   "bag": "Mindst **18 år** for arbejde på eller nær en installation under spænding (§ 78, stk. 1).\nPersoner under uddannelse må fra **16 år** udføre **måling og fejlsøgning** under spænding, hvis de er **instrueret** og under **opsyn af en sagkyndig** person (stk. 2).",
+   "tags": [
+    "BEK-1082",
+    "lærling",
+    "under-spænding"
+   ],
+   "kilde": {
+    "dok": "BEK nr. 1082 af 12/07/2016 (elinstallationsbekendtgørelsen)",
+    "afsnit": "§ 78",
+    "udgave": "Ændret ved BEK nr. 639 af 02/06/2017",
+    "gyldigFra": "2017-07-01"
+   }
+  },
+  {
+   "id": "love-055",
+   "type": "regel",
+   "emne": "love",
+   "front": "Hvor mange gange må du genindkoble en sikring eller automatsikring, der er udløst?",
+   "bag": "**Én gang** manuelt (§ 81, stk. 1). Udløser den igen, skal **fejlen findes og fjernes**, før der genindkobles igen (stk. 2).\nAutomatisk genindkobling af beskyttelsesudstyr mod elektrisk stød er **ikke tilladt**, hvor lægmand har adgang til installationen (§ 82).",
+   "tags": [
+    "BEK-1082",
+    "drift",
+    "genindkobling"
+   ],
+   "kilde": {
+    "dok": "BEK nr. 1082 af 12/07/2016 (elinstallationsbekendtgørelsen)",
+    "afsnit": "§ 81, § 82",
+    "udgave": "Ændret ved BEK nr. 639 af 02/06/2017",
+    "gyldigFra": "2017-07-01"
+   }
+  },
+  {
+   "id": "love-056",
+   "type": "regel",
+   "emne": "love",
+   "front": "Hvilken farve skal en beskyttelsesleder have?",
+   "bag": "**Grøn/gul** (§ 39, stk. 1). En grøn/gul leder må **kun** bruges som beskyttelsesleder (stk. 2).\nBruges der beskyttende potentialudligning, skal der være en **hovedjordklemme**, hvor udligningsforbindelser, jordingsledere og beskyttelsesledere forbindes (§ 40).",
+   "tags": [
+    "BEK-1082",
+    "beskyttelsesleder",
+    "udligning"
+   ],
+   "kilde": {
+    "dok": "BEK nr. 1082 af 12/07/2016 (elinstallationsbekendtgørelsen)",
+    "afsnit": "§ 39, § 40",
+    "udgave": "Ændret ved BEK nr. 639 af 02/06/2017",
+    "gyldigFra": "2017-07-01"
+   }
+  },
+  {
+   "id": "love-057",
+   "type": "regel",
+   "emne": "love",
+   "front": "Hvornår skal en installation have en nødafbryder?",
+   "bag": "Hvor der er behov for **øjeblikkelig afbrydelse** af forsyningen for at undgå fare for personer, husdyr eller ejendom. Nødafbryderen skal være **let genkendelig, effektiv og hurtig** at betjene (§ 34).\nDesuden skal enhver strømkreds kunne **adskilles** fra hver af de spændingsførende ledere (§ 33, stk. 2).",
+   "tags": [
+    "BEK-1082",
+    "nødafbryder",
+    "adskillelse"
+   ],
+   "kilde": {
+    "dok": "BEK nr. 1082 af 12/07/2016 (elinstallationsbekendtgørelsen)",
+    "afsnit": "§ 33, § 34",
+    "udgave": "Ændret ved BEK nr. 639 af 02/06/2017",
+    "gyldigFra": "2017-07-01"
+   }
+  },
+  {
+   "id": "love-058",
+   "type": "regel",
+   "emne": "love",
+   "front": "Hvad skal der være ved et tilslutningssted til en lampe, der ikke er fastmonteret?",
+   "bag": "Så lampen kan tilsluttes uden indgreb i den faste installation, skal der være enten (§ 58):\n1. **fast anbragte klemmer**\n2. **DCL**-udtag (EN 61995-2) eller\n3. **lampestik og stikkontakt** (DS 60884-2-D1)",
+   "tags": [
+    "BEK-1082",
+    "belysning",
+    "tilslutning"
+   ],
+   "kilde": {
+    "dok": "BEK nr. 1082 af 12/07/2016 (elinstallationsbekendtgørelsen)",
+    "afsnit": "§ 58",
+    "udgave": "Ændret ved BEK nr. 639 af 02/06/2017",
+    "gyldigFra": "2017-07-01"
+   }
+  },
+  {
+   "id": "love-059",
+   "type": "regel",
+   "emne": "love",
+   "front": "Hvad kræver BEK 1082 af en virksomhed, der bruger eget elværktøj hos kunder eller udlejer materiel?",
+   "bag": "Virksomheden skal sikre, at materiellet er **vedligeholdt**, så det ikke er farligt, når det tilsluttes, ved arbejde hos andre og ved udlejning (§ 80).\nI praksis betyder det jævnligt eftersyn af værktøj, ledninger og forlængerledninger.",
+   "tags": [
+    "BEK-1082",
+    "værktøj",
+    "vedligehold"
+   ],
+   "kilde": {
+    "dok": "BEK nr. 1082 af 12/07/2016 (elinstallationsbekendtgørelsen)",
+    "afsnit": "§ 80",
+    "udgave": "Ændret ved BEK nr. 639 af 02/06/2017",
+    "gyldigFra": "2017-07-01"
+   }
+  },
+  {
+   "id": "love-060",
+   "type": "regel",
+   "emne": "love",
+   "front": "Hvilken straf kan man få for at overtræde BEK 1082?",
+   "bag": "**Bøde**, fx for at overtræde sikkerhedskravene, undlade verifikation eller undlade indberetning af afvigelse fra HD 60364 (§ 85, stk. 1). Selskaber kan også straffes (stk. 2).\nForældelsesfristen er **10 år** (§ 86).",
+   "tags": [
+    "BEK-1082",
+    "straf"
+   ],
+   "kilde": {
+    "dok": "BEK nr. 1082 af 12/07/2016 (elinstallationsbekendtgørelsen)",
+    "afsnit": "§ 85, § 86",
+    "udgave": "Ændret ved BEK nr. 639 af 02/06/2017",
+    "gyldigFra": "2017-07-01"
+   }
+  },
+  {
+   "id": "love-061",
+   "type": "regel",
+   "emne": "love",
+   "front": "Hvad kan Erhvervsstyrelsen gøre, når en elinstallation ikke overholder reglerne?",
+   "bag": "Den kan påbyde ejeren eller brugeren at:\n- lade en **autoriseret elinstallatørvirksomhed** foretage eftersyn (§ 16)\n- få fejl og mangler **udbedret** (§ 17)\nbegge dele for ejerens eller brugerens egen regning. Den kan **forbyde brugen** af installationen og ved overtrædelse af forbuddet lade elforsyningen afbryde (§ 18).\nStyrelsen har adgang uden retskendelse mod legitimation (§ 15).",
+   "tags": [
+    "Erhvervsstyrelsen",
+    "tilsyn",
+    "elsikkerhedsloven"
+   ],
+   "kilde": {
+    "dok": "Elsikkerhedsloven, LBK nr. 57 af 19/01/2026",
+    "afsnit": "§§ 15-18",
+    "udgave": "LBK nr. 57 af 19/01/2026",
+    "gyldigFra": "2016-01-01"
+   }
+  },
+  {
+   "id": "love-062",
+   "type": "fakta",
+   "emne": "love",
+   "front": "Hvad er forskellen på et elektrisk anlæg og en elektrisk installation efter elsikkerhedsloven?",
+   "bag": "**Elektrisk anlæg:** anlæg til produktion, transmission, distribution og lagring af el samt baneanlæg, uden spændingsgrænse (§ 2, stk. 1).\n**Elektrisk installation:** hele installationen fra det elektriske anlæg frem til og med tilsluttet materiel og ledninger (§ 2, stk. 2).\nTypisk: netselskabets net er anlæg, kundens installation efter tilslutningspunktet er installation.",
+   "tags": [
+    "elsikkerhedsloven",
+    "definition",
+    "anlæg"
+   ],
+   "kilde": {
+    "dok": "Elsikkerhedsloven, LBK nr. 57 af 19/01/2026",
+    "afsnit": "§ 2",
+    "udgave": "LBK nr. 57 af 19/01/2026",
+    "gyldigFra": "2016-01-01"
+   }
+  },
+  {
+   "id": "love-063",
+   "type": "regel",
+   "emne": "love",
+   "front": "Hvad er elsikkerhedslovens grundlæggende sikkerhedskrav?",
+   "bag": "Elektriske anlæg og installationer skal være udført og drives, så de **ikke frembyder fare for personer, husdyr eller ejendom** (§ 3).\nDet er dette krav, BEK 1082 uddyber, og som HD 60364 er en måde at opfylde på.",
+   "tags": [
+    "elsikkerhedsloven",
+    "sikkerhedskrav"
+   ],
+   "kilde": {
+    "dok": "Elsikkerhedsloven, LBK nr. 57 af 19/01/2026",
+    "afsnit": "§ 3",
+    "udgave": "LBK nr. 57 af 19/01/2026",
+    "gyldigFra": "2016-01-01"
+   }
+  },
+  {
+   "id": "love-064",
+   "type": "regel",
+   "emne": "love",
+   "front": "Hvad betyder det, at sikkerhedskravet \"anses for opfyldt\", når standarderne følges?",
+   "bag": "Følges reglerne og de standarder, de henviser til, anses sikkerhedskravet i § 3 for opfyldt (§ 7, stk. 1). Det er en **formodning**: du skal ikke selv bevise sikkerheden.\nFølges standarderne ikke eller kun delvist, skal det kunne **dokumenteres**, hvordan kravet er opfyldt, på **dansk eller engelsk** (§ 7, stk. 2).",
+   "tags": [
+    "elsikkerhedsloven",
+    "standarder",
+    "dokumentation"
+   ],
+   "kilde": {
+    "dok": "Elsikkerhedsloven, LBK nr. 57 af 19/01/2026",
+    "afsnit": "§ 7",
+    "udgave": "LBK nr. 57 af 19/01/2026",
+    "gyldigFra": "2016-01-01"
+   }
+  },
+  {
+   "id": "love-065",
+   "type": "regel",
+   "emne": "love",
+   "front": "Må netselskabet stille strengere sikkerhedskrav til en installation end reglerne?",
+   "bag": "**Nej.** Den, der driver et distributionsanlæg, må ikke som betingelse for at levere el stille strengere sikkerhedskrav end dem, der følger af reglerne (§ 11).\nNetselskabet kan stadig have tekniske tilslutningsbestemmelser, fx om måling og anmeldelse.",
+   "tags": [
+    "elsikkerhedsloven",
+    "netselskab"
+   ],
+   "kilde": {
+    "dok": "Elsikkerhedsloven, LBK nr. 57 af 19/01/2026",
+    "afsnit": "§ 11",
+    "udgave": "LBK nr. 57 af 19/01/2026",
+    "gyldigFra": "2016-01-01"
+   }
+  },
+  {
+   "id": "love-066",
+   "type": "regel",
+   "emne": "love",
+   "front": "Hvem er erstatningsansvarlig, når et elektrisk anlæg (fx forsyningsnettet) forvolder skade?",
+   "bag": "Den, der **driver anlægget**, skal erstatte skaden på person eller gods, **medmindre** den godtgør, at skaden ikke kunne være afværget med den omhu, driften kræver (§ 12, stk. 1).\nBevisbyrden er altså **omvendt**: driftsselskabet skal bevise, at det ikke har været uforsigtigt.",
+   "tags": [
+    "elsikkerhedsloven",
+    "ansvar",
+    "erstatning"
+   ],
+   "kilde": {
+    "dok": "Elsikkerhedsloven, LBK nr. 57 af 19/01/2026",
+    "afsnit": "§ 12",
+    "udgave": "LBK nr. 57 af 19/01/2026",
+    "gyldigFra": "2016-01-01"
+   }
+  },
+  {
+   "id": "love-067",
+   "type": "regel",
+   "emne": "love",
+   "front": "Hvilke beføjelser har Erhvervsstyrelsen ved kontrol efter elsikkerhedsloven?",
+   "bag": "- Kræve **alle nødvendige oplysninger** fra dem, der projekterer, udfører og driver, og fra ejere og brugere (§ 13, stk. 2).\n- **Adgang uden retskendelse** til offentlige og private ejendomme mod legitimation, evt. med politiets hjælp (§ 15).\n- Påbud, forbud og afbrydelse af forsyningen (§§ 16-18).\n- Bemyndige andre, fx private kontrolvirksomheder (§ 24).",
+   "tags": [
+    "elsikkerhedsloven",
+    "Erhvervsstyrelsen",
+    "tilsyn"
+   ],
+   "kilde": {
+    "dok": "Elsikkerhedsloven, LBK nr. 57 af 19/01/2026",
+    "afsnit": "§§ 13-18, § 24",
+    "udgave": "LBK nr. 57 af 19/01/2026",
+    "gyldigFra": "2016-01-01"
+   }
+  },
+  {
+   "id": "love-068",
+   "type": "regel",
+   "emne": "love",
+   "front": "Hvilken straf giver elsikkerhedsloven?",
+   "bag": "**Bøde** for bl.a. at **forsætligt** overtræde sikkerhedskravet i § 3, tilsidesætte oplysningspligten eller ikke efterkomme et påbud eller forbud (§ 34, stk. 1). Selskaber kan straffes (§ 35).\nForældelsesfristen er **10 år** (§ 36).",
+   "tags": [
+    "elsikkerhedsloven",
+    "straf"
+   ],
+   "kilde": {
+    "dok": "Elsikkerhedsloven, LBK nr. 57 af 19/01/2026",
+    "afsnit": "§§ 34-36",
+    "udgave": "LBK nr. 57 af 19/01/2026",
+    "gyldigFra": "2016-01-01"
+   }
+  },
+  {
+   "id": "love-069",
+   "type": "fakta",
+   "emne": "love",
+   "front": "Hvornår trådte elsikkerhedsloven i kraft, og hvad afløste den?",
+   "bag": "Den trådte i kraft **1. januar 2016** og afløste **lov om elektriske stærkstrømsanlæg og elektrisk materiel** (stærkstrømsloven) (§ 37).\nRegler udstedt efter stærkstrømsloven gælder, indtil de ophæves eller erstattes (§ 38). Gældende tekst: LBK nr. 57 af 19/01/2026.",
+   "tags": [
+    "elsikkerhedsloven",
+    "historik"
+   ],
+   "kilde": {
+    "dok": "Elsikkerhedsloven, LBK nr. 57 af 19/01/2026",
+    "afsnit": "§ 37, § 38",
+    "udgave": "LBK nr. 57 af 19/01/2026",
+    "gyldigFra": "2016-01-01"
+   }
+  },
+  {
+   "id": "love-070",
+   "type": "fakta",
+   "emne": "love",
+   "front": "Hvilke installationer er ikke omfattet af elsikkerhedsloven?",
+   "bag": "Installationer på **skibe**, på mobile **offshoreanlæg**, i **luftfartøjer** og i jernbanekøretøjer, samt installationer i **motorkøretøjer** til køretøjets drift (§ 2, stk. 2).\nLadestikket på et elkøretøj er dog omfattet. Loven gælder ikke for Færøerne og Grønland (§ 45).",
+   "tags": [
+    "elsikkerhedsloven",
+    "anvendelsesområde"
+   ],
+   "kilde": {
+    "dok": "Elsikkerhedsloven, LBK nr. 57 af 19/01/2026",
+    "afsnit": "§ 2, stk. 2; § 45",
+    "udgave": "LBK nr. 57 af 19/01/2026",
+    "gyldigFra": "2016-01-01"
    }
   }
  ]
