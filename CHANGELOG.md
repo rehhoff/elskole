@@ -1,5 +1,9 @@
 # Ændringer
 
+## 0.4.0 · 2026-11-23 · Claude Opus 5.5 og Claude Sonnet 5.5
+- Skema 3: resultater fra prøvesimuleringen får deres egen art, `proeve`. Prøver, der er gemt med skema 2 (`art:'case'`, `ref:'proeve'`), flyttes ved første start efter en backup i `elskole.backup`, og igen ved synk. Prøver tæller derfor ikke længere med som cases i kompetencetræet.
+- En app med skema 2 kan ikke længere synkronisere med en Gist, der er skrevet af 0.4.0. Opdatér alle enheder.
+
 ## 0.3.0 · 2026-11-23 · Claude Opus 5.5 og Claude Sonnet 5.5
 - Fase 3, kompetence (`docs/planer/2026-11-22-fase-3-kompetence.md`): fanen Kompetence (tast 7) med kompetencetræ pr. emne og delemne ud fra kort, opgaver, cases og fejlfinding, de svageste områder og en log over typiske fejl med henvisning til træning.
 - Fase 6, prøve (`docs/planer/2026-11-22-fase-6-proeve.md`): fanen Prøve (tast 8) med tidsbegrænset prøvesimulering af kort, opgaver og cases, karakter på 7-trinsskalaen og gennemgang. Niveauet kan vælges, fordi det ikke er afgjort endnu. Regneopgaver kan bygges ud fra projekter i El-oversigtsappen, som kun læses.

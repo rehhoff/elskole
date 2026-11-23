@@ -8,7 +8,7 @@ Sidst opdateret: 2026-11-22.
 
 Elskolen er en dansk webapp, der skal gøre ejeren til en meget dygtig elektriker: matematik og fysik, dimensionering (DS/HD 60364), særlige installationer, love og myndigheder, erhverv og arbejdsmiljø. Den afløser og udvider Anki med opgaver, cases og fejlfinding. Samlet plan: `docs/plan.md`.
 
-- Live: https://rehhoff.github.io/elskole/ (GitHub Pages fra `main` i `rehhoff/elskole`). Udgivet version: **0.3.0**.
+- Live: https://rehhoff.github.io/elskole/ (GitHub Pages fra `main` i `rehhoff/elskole`). Udgivet version: **0.3.0**. Version **0.4.0** (skema 3, resultatarten `proeve`) er merget på `main`, men ikke pushet.
 - Lokal mappe på ejerens PC: `Desktop\GROUND\elskole`.
 - Søsterapp: El-oversigtsappen (`rehhoff/rehhoff.github.io`, lokalt `Desktop\GROUND\rehhoff.github.io`). Separat repo og separat app, men samme origin. Se "Samme origin" nedenfor.
 
@@ -28,7 +28,6 @@ Elskolen er en dansk webapp, der skal gøre ejeren til en meget dygtig elektrike
 
 Erfaring fra merge: `css/tailwind.css` løses ved at tage én side og bygge igen med `python tools/byg_css.py`. Når to faser tilføjer blokke samme sted i `index.html`, så tjek, at hver blok har sin egen `</section></template>`. Ved merge af fase 3 og 6 manglede den, og appen startede ikke.
 
-**Næste opgave for hovedsessionen:** tilføj `'proeve'` til `RESULTAT_ARTER` i `js/data.js`. Det kræver skema 3, backup og et røgtjek med gamle data, fordi en ældre app ellers ville lave `'proeve'` om til `'opgave'`. Indtil da gemmer fase 6 prøver som `art:'case'`, `ref:'proeve'`, `emne:'andet'`, og de tælles derfor med i kompetencetræets case-tal for `andet`.
 
 ## Åbne punkter for ejeren
 
@@ -66,4 +65,4 @@ Erfaring fra merge: `css/tailwind.css` løses ved at tage én side og bygge igen
 ## Historik i korte træk
 
 - 2026-11-22: Plan lagt. Fase 0–1 bygget og udgivet som 0.1.0. El-oversigtsappen 10.26.1 udgivet med rettelse af service workeren. Forberedelse til parallelle faser committet. Fase 2, 4 og 5 bygget i tre sessioner og udgivet som 0.2.0.
-- 2026-11-23: Fase 3 (Sonnet) og fase 6 (planlagt af Opus, kodet af Sonnet) udgivet som 0.3.0.
+- 2026-11-23: Fase 3 (Sonnet) og fase 6 (planlagt af Opus, kodet af Sonnet) udgivet som 0.3.0. Skema 3 med resultatarten `proeve` merget som 0.4.0 (kodet af Sonnet, gennemgået af Opus).
